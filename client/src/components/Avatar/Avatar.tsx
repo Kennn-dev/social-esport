@@ -20,13 +20,20 @@ const Text = styled.div`
   span {
     font-size: 0.75rem;
   }
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
 `;
 const MainText = styled.div`
   font-size: 1.075rem;
   font-weight: bold;
-  display: block;
+  display: none;
   &:hover {
     color: ${colors.white};
+  }
+  @media (min-width: 768px) {
+    display: block;
   }
 `;
 
