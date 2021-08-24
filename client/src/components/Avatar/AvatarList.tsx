@@ -18,7 +18,6 @@ const Layout = styled.div`
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   transition: all ease 0.3s;
-  font-weight: 500;
   img {
     width: 2.5rem;
     height: 2.5rem;

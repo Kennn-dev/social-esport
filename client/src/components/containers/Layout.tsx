@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
+import RightSideBar from "../Sidebar/RightSideBar";
 import { Grids } from ".";
 import styled from "styled-components";
 interface LayoutProps {
@@ -21,7 +22,7 @@ function Layout({ col, children }: LayoutProps) {
       <GridLayout col={col}>
         <Sidebar />
         {children}
-        <div>Sidebar</div>
+        <RightSideBar />
       </GridLayout>
     </>
   );

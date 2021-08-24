@@ -19,10 +19,16 @@ const Text = styled.div`
   cursor: pointer;
   span {
     font-size: 0.75rem;
+    display: none;
   }
   display: none;
   @media (min-width: 768px) {
     display: block;
+  }
+  @media (min-width: 1024px) {
+    span {
+      display: block;
+    }
   }
 `;
 const MainText = styled.div`

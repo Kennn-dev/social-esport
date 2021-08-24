@@ -9,6 +9,7 @@ import { MessageIcon, MenuIcon, BellIcon } from "../Icons/index";
 
 const GridLayout = styled(Grids)`
   border-bottom: 1px solid ${colors.gray};
+  grid-template-columns: 1fr 3fr 2fr;
 `;
 const Logo = styled.div`
   width: 6rem;
@@ -58,8 +59,8 @@ export default function Navbar() {
       </LeftContent>
       <SearchInput placeholder="Search ..." />
       <RightContent>
-        <BellIcon color={colors.gray} />
-        <MessageIcon color={colors.gray} />
+        <BellIcon title="Notification" color={colors.gray} />
+        <MessageIcon title="Message" color={colors.gray} />
         <Avatar />
       </RightContent>
     </GridLayout>

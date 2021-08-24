@@ -2,9 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".", // all paths are relative to the baseUrl
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@pages/*": ["./src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"],
     
     },
     "target": "es5",
@@ -13,6 +13,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

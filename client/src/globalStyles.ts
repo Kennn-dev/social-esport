@@ -5,13 +5,13 @@ const GlobalStyle = createGlobalStyle`
 		margin : 0;
 		padding : 0;
 		box-sizing : border-box;
-		font-size : 18px;
+		font-size : 16px;
       @media (min-width: 768px) {
-        font-size: 16px;
+        /* font-size: 16px; */
       }
 
       @media (min-width: 1024px) {
-        font-size: 16px;
+        /* font-size: 16px; */
       }
 	}
 	html {

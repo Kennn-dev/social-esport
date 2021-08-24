@@ -6,7 +6,7 @@ const Grids = styled.div<{ col: ColType }>`
   align-items: center;
   grid-gap: 2rem;
   grid-template-columns: ${(props) =>
-    props.col == 1 ? "1rf" : props.col == 2 ? "1fr 2fr" : "1fr 3fr 2fr"};
+    props.col == 1 ? "1rf" : props.col == 2 ? "1fr 2fr" : "1fr 3fr 1.5fr"};
   padding: 1rem 1.5rem;
   transition: all ease-in-out 0.5s;
   color: ${colors.gray};
