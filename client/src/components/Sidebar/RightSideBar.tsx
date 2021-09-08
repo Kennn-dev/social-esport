@@ -5,14 +5,15 @@ import TitleWithButton from "../common/TitleWithButton";
 import { RightIcon } from "../Icons/index";
 import { VideoCard } from "../Cards/index";
 const Layout = styled.div`
-  width: 100%;
   height: 100%;
   color: ${colors.lightGray};
   border-left: 1px solid ${colors.gray};
   padding: 1rem 0.75rem;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   gap: 3rem;
+  overflow-y: auto;
 `;
 const ChildLayout = styled.div`
   display: flex;

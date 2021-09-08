@@ -13,6 +13,11 @@ export default styled.div`
   color: ${colors.white};
 
   transition: all ease-out 0.3s;
+
+  svg {
+    width: auto;
+    height: 1.25rem;
+  }
   &:hover {
     background-color: ${colors.bgBlock3};
   }

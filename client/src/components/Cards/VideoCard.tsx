@@ -30,6 +30,7 @@ const Layout = styled.div`
     gap: 0.5rem;
 
     .avatar {
+      margin-top: 0.5rem;
     }
     .creator-text {
       display: inline;

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import * as colors from "../../constains/colors";
-const Layout = styled.div`
+const Layout = styled.div<{ reverse: boolean }>`
   display: flex;
+  flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
   gap: 1rem;
   align-items: center;
-  padding: 0 1.5rem;
-  background: ${colors.bgBlock1};
+  background: transparent;
   color: ${colors.lightGray};
 `;
 const Image = styled.img`
@@ -43,9 +43,13 @@ const MainText = styled.div`
   }
 `;
 
-export default function Avatar() {
+interface AvatarProps {
+  reverse?: boolean;
+}
+
+export default function Avatar({ reverse = false }: AvatarProps) {
   return (
-    <Layout>
+    <Layout reverse={reverse}>
       <Text>
         <MainText>Lily Bailey</MainText>
         <span>3ks Followers</span>

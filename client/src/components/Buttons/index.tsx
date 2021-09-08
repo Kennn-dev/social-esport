@@ -8,10 +8,11 @@ interface ButtonProps {
   type?: TypeButton; //	default
   icon?: ReactNode | boolean; // false
   isActive?: boolean; //	false
+  className?: string;
   children?: ReactNode;
 }
 interface ButtonLayoutProps {
-  isActive: boolean;
+  isActive?: boolean;
 }
 const ButtonLayout = styled.div<ButtonLayoutProps>`
   background-color: ${(props) =>
@@ -38,10 +39,10 @@ const Button = ({
   icon = false,
   isActive = false,
   children,
-  ...props
+  className,
 }: ButtonProps) => (
-  <ButtonLayout isActive={isActive}>
-    {icon && icon}
+  <ButtonLayout className={className || ""} isActive={isActive}>
+    {icon || null}
     {children}
   </ButtonLayout>
 );

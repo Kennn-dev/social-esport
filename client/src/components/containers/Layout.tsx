@@ -1,30 +1,51 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
-import RightSideBar from "../Sidebar/RightSideBar";
 import { Grids } from ".";
 import styled from "styled-components";
 interface LayoutProps {
-  col: 1 | 2 | 3;
+  rightContent: boolean;
   children: React.ReactNode;
 }
-const GridLayout = styled(Grids)`
-  align-items: start;
-  gap: 0.5rem;
-  padding: 0;
-  height: 100%;
+const GridLayout = styled.div`
+  display: flex;
+  width: 100%;
+`;
+const LayoutWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .body {
+    padding-top: 6rem;
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 20%;
+      padding-top: 6rem;
+    }
+
+    .body--content {
+      display: flex;
+      padding-left: 20%;
+    }
+  }
 `;
 
-function Layout({ col, children }: LayoutProps) {
+function Layout({ rightContent = true, children }: LayoutProps) {
   return (
-    <>
+    <LayoutWrapper>
       <Navbar />
-      <GridLayout col={col}>
-        <Sidebar />
-        {children}
-        <RightSideBar />
-      </GridLayout>
-    </>
+      <div className="body">
+        <GridLayout>
+          <div className="sidebar">
+            <Sidebar />
+          </div>
+          <div className="body--content">{children}</div>
+        </GridLayout>
+      </div>
+    </LayoutWrapper>
   );
 }
 export default Layout;

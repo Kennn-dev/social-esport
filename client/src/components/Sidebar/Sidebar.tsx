@@ -14,6 +14,8 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+
+  overflow-y: auto;
 `;
 
 const ButtonWrapper = styled.div`
