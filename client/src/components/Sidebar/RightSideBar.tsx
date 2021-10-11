@@ -8,7 +8,7 @@ const Layout = styled.div`
   height: 100%;
   color: ${colors.lightGray};
   border-left: 1px solid ${colors.gray};
-  padding: 1rem 0.75rem;
+  padding: 1rem 2rem;
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
@@ -23,7 +23,7 @@ const ChildLayout = styled.div`
 const ChildContentLayout = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   padding: 0 1rem;
 `;
 
@@ -45,13 +45,13 @@ export default function RightSideBar() {
           <VideoCard
             title="I Tried My Signature Buffed Gangplank Build... It's Not Balanced!"
             author="Ken"
-            src="https://www.youtube.com/embed/hgaTALC-G5I"
+            src={`https://source.unsplash.com/random?sig=888`}
             tags={["League of Legends", "Gangplank"]}
           />
           <VideoCard
             title={`OYO VOLIBEAR MONTAGE - "KOREA VOLIBEAR MAIN" 2021 | LOL HYPER`}
             author="OYO"
-            src="https://www.youtube.com/embed/wd-jjIDpAOo"
+            src={`https://source.unsplash.com/random?sig=82`}
             tags={["League of Legends", "Volibear"]}
           />
         </ChildContentLayout>

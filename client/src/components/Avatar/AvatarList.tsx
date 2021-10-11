@@ -26,7 +26,7 @@ const Layout = styled.div`
 
   &:hover {
     font-weight: 700;
-    background-color: ${colors.bgBlock2};
+    background-color: ${({ theme }) => theme.bgBlock2};
   }
 `;
 
@@ -49,7 +49,7 @@ const StatusDot = styled.div<StatusDotProps>`
   height: 0.5rem;
   border-radius: 50%;
   background-color: ${(props) =>
-    props.isOnline ? colors.primary : colors.gray};
+    props.isOnline ? props.theme.primary : props.theme.gray};
 `;
 function AvatarList({
   name,

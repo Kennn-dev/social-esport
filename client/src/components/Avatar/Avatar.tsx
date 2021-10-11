@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import * as colors from "../../constains/colors";
 const Layout = styled.div<{ reverse: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
   gap: 1rem;
   align-items: center;
   background: transparent;
-  color: ${colors.lightGray};
+  color: ${({ theme }) => theme.lightGray};
 `;
 const Image = styled.img`
   width: 3rem;
@@ -36,7 +35,7 @@ const MainText = styled.div`
   font-weight: bold;
   display: none;
   &:hover {
-    color: ${colors.white};
+    color: ${(props) => props.theme.white};
   }
   @media (min-width: 768px) {
     display: block;

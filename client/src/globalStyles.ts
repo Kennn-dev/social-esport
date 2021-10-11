@@ -26,6 +26,39 @@ const GlobalStyle = createGlobalStyle`
 		#root{
 		height : 100%;
 		}
+
+		a{
+			color :white;
+			text-decoration: underline;
+		}
+		.bold{
+			font-weight : bold;
+		}
+
+		/* Custom scrollbar */
+		/* width */
+		::-webkit-scrollbar {
+			width: 7px;
+		}
+		/* Track */
+		::-webkit-scrollbar-track {
+			border-radius : 7px;
+			background: rgba(87, 87, 87, 0.38);
+		}
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background:rgba(112, 112, 112, 0.38);
+		}/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(112, 112, 112, 1);
+		}
+
+		.disabled-focus{
+			&::focus {
+				outline : none
+			}
+		}
+
 	}
 
 `;

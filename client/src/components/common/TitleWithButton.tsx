@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import * as colors from "../../constains/colors";
 
 export default styled.div`
   border-radius: 0.75rem;
@@ -10,7 +9,7 @@ export default styled.div`
   cursor: pointer;
 
   font-weight: 700;
-  color: ${colors.white};
+  color: ${({ theme }) => theme.white};
 
   transition: all ease-out 0.3s;
 
@@ -19,6 +18,6 @@ export default styled.div`
     height: 1.25rem;
   }
   &:hover {
-    background-color: ${colors.bgBlock3};
+    background-color: ${({ theme }) => theme.bgBlock3};
   }
 `;

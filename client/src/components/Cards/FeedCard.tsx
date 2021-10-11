@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import * as colors from "../../constains/colors";
 import { Avatar } from "../Avatar/index";
 import { Button } from "../Buttons/index";
 import {
@@ -12,27 +11,29 @@ import {
 const Layout = styled.div`
   line-height: 140%;
 
-  color: ${colors.white};
-  background: ${colors.bgBlock2};
+  color: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.bgBlock2};
   border-radius: 1rem;
-  padding: 1rem 1.25rem;
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
   margin: 0 auto;
   width: 80%;
 
   .header {
+    padding: 1rem 1.25rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .content {
+  .card--content {
+    padding: 0 1.25rem;
   }
-  .actions {
+  .card--actions {
+    padding: 0 1.25rem 1.25rem 1.25rem;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -55,11 +56,11 @@ export default function FeedCard(): JSX.Element {
         <Avatar reverse />
         <MoreHorizontalIcon />
       </div>
-      <span>
+      <span className="card--content">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod massa
         donec cursus tortor enim. Nunc, hac diam morbi augue at vulputate vitae.
       </span>
-      <div className="content">
+      <div className="card--img">
         <img
           src={"https://source.unsplash.com/random"}
           alt="this is content img"
@@ -67,7 +68,7 @@ export default function FeedCard(): JSX.Element {
           height="auto"
         />
       </div>
-      <div className="actions">
+      <div className="card--actions">
         <Button className="button" icon={<FireIcon />}>
           5
         </Button>

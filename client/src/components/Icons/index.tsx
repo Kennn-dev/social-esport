@@ -157,18 +157,18 @@ const MoreVerticalIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
 const RightIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
   <svg
     {...props}
-    width="14"
-    height="24"
-    viewBox="0 0 14 24"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="ionicon"
+    viewBox="0 0 512 512"
   >
     <path
-      d="M1.66666 1.33331L12.3333 12L1.66666 22.6666"
-      stroke="#F3F3F3"
-      stroke-width="2"
+      fill="none"
+      stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"
+      stroke-width="48"
+      d="M184 112l144 144-144 144"
+      stroke-color={color}
     />
   </svg>
 );
@@ -184,8 +184,8 @@ const FireIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
     <path
       d="M17 42C25.235 42 32 35.474 32 27.098C32 25.042 31.895 22.838 30.755 19.412C29.615 15.986 29.386 15.544 28.181 13.428C27.666 17.745 24.911 19.545 24.211 20.083C24.211 19.523 22.545 13.336 20.018 9.633C17.537 6 14.163 3.617 12.185 2C12.185 5.07 11.322 9.634 10.085 11.96C8.849 14.285 8.617 14.37 7.072 16.1C5.528 17.83 4.819 18.365 3.527 20.465C2.236 22.565 2 25.362 2 27.418C2 35.794 8.765 42 17 42Z"
       stroke={color}
-      stroke-width="4"
-      stroke-linejoin="round"
+      strokeWidth="4"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -218,8 +218,57 @@ const SearchIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
     />
   </svg>
 );
-
+const FacebookIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
+  <svg
+    {...props}
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clip-path="url(#clip0)">
+      <path
+        d="M23.446 18L24.335 12.209H18.778V8.45098C18.778 6.86698 19.554 5.32198 22.043 5.32198H24.569V0.391977C24.569 0.391977 22.277 0.000976562 20.085 0.000976562C15.509 0.000976562 12.518 2.77498 12.518 7.79598V12.21H7.43103V18.001H12.518V32.001H18.778V18.001L23.446 18Z"
+        fill={color}
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0">
+        <rect width="32" height="32" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+const GoogleColoredIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M43.611 20.083H42V20H24V28H35.303C33.654 32.657 29.223 36 24 36C17.373 36 12 30.627 12 24C12 17.373 17.373 12 24 12C27.059 12 29.842 13.154 31.961 15.039L37.618 9.382C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24C4 35.045 12.955 44 24 44C35.045 44 44 35.045 44 24C44 22.659 43.862 21.35 43.611 20.083Z"
+      fill="#FFC107"
+    />
+    <path
+      d="M6.30603 14.691L12.877 19.51C14.655 15.108 18.961 12 24 12C27.059 12 29.842 13.154 31.961 15.039L37.618 9.382C34.046 6.053 29.268 4 24 4C16.318 4 9.65603 8.337 6.30603 14.691Z"
+      fill="#FF3D00"
+    />
+    <path
+      d="M23.9999 44C29.1659 44 33.8599 42.023 37.4089 38.808L31.2189 33.57C29.1435 35.1483 26.6074 36.002 23.9999 36C18.7979 36 14.3809 32.683 12.7169 28.054L6.19495 33.079C9.50495 39.556 16.2269 44 23.9999 44Z"
+      fill="#4CAF50"
+    />
+    <path
+      d="M43.611 20.083H42V20H24V28H35.303C34.5142 30.2164 33.0934 32.1532 31.216 33.571L31.219 33.569L37.409 38.807C36.971 39.205 44 34 44 24C44 22.659 43.862 21.35 43.611 20.083Z"
+      fill="#1976D2"
+    />
+  </svg>
+);
 export {
+  FacebookIcon,
+  GoogleColoredIcon,
   SearchIcon,
   ShareIcon,
   FireIcon,

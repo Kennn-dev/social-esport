@@ -27,6 +27,7 @@ const LayoutWrapper = styled.div`
     }
 
     .body--content {
+      width: 100%;
       display: flex;
       padding-left: 20%;
     }

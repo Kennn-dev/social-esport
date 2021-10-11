@@ -8,8 +8,8 @@ import { AvatarList } from "../Avatar/index";
 const Layout = styled.div`
   width: 100%;
   height: 100%;
-  color: ${colors.lightGray};
-  border-right: 1px solid ${colors.gray};
+  color: ${({ theme }) => theme.lightGray};
+  border-right: 1px solid ${({ theme }) => theme.gray};
   padding: 1rem 0.75rem;
   display: flex;
   flex-direction: column;
@@ -29,9 +29,11 @@ const ButtonWrapper = styled.div`
 `;
 
 const ButtonSidebar = styled(Button)`
+  justify-content: flex-start;
   svg {
     path {
-      fill: ${(props) => (props.isActive ? colors.white : colors.lightGray)};
+      fill: ${({ color, theme }) =>
+        color === "secondary" ? theme.bgBlock1 : theme.white};
     }
   }
 `;
@@ -53,7 +55,7 @@ export default function Sidebar() {
   return (
     <Layout>
       <ButtonWrapper>
-        <ButtonSidebar isActive>
+        <ButtonSidebar color="primary">
           <HomeIcon color={colors.white} />
           Home
         </ButtonSidebar>

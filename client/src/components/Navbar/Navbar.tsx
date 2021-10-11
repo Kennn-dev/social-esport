@@ -4,35 +4,22 @@ import Avatar from "../../components/Avatar/Avatar";
 import logo from "../../assets/logo.png";
 import * as colors from "../../constains/colors";
 import Input from "../Inputs/Input";
-import { Grids } from "../containers/index";
+import Grids from "../containers/Grids";
 import { MessageIcon, BellIcon, SearchIcon } from "../Icons/index";
 
 const GridLayout = styled(Grids)`
-  border-bottom: 1px solid ${colors.gray};
+  border-bottom: 1px solid ${({ theme }) => theme.gray};
 
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
-  background: ${colors.bgBlock1};
+  background: ${({ theme }) => theme.bgBlock1};
 
   z-index: 99;
   .navbar--search {
     width: 70%;
     position: relative;
-    .search--input {
-      padding-right: 3.5rem;
-    }
-    svg {
-      position: absolute;
-
-      right: 1rem;
-      top: 50%;
-      width: 1.25rem;
-      height: auto;
-
-      transform: translate(0, -50%);
-    }
   }
 `;
 const Logo = styled.div`
@@ -51,7 +38,7 @@ const RightContent = styled.div`
     cursor: pointer;
     &:hover {
       path {
-        fill: ${colors.primary};
+        fill: ${({ theme }) => theme.primary};
       }
     }
   }
@@ -73,8 +60,11 @@ export default function Navbar() {
         </Logo>
       </LeftContent>
       <div className="navbar--search">
-        <Input className="search--input" placeholder="Search ..." />
-        <SearchIcon color={colors.gray} />
+        <Input
+          icon={<SearchIcon color={colors.gray} />}
+          className="search--input"
+          placeholder="Search ..."
+        />
       </div>
       <RightContent>
         <BellIcon title="Notification" color={colors.gray} />
