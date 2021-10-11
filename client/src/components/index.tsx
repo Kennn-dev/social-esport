@@ -7,3 +7,4 @@ export * from "./common/index";
 export * from "./Inputs/index";
 export * from "./Cards/index";
 export { default as Tag } from "./Tags/Tag";
+export { default as Tabs } from "./Tabs/Tabs";

@@ -3,17 +3,22 @@ import styled from "styled-components";
 import {
   Tag,
   Button,
-  FireIcon,
   ShareIcon,
+  FireIcon,
   Avatar,
   MoreHorizontalIcon,
+  Tabs,
+  VideoCard,
+  CommentCard,
 } from "../../../../components/index";
 import { MontageLayout } from "./Montage";
 
 const MontageDetailLayout = styled(MontageLayout)`
+  display: flex;
+  flex-direction: row;
   .montage--video {
-    width: 60%;
-
+    /* width: 60%; */
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -30,6 +35,32 @@ const MontageDetailLayout = styled(MontageLayout)`
       font-size: 2rem;
       font-weight: bold;
       color: ${({ theme }) => theme.white};
+    }
+    &--info {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+
+      gap: 20px;
+      &--author {
+        display: flex;
+        justify-content: space-between;
+
+        .buttons-group {
+          display: flex;
+          width: 30%;
+          column-gap: 1rem;
+          .button-more {
+            width: fit-content;
+
+            padding: 0.75rem;
+          }
+        }
+      }
+
+      &--tabs {
+        margin-top: 20px;
+      }
     }
     &--subinfo {
       display: flex;
@@ -48,31 +79,14 @@ const MontageDetailLayout = styled(MontageLayout)`
       }
     }
   }
-  .montage--video--info {
-    margin-top: 10px;
+  .montage--video--list {
+    flex-shrink: 0;
+    max-width: 400px;
+
     display: flex;
     flex-direction: column;
-
-    gap: 20px;
-    &--author {
-      display: flex;
-      justify-content: space-between;
-
-      .buttons-group {
-        display: flex;
-        width: 30%;
-        column-gap: 1rem;
-        .button-more {
-          width: fit-content;
-
-          padding: 0.75rem;
-        }
-      }
-    }
-
-    &--tabs {
-      margin-top: 20px;
-    }
+    row-gap: 15px;
+    margin-left: auto;
   }
 `;
 const VideoPlayer = ({ src }: { src: string }) => {
@@ -90,41 +104,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
   `;
   return <Wrapper />;
 };
-type TabsItem = {
-  label: string;
-  value: string;
-};
-interface TabsProps {
-  tabs: TabsItem[];
-  onChange?: () => {};
-}
 
-const Tabs: React.FC<TabsProps> = ({ tabs, onChange }) => {
-  const [active, setActive] = React.useState<string>(tabs[0].value);
-  const Wrapper = styled.div`
-    display: flex;
-    column-gap: 20px;
-    align-items: center;
-
-    button {
-      width: fit-content;
-    }
-  `;
-  return (
-    <Wrapper>
-      {tabs.map((tab: TabsItem, index: number) => (
-        <Button
-          onClick={() => setActive(tab.value)}
-          color={active === tab.value ? "primary" : "default"}
-          key={tab.value + index}
-          size="sm"
-        >
-          {tab.label}
-        </Button>
-      ))}
-    </Wrapper>
-  );
-};
 export default function MontageDetail() {
   return (
     <MontageDetailLayout>
@@ -170,6 +150,9 @@ export default function MontageDetail() {
           </div>
           <div className="montage--video--info--tabs">
             <Tabs
+              onChange={(vl) => {
+                console.log(vl);
+              }}
               tabs={[
                 { label: "Comments", value: "0" },
                 { label: "Descriptions", value: "1" },
@@ -177,8 +160,23 @@ export default function MontageDetail() {
             />
           </div>
         </div>
+        <div className="montage--video--comments">
+          <CommentCard
+            src={`https://images.unsplash.com/photo-1548067459-3a655f26f70d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fGxvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60`}
+          />
+        </div>
       </div>
-      <div className="montage--videos"></div>
+      <div className="montage--video--list">
+        {[...Array(8).keys()].map((i) => (
+          <VideoCard
+            key={i}
+            title="My Related Video Card Title"
+            author={"Ken"}
+            src={`https://source.unsplash.com/random?sig=88${i}`}
+            tags={["Category 1", "Category 2"]}
+          />
+        ))}
+      </div>
     </MontageDetailLayout>
   );
 }

@@ -26,7 +26,7 @@ export default function VideoCard({
       <VideoLayout src={src} />
       <div className="content">
         <div className="avatar">
-          <AvatarCircle height="2rem" width="2rem">
+          <AvatarCircle height="40px" width="40px">
             <img
               src="https://source.unsplash.com/random?sig=888"
               height="auto"

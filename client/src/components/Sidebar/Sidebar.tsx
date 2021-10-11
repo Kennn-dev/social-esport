@@ -32,7 +32,7 @@ const ButtonSidebar = styled(Button)`
   justify-content: flex-start;
   svg {
     path {
-      fill: ${({ color, theme }) =>
+      stroke: ${({ color, theme }) =>
         color === "secondary" ? theme.bgBlock1 : theme.white};
     }
   }

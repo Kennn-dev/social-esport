@@ -33,12 +33,12 @@ const RightContent = styled.div`
   align-items: center;
 
   svg {
-    width: 1.25rem;
+    width: 28px;
     height: auto;
     cursor: pointer;
     &:hover {
       path {
-        fill: ${({ theme }) => theme.primary};
+        stroke: ${({ theme }) => theme.primary};
       }
     }
   }

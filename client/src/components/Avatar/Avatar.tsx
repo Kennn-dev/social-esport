@@ -17,6 +17,7 @@ const Image = styled.img`
 const Text = styled.div`
   cursor: pointer;
   span {
+    margin-top: 5px;
     font-size: 0.75rem;
     display: none;
   }
