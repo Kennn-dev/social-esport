@@ -4,9 +4,11 @@ import * as colors from "../../constains/colors";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import { Layout } from "../../components/index";
+import { Suspense } from "react";
 
 const Home = React.lazy(() => import("./views/Home"));
 const MontageRoutes = React.lazy(() => import("./views/montages/index"));
+const DiscoverRoutes = React.lazy(() => import("./views/discover/index"));
 const HomeWrapper = styled(Layout)`
   width: 60%;
   .heading {
@@ -32,13 +34,18 @@ function Routes(): JSX.Element {
   console.log("dashboard", path);
   return (
     <HomeWrapper rightContent>
-      <Switch>
-        <Route exact path={path} component={Home} />
-        <Route path={`${path}/montage`} component={MontageRoutes} />
-        <Route path="*">
-          <h1 style={{ color: "white" }}>Not found</h1>
-        </Route>
-      </Switch>
+      <Suspense
+        fallback={<h1 style={{ color: colors.white }}>Dashboar Loading..</h1>}
+      >
+        <Switch>
+          <Route exact path={path} component={Home} />
+          <Route path={`${path}/montage`} component={MontageRoutes} />
+          <Route path={`${path}/discover`} component={DiscoverRoutes} />
+          <Route path="*">
+            <h1 style={{ color: "white" }}>Not found</h1>
+          </Route>
+        </Switch>
+      </Suspense>
     </HomeWrapper>
   );
 }

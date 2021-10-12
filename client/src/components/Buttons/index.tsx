@@ -13,7 +13,8 @@ interface ButtonProps {
 }
 
 const ButtonLayout = styled.button<ButtonProps>`
-  border: none;
+  border: ${({ color, theme }) =>
+    color === "ghost" ? `2px solid ${theme.gray}` : "none"};
   background-color: ${({ color, theme }) =>
     color === "primary"
       ? theme.primary

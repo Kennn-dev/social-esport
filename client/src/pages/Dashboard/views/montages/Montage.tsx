@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import * as colors from "../../../../constains/colors";
 import {
-  Button,
   Input,
   SearchIcon,
   CustomSelect,
   VideoCard,
+  Tabs,
 } from "../../../../components/index";
 
 const options = [
@@ -14,16 +14,19 @@ const options = [
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" },
 ];
+const tabs = [
+  { value: "0", label: "For you" },
+  { value: "1", label: "Following" },
+  { value: "2", label: "Categories" },
+  { value: "3", label: "Liked" },
+];
 
 export default function Montages() {
   return (
     <MontageLayout>
       <div className="header--text">Montage</div>
       <div className="montage--actions">
-        <Button color="primary">For you</Button>
-        <Button>Following</Button>
-        <Button>Categories</Button>
-        <Button>Liked</Button>
+        <Tabs tabs={tabs} />
       </div>
       <div className="montage--actions">
         <Input

@@ -13,6 +13,26 @@ const GlobalStyle = createGlobalStyle`
       @media (min-width: 1024px) {
         /* font-size: 16px; */
       }
+
+			/* Custom scrollbar */
+		/* width */
+		&::-webkit-scrollbar {
+			width: 10px;
+			height: 10px;
+		}
+		/* Track */
+	&::-webkit-scrollbar-track {
+			border-radius : 7px;
+			background: rgba(87, 87, 87, 0.38);
+		}
+		/* Handle */
+	&::-webkit-scrollbar-thumb {
+		border-radius : 7px;
+			background:rgba(112, 112, 112, 0.38);
+		}/* Handle on hover */
+		&::-webkit-scrollbar-thumb:hover {
+			background: rgba(112, 112, 112, 1);
+		}
 	}
 	html {
 		height : 100%;
@@ -35,23 +55,7 @@ const GlobalStyle = createGlobalStyle`
 			font-weight : bold;
 		}
 
-		/* Custom scrollbar */
-		/* width */
-		::-webkit-scrollbar {
-			width: 7px;
-		}
-		/* Track */
-		::-webkit-scrollbar-track {
-			border-radius : 7px;
-			background: rgba(87, 87, 87, 0.38);
-		}
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-			background:rgba(112, 112, 112, 0.38);
-		}/* Handle on hover */
-		::-webkit-scrollbar-thumb:hover {
-			background: rgba(112, 112, 112, 1);
-		}
+		
 
 		.disabled-focus{
 			&::focus {

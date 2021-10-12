@@ -73,42 +73,44 @@ const VideoIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
   </svg>
 );
 
-const MessageIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
-  <div title={props.title}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="ionicon"
-      viewBox="0 0 512 512"
-    >
-      <path
-        d="M87.49 380c1.19-4.38-1.44-10.47-3.95-14.86a44.86 44.86 0 00-2.54-3.8 199.81 199.81 0 01-33-110C47.65 139.09 140.73 48 255.83 48 356.21 48 440 117.54 459.58 209.85a199 199 0 014.42 41.64c0 112.41-89.49 204.93-204.59 204.93-18.3 0-43-4.6-56.47-8.37s-26.92-8.77-30.39-10.11a31.09 31.09 0 00-11.12-2.07 30.71 30.71 0 00-12.09 2.43l-67.83 24.48a16 16 0 01-4.67 1.22 9.6 9.6 0 01-9.57-9.74 15.85 15.85 0 01.6-3.29z"
-        fill="none"
-        stroke={color}
-        stroke-linecap="round"
-        stroke-miterlimit="10"
-        stroke-width="40"
-      />
-    </svg>
-  </div>
+const MessageIcon = ({
+  color = "#D0D0D0",
+  title = "",
+  ...props
+}: IconProps) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    className="ionicon"
+    viewBox="0 0 512 512"
+  >
+    <title>{title}</title>
+    <path
+      d="M87.49 380c1.19-4.38-1.44-10.47-3.95-14.86a44.86 44.86 0 00-2.54-3.8 199.81 199.81 0 01-33-110C47.65 139.09 140.73 48 255.83 48 356.21 48 440 117.54 459.58 209.85a199 199 0 014.42 41.64c0 112.41-89.49 204.93-204.59 204.93-18.3 0-43-4.6-56.47-8.37s-26.92-8.77-30.39-10.11a31.09 31.09 0 00-11.12-2.07 30.71 30.71 0 00-12.09 2.43l-67.83 24.48a16 16 0 01-4.67 1.22 9.6 9.6 0 01-9.57-9.74 15.85 15.85 0 01.6-3.29z"
+      fill="none"
+      stroke={color}
+      stroke-linecap="round"
+      stroke-miterlimit="10"
+      stroke-width="40"
+    />
+  </svg>
 );
-const BellIcon = ({ color = "#D0D0D0", title, ...props }: IconProps) => (
-  <div title={title}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="ionicon"
-      viewBox="0 0 512 512"
-    >
-      <title>Notifications</title>
-      <path
-        d="M427.68 351.43C402 320 383.87 304 383.87 217.35 383.87 138 343.35 109.73 310 96c-4.43-1.82-8.6-6-9.95-10.55C294.2 65.54 277.8 48 256 48s-38.21 17.55-44 37.47c-1.35 4.6-5.52 8.71-9.95 10.53-33.39 13.75-73.87 41.92-73.87 121.35C128.13 304 110 320 84.32 351.43 73.68 364.45 83 384 101.61 384h308.88c18.51 0 27.77-19.61 17.19-32.57zM320 384v16a64 64 0 01-128 0v-16"
-        fill="none"
-        stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="40"
-      />
-    </svg>
-  </div>
+const BellIcon = ({ color = "#D0D0D0", title = "", ...props }: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="ionicon"
+    viewBox="0 0 512 512"
+  >
+    <title>{title}</title>
+    <path
+      d="M427.68 351.43C402 320 383.87 304 383.87 217.35 383.87 138 343.35 109.73 310 96c-4.43-1.82-8.6-6-9.95-10.55C294.2 65.54 277.8 48 256 48s-38.21 17.55-44 37.47c-1.35 4.6-5.52 8.71-9.95 10.53-33.39 13.75-73.87 41.92-73.87 121.35C128.13 304 110 320 84.32 351.43 73.68 364.45 83 384 101.61 384h308.88c18.51 0 27.77-19.61 17.19-32.57zM320 384v16a64 64 0 01-128 0v-16"
+      fill="none"
+      stroke={color}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="40"
+    />
+  </svg>
 );
 const MoreHorizontalIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
   <svg
@@ -269,7 +271,27 @@ const GoogleColoredIcon = ({ color = "#D0D0D0", ...props }: IconProps) => (
     />
   </svg>
 );
+const LeftIcon = ({ color = "#D0D0D0", title = "", ...props }: IconProps) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    className="ionicon"
+    viewBox="0 0 512 512"
+  >
+    <title>{title}</title>
+    <path
+      fill="none"
+      stroke={color}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="50"
+      d="M244 400L100 256l144-144M120 256h292"
+    />
+  </svg>
+);
+
 export {
+  LeftIcon,
   FacebookIcon,
   GoogleColoredIcon,
   SearchIcon,

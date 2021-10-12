@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import * as colors from "../../constains/colors";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../Buttons/index";
 import { HomeIcon, GlobalIcon, VideoIcon, MessageIcon } from "../Icons/index";
@@ -22,6 +23,9 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  a {
+    text-decoration: none;
+  }
   svg {
     width: 1.25rem;
     height: auto;
@@ -55,22 +59,30 @@ export default function Sidebar() {
   return (
     <Layout>
       <ButtonWrapper>
-        <ButtonSidebar color="primary">
-          <HomeIcon color={colors.white} />
-          Home
-        </ButtonSidebar>
-        <ButtonSidebar>
-          <GlobalIcon color={colors.white} />
-          Discover
-        </ButtonSidebar>
-        <ButtonSidebar>
-          <VideoIcon color={colors.white} />
-          Montages
-        </ButtonSidebar>
-        <ButtonSidebar>
-          <MessageIcon color={colors.white} />
-          Messages
-        </ButtonSidebar>
+        <Link to="/dashboard">
+          <ButtonSidebar color="primary">
+            <HomeIcon color={colors.white} />
+            Home
+          </ButtonSidebar>
+        </Link>
+        <Link to="/dashboard/discover">
+          <ButtonSidebar>
+            <GlobalIcon color={colors.white} />
+            Discover
+          </ButtonSidebar>
+        </Link>
+        <Link to="/dashboard/montage">
+          <ButtonSidebar>
+            <VideoIcon color={colors.white} />
+            Montages
+          </ButtonSidebar>
+        </Link>
+        <Link to="/dashboard/message">
+          <ButtonSidebar>
+            <MessageIcon color={colors.white} />
+            Messages
+          </ButtonSidebar>
+        </Link>
       </ButtonWrapper>
       <SectionWrapper>
         <Bold>Your Friends</Bold>
