@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 const Layout = styled.div<{ reverse: boolean }>`
   display: flex;
+  float: ${(p) => (p.reverse ? "left" : "none")};
   flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
   gap: 1rem;
   align-items: center;

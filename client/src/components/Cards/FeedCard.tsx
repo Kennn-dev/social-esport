@@ -8,6 +8,42 @@ import {
   MessageIcon,
   ShareIcon,
 } from "../Icons/index";
+interface IFeedCardProps {
+  src?: string;
+}
+export default function FeedCard({ src }: IFeedCardProps): JSX.Element {
+  return (
+    <Layout>
+      <div className="header">
+        <Avatar reverse />
+        <MoreHorizontalIcon />
+      </div>
+      <span className="card--content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod massa
+        donec cursus tortor enim. Nunc, hac diam morbi augue at vulputate vitae.
+      </span>
+      <div className="card--img">
+        <img
+          src={src || "https://source.unsplash.com/random"}
+          alt="this is content img"
+          width="100%"
+          height="auto"
+        />
+      </div>
+      <div className="card--actions">
+        <Button className="button" icon={<FireIcon />}>
+          5
+        </Button>
+        <Button className="button" icon={<MessageIcon />}>
+          4
+        </Button>
+        <Button className="button" icon={<ShareIcon />}>
+          5
+        </Button>
+      </div>
+    </Layout>
+  );
+}
 const Layout = styled.div`
   line-height: 140%;
 
@@ -17,7 +53,7 @@ const Layout = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 15px;
   margin: 0 auto;
   width: 80%;
 
@@ -48,37 +84,3 @@ const Layout = styled.div`
     }
   }
 `;
-
-export default function FeedCard(): JSX.Element {
-  return (
-    <Layout>
-      <div className="header">
-        <Avatar reverse />
-        <MoreHorizontalIcon />
-      </div>
-      <span className="card--content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod massa
-        donec cursus tortor enim. Nunc, hac diam morbi augue at vulputate vitae.
-      </span>
-      <div className="card--img">
-        <img
-          src={"https://source.unsplash.com/random"}
-          alt="this is content img"
-          width="100%"
-          height="auto"
-        />
-      </div>
-      <div className="card--actions">
-        <Button className="button" icon={<FireIcon />}>
-          5
-        </Button>
-        <Button className="button" icon={<MessageIcon />}>
-          4
-        </Button>
-        <Button className="button" icon={<ShareIcon />}>
-          5
-        </Button>
-      </div>
-    </Layout>
-  );
-}

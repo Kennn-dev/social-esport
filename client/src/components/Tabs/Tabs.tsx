@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "../../components/index";
+import { TabsItem } from "../../types/tabs";
 
-type TabsItem = {
-  label: string;
-  value: string;
-};
 interface TabsProps {
   tabs: TabsItem[];
   onChange?: (item: TabsItem) => void;
@@ -15,15 +12,6 @@ const Tabs: React.FC<TabsProps> = ({ tabs, onChange = () => {} }) => {
 
   onChange(active);
 
-  const Wrapper = styled.div`
-    display: flex;
-    column-gap: 20px;
-    align-items: center;
-
-    button {
-      width: fit-content;
-    }
-  `;
   return (
     <Wrapper>
       {tabs.map((tab: TabsItem, index: number) => (
@@ -41,3 +29,12 @@ const Tabs: React.FC<TabsProps> = ({ tabs, onChange = () => {} }) => {
 };
 
 export default Tabs;
+const Wrapper = styled.div`
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+
+  button {
+    width: fit-content;
+  }
+`;

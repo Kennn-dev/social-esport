@@ -24,7 +24,7 @@ export default function VideoCard({
   return (
     <Layout>
       <VideoLayout src={src} />
-      <div className="content">
+      <div className="video--card--content">
         <div className="avatar">
           <AvatarCircle height="40px" width="40px">
             <img
@@ -83,7 +83,7 @@ const Layout = styled.div`
   a {
     text-decoration: none;
   }
-  .content {
+  .video--card--content {
     margin-top: 5px;
     padding: 0.75rem 1rem;
     display: flex;

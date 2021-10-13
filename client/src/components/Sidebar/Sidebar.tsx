@@ -1,16 +1,16 @@
-import React, { ReactNode } from "react";
-import * as colors from "../../constains/colors";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import * as colors from "../../constains/colors";
+import { AvatarList, Avatar } from "../Avatar/index";
 import { Button } from "../Buttons/index";
-import { HomeIcon, GlobalIcon, VideoIcon, MessageIcon } from "../Icons/index";
-import { AvatarList } from "../Avatar/index";
+
+import { GlobalIcon, HomeIcon, MessageIcon, VideoIcon } from "../Icons/index";
 
 const Layout = styled.div`
   width: 100%;
   height: 100%;
   color: ${({ theme }) => theme.lightGray};
-  border-right: 1px solid ${({ theme }) => theme.gray};
   padding: 1rem 0.75rem;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,6 @@ const Layout = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
   a {
     text-decoration: none;
   }
@@ -34,6 +33,7 @@ const ButtonWrapper = styled.div`
 
 const ButtonSidebar = styled(Button)`
   justify-content: flex-start;
+  padding: 1.25rem 1.5rem;
   svg {
     path {
       stroke: ${({ color, theme }) =>
@@ -54,10 +54,28 @@ const FriendWrapper = styled.div`
 const Bold = styled.span`
   font-weight: 700;
 `;
+const ProfileButton = styled.div`
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  border: 2px solid ${({ theme }) => theme.gray};
+  background-color: ${({ theme }) => theme.bgBlock1};
+
+  transition: all ease 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.bgBlock2};
+  }
+`;
 
 export default function Sidebar() {
   return (
     <Layout>
+      <ProfileButton>
+        <Link to="/dashboard/profile">
+          <Avatar reverse={true} />
+        </Link>
+      </ProfileButton>
       <ButtonWrapper>
         <Link to="/dashboard">
           <ButtonSidebar color="primary">
