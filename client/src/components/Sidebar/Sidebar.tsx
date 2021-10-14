@@ -4,9 +4,72 @@ import styled from "styled-components";
 import * as colors from "../../constains/colors";
 import { AvatarList, Avatar } from "../Avatar/index";
 import { Button } from "../Buttons/index";
+import { ColorButton } from "../../components/Buttons/index";
+import { useLocation } from "react-router-dom";
 
 import { GlobalIcon, HomeIcon, MessageIcon, VideoIcon } from "../Icons/index";
 
+export default function Sidebar() {
+  const location = useLocation();
+  const setActive = (path: string): ColorButton => {
+    return location.pathname === path ? "primary" : "default";
+  };
+  return (
+    <Layout>
+      <ProfileButton className={setActive("/dashboard/profile")}>
+        <Link to="/dashboard/profile">
+          <Avatar reverse={true} />
+        </Link>
+      </ProfileButton>
+      <ButtonWrapper>
+        <Link to="/dashboard">
+          <ButtonSidebar color={setActive("/dashboard")}>
+            <HomeIcon color={colors.white} />
+            Home
+          </ButtonSidebar>
+        </Link>
+        <Link to="/dashboard/discover">
+          <ButtonSidebar color={setActive("/dashboard/discover")}>
+            <GlobalIcon color={colors.white} />
+            Discover
+          </ButtonSidebar>
+        </Link>
+        <Link to="/dashboard/montage">
+          <ButtonSidebar color={setActive("/dashboard/montage")}>
+            <VideoIcon color={colors.white} />
+            Montages
+          </ButtonSidebar>
+        </Link>
+        <Link to="/dashboard/message">
+          <ButtonSidebar color={setActive("/dashboard/message")}>
+            <MessageIcon color={colors.white} />
+            Messages
+          </ButtonSidebar>
+        </Link>
+      </ButtonWrapper>
+      <SectionWrapper>
+        <Bold>Your Friends</Bold>
+        <FriendWrapper>
+          <AvatarList
+            isOnline
+            name="Ken"
+            avatarUrl={"https://source.unsplash.com/random/sig=122"}
+          />
+          <AvatarList
+            isOnline
+            name="Lily Bailey"
+            avatarUrl={"https://source.unsplash.com/random/sig=322"}
+          />
+          <AvatarList
+            isOnline={false}
+            name="John Doe Madafaka"
+            avatarUrl={"https://source.unsplash.com/random/sig=222"}
+          />
+        </FriendWrapper>
+      </SectionWrapper>
+    </Layout>
+  );
+}
 const Layout = styled.div`
   width: 100%;
   height: 100%;
@@ -17,6 +80,9 @@ const Layout = styled.div`
   gap: 3rem;
 
   overflow-y: auto;
+  .primary {
+    background-color: ${({ theme }) => theme.bgBlock2};
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -67,61 +133,3 @@ const ProfileButton = styled.div`
     background-color: ${({ theme }) => theme.bgBlock2};
   }
 `;
-
-export default function Sidebar() {
-  return (
-    <Layout>
-      <ProfileButton>
-        <Link to="/dashboard/profile">
-          <Avatar reverse={true} />
-        </Link>
-      </ProfileButton>
-      <ButtonWrapper>
-        <Link to="/dashboard">
-          <ButtonSidebar color="primary">
-            <HomeIcon color={colors.white} />
-            Home
-          </ButtonSidebar>
-        </Link>
-        <Link to="/dashboard/discover">
-          <ButtonSidebar>
-            <GlobalIcon color={colors.white} />
-            Discover
-          </ButtonSidebar>
-        </Link>
-        <Link to="/dashboard/montage">
-          <ButtonSidebar>
-            <VideoIcon color={colors.white} />
-            Montages
-          </ButtonSidebar>
-        </Link>
-        <Link to="/dashboard/message">
-          <ButtonSidebar>
-            <MessageIcon color={colors.white} />
-            Messages
-          </ButtonSidebar>
-        </Link>
-      </ButtonWrapper>
-      <SectionWrapper>
-        <Bold>Your Friends</Bold>
-        <FriendWrapper>
-          <AvatarList
-            isOnline
-            name="Ken"
-            avatarUrl={"https://source.unsplash.com/random/sig=122"}
-          />
-          <AvatarList
-            isOnline
-            name="Lily Bailey"
-            avatarUrl={"https://source.unsplash.com/random/sig=322"}
-          />
-          <AvatarList
-            isOnline={false}
-            name="John Doe Madafaka"
-            avatarUrl={"https://source.unsplash.com/random/sig=222"}
-          />
-        </FriendWrapper>
-      </SectionWrapper>
-    </Layout>
-  );
-}

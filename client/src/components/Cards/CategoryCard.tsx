@@ -60,6 +60,9 @@ const Body = styled.div`
       font-size: 1.25rem;
       font-weight: bold;
       text-transform: capitalize;
+      &:hover {
+        color: ${({ theme }) => theme.primary};
+      }
     }
     &--sub {
       color: ${({ theme }) => theme.lightGray};

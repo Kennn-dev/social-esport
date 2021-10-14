@@ -59,7 +59,7 @@ const VideoLayout = styled.div<VideoLayoutProps>`
   width: 100%;
   max-height: 800px;
   max-width: 900px;
-  border-radius: 8px 8px 0 0;
+  border-radius: 15px 15px 0 0;
   overflow: hidden;
 
   background-image: url(${(props) => props.src});
@@ -72,7 +72,7 @@ const Layout = styled.div`
   flex-direction: column;
 
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 15px;
 
   cursor: pointer;
 

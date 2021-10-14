@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 import * as colors from "../../../../constains/colors";
 import {
   Button,
@@ -20,6 +21,7 @@ const Profile = () => {
     { value: "0", label: "Post" },
     { value: "1", label: "Montage" },
   ];
+  const history = useHistory();
   const [tabs, setTabs] = React.useState<TabsItem>(tabsInit[0]);
 
   const handleChangeTabs = (tab: TabsItem) => {
@@ -107,6 +109,17 @@ const Profile = () => {
               >
                 Message
               </Button>
+              {/* {
+                <Button
+                  onClick={() => {
+                    history.push("/dashboard/profile/edit");
+                  }}
+                  size="lg"
+                  color="ghost"
+                >
+                  Edit Profile
+                </Button>
+              } */}
             </div>
           </div>
         </div>
@@ -239,9 +252,6 @@ const Layout = styled(MontageLayout)<IProfileLayoutProps>`
         color: ${({ theme }) => theme.lightGray};
         margin-bottom: 20px;
         cursor: pointer;
-        &:hover {
-          color: ${({ theme }) => theme.primary};
-        }
       }
       &--slide {
         margin-top: 15px;

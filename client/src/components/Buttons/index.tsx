@@ -1,7 +1,12 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
 
-type ColorButton = "primary" | "secondary" | "link" | "ghost" | "default";
+export type ColorButton =
+  | "primary"
+  | "secondary"
+  | "link"
+  | "ghost"
+  | "default";
 type SizeButton = "base" | "lg" | "sm";
 interface ButtonProps {
   color?: ColorButton;

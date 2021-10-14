@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as colors from "../../constains/colors";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
-import { Layout } from "../../components/index";
+import { Layout, Loader } from "../../components/index";
 import { Suspense } from "react";
 
 const Home = React.lazy(() => import("./views/Home"));
@@ -17,7 +17,11 @@ function Routes(): JSX.Element {
   return (
     <HomeWrapper rightContent>
       <Suspense
-        fallback={<h1 style={{ color: colors.white }}>Dashboar Loading..</h1>}
+        fallback={
+          <LoadWrapper>
+            <Loader />
+          </LoadWrapper>
+        }
       >
         <Switch>
           <Route exact path={path} component={Home} />
@@ -35,7 +39,12 @@ function Routes(): JSX.Element {
 }
 
 export default Routes;
-
+const LoadWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(230%, 0px);
+`;
 const HomeWrapper = styled(Layout)`
   width: 60%;
   .heading {
