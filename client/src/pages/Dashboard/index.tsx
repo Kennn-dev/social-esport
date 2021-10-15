@@ -10,6 +10,7 @@ const Home = React.lazy(() => import("./views/Home"));
 const MontageRoutes = React.lazy(() => import("./views/montages/index"));
 const DiscoverRoutes = React.lazy(() => import("./views/discover/index"));
 const ProfileRoutes = React.lazy(() => import("./views/profile/index"));
+const UnknownPage = React.lazy(() => import("../404/UnknowPage"));
 
 function Routes(): JSX.Element {
   const { path } = useRouteMatch();
@@ -30,7 +31,15 @@ function Routes(): JSX.Element {
           <Route path={`${path}/profile`} component={ProfileRoutes} />
 
           <Route path="*">
-            <h1 style={{ color: "white" }}>Not found</h1>
+            <div
+              style={{
+                position: "relative",
+                width: "inherit",
+                height: "600px",
+              }}
+            >
+              <UnknownPage />
+            </div>
           </Route>
         </Switch>
       </Suspense>
@@ -47,6 +56,7 @@ const LoadWrapper = styled.div`
 `;
 const HomeWrapper = styled(Layout)`
   width: 60%;
+
   .heading {
     font-size: 2rem;
     font-weight: bold;

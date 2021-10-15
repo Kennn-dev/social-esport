@@ -1,65 +1,157 @@
 import React from "react";
 import styled from "styled-components";
-const ScheduleCard = () => {
+import moment from "moment";
+interface Team {
+  code: string;
+  image: string;
+  name: string;
+  record?: {
+    wins: number;
+    losses: number;
+  };
+  result?: {
+    outcome?: "loss" | "win";
+    gameWins: number;
+  };
+}
+type State = "unstarted" | "completed" | "inProgress";
+export interface Event {
+  blockName: string;
+  league: {
+    name: string;
+    slug: string;
+  };
+  match: {
+    id: string;
+    teams: Team[];
+  };
+  startTime: string;
+  state: State;
+}
+interface ScheduleCardProps {
+  key?: string;
+  event: Event;
+  day?: string;
+}
+const renderTime = (time: string): React.ReactNode => {
+  const vl = moment(time).hours();
   return (
-    <ScheduleCardWrapper>
-      <div className="time">
-        <div className="time--day">17</div>
-        <div className="time--month">Aug 2020</div>
-      </div>
-      <div className="main">
-        <div className="main--team reverse">
-          <img
-            src={`https://am-a.akamaihd.net/image?resize=70:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1631820065346_cloud9-2021-worlds.png`}
-            className="main--team--logo"
-            alt=""
-            width="100%"
-            height="auto"
-          />
-          <div className="main--team--text">
-            <div className="main--team--text--title">
-              <div className="dot red"></div> Cloud 9
+    <>
+      {vl > 12 ? vl - 12 : vl}
+      <span style={{ fontSize: 14, marginLeft: 5 }}>
+        {vl > 12 ? "pm" : "am"}
+      </span>
+    </>
+  );
+};
+
+const ScheduleCard = ({ event, day, ...props }: ScheduleCardProps) => {
+  // console.log(event, { record: event.match.teams[0].record });
+  const renderScore = () => {
+    let render = "VS";
+    if (event.state === "completed") {
+      render = `${event.match.teams[0].result?.gameWins} - ${event.match.teams[1].result?.gameWins}`;
+    }
+    return render;
+  };
+  return (
+    <>
+      <ScheduleCardWrapper state={event.state} {...props}>
+        <div className="time">
+          <div className="time--day">{renderTime(event.startTime)}</div>
+        </div>
+        <div className="main">
+          <div
+            className={`main--team reverse ${
+              event.match.teams[0].result?.outcome === "loss" ? "losses" : ""
+            }`}
+          >
+            <img
+              src={event.match.teams[0].image}
+              className="main--team--logo"
+              alt=""
+              width="100%"
+              height="auto"
+            />
+            <div className="main--team--text">
+              <div className="main--team--text--title">
+                <div className="dot"></div>
+                {event.match.teams[0].name}
+              </div>
+              <div className="main--team--text--meta">
+                {!!event.match.teams[0].record
+                  ? `${event.match.teams[0].record.wins}W - ${event.match.teams[0].record.losses}L`
+                  : ""}
+              </div>
             </div>
-            <div className="main--team--text--meta">3W - 0L</div>
+          </div>
+          <div className="main--middle-text">
+            {event.state === "inProgress" && <div className="live">LIVE</div>}
+            {renderScore()}
+          </div>
+          <div
+            className={`main--team ${
+              event.match.teams[1].result?.outcome === "loss" ? "losses" : ""
+            }`}
+          >
+            <img
+              src={event.match.teams[1].image}
+              className="main--team--logo"
+              alt=""
+              width="100%"
+              height="auto"
+            />
+            <div className="main--team--text reverse">
+              <div className="main--team--text--title">
+                {event.match.teams[1].name}
+                <div className="dot"></div>
+              </div>
+              <div className="main--team--text--meta">
+                {!!event.match.teams[1].record
+                  ? `${event.match.teams[1].record.wins}W - ${event.match.teams[1].record.losses}L`
+                  : ""}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="main--middle-text">VS</div>
-        <div className="main--team">
-          <img
-            src={`https://am-a.akamaihd.net/image?resize=70:&f=http%3A%2F%2Fstatic.lolesports.com%2Fteams%2F1631820065346_cloud9-2021-worlds.png`}
-            className="main--team--logo"
-            alt=""
-            width="100%"
-            height="auto"
-          />
-          <div className="main--team--text reverse">
-            <div className="main--team--text--title">
-              Cloud 9<div className="dot green"></div>
-            </div>
-            <div className="main--team--text--meta">3W - 0L</div>
-          </div>
+        <div className="league--name">
+          <div>{event.league.name}</div>{" "}
+          <div className="league--name--group">{event.blockName}</div>
         </div>
-      </div>
-      <div className="league--name">
-        <div>WORLDS</div>{" "}
-        <div className="league--name--group">Play In Groups</div>
-      </div>
-    </ScheduleCardWrapper>
+      </ScheduleCardWrapper>
+    </>
   );
 };
 export default ScheduleCard;
 
-const ScheduleCardWrapper = styled.div`
+const ScheduleCardWrapper = styled.div<any>`
   width: 100%;
   margin: 0 auto;
   padding: 20px;
   background-color: ${({ theme }) => theme.bgBlock1};
   border-radius: 15px;
+  border: ${(p) => (p.state === "inProgress" ? `2px solid #E83A30` : "")};
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .live {
+    color: ${(p) => p.theme.white};
 
+    text-transform: uppercase;
+    &:before {
+      content: "";
+      display: inline-block;
+      margin: 0 5px 0 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #e83a30;
+    }
+  }
+  .losses {
+    opacity: 0.4;
+  }
   &:hover {
     background-color: ${({ theme }) => theme.bgBlock2};
   }
@@ -69,12 +161,7 @@ const ScheduleCardWrapper = styled.div`
     height: 5px;
     border-radius: 50%;
   }
-  .red {
-    background-color: red;
-  }
-  .green {
-    background-color: green;
-  }
+
   .time {
     width: 100px;
     flex-shrink: 0;
@@ -94,12 +181,15 @@ const ScheduleCardWrapper = styled.div`
     text-align: left !important;
   }
   .main {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-    gap: 0 20px;
+    /* gap: 0 20px; */
     &--team {
+      grid-column: span 3 / span 3;
       display: flex;
       align-items: center;
       gap: 0 10px;
@@ -116,9 +206,6 @@ const ScheduleCardWrapper = styled.div`
           font-size: 1.25rem;
           font-weight: bold;
           color: ${({ theme }) => theme.white};
-          &:hover {
-            color: ${({ theme }) => theme.primary};
-          }
         }
         &--meta {
           margin-top: 5px;
@@ -128,8 +215,10 @@ const ScheduleCardWrapper = styled.div`
       }
     }
     &--middle-text {
-      font-weight: 500;
-      color: ${({ theme }) => theme.gray};
+      grid-column: span 1 / span 1;
+      text-align: center;
+      font-weight: bold;
+      color: ${({ theme }) => theme.primary};
     }
   }
 
