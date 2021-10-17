@@ -1,17 +1,20 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
+
 import moment from "moment";
 import React from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import useSWR from "swr";
-import { Event } from "../../../../components/Cards/ScheduleCard";
 import { TLeagueCard } from "../../../../components/Cards/LeagueCard";
+import { Event } from "../../../../components/Cards/ScheduleCard";
 // import * as colors from "../../../../constains/colors";
 import {
   Button,
+  LeagueCard,
   ProfileCard,
   ScheduleCard,
-  LeagueCard,
+  LeagueCardSkeleton,
+  ScheduleCardSkeleton,
 } from "../../../../components/index";
 import { MontageLayout } from "../montages/Montage";
 import axiosClient from "./api/index";
@@ -56,7 +59,7 @@ const Discover = () => {
         moment(time).format("DD MM YYYY");
       let currentTime: string = "";
       return (
-        <div key={"0"} className="discover--section--schedule">
+        <>
           {vl.data.data?.schedule?.events?.map((rs: Event, index: number) => {
             if (getDay(rs.startTime) !== getDay(currentTime)) {
               currentTime = rs.startTime;
@@ -69,7 +72,7 @@ const Discover = () => {
             }
             return <ScheduleCard key={rs?.match?.id} event={rs} />;
           })}
-        </div>
+        </>
       );
     }
   };
@@ -83,7 +86,7 @@ const Discover = () => {
     // console.log(dataLeague);
 
     return (
-      <div key={"1"} className="discover--section--filter">
+      <>
         {vl.data?.leagues?.map((league: TLeagueCard, index: number) => {
           const priority = league.displayPriority.status;
           if (priority === "hidden" || priority === "not_selected") {
@@ -107,7 +110,7 @@ const Discover = () => {
             </>
           );
         })}
-      </div>
+      </>
     );
   };
   return (
@@ -137,9 +140,14 @@ const Discover = () => {
         <div className="discover--section--title">
           <span>Esport Today</span>
         </div>
-        {dataLeague ? <RenderLeagues /> : <h1>Loading ...</h1>}
+
+        <div className="discover--section--filter">
+          {dataLeague ? <RenderLeagues /> : <LeagueCardSkeleton count={3} />}
+        </div>
         {/*  */}
-        {data ? <RenderSchedules /> : <h1>Loading ...</h1>}
+        <div className="discover--section--schedule">
+          {data ? <RenderSchedules /> : <ScheduleCardSkeleton count={3} />}
+        </div>
       </div>
     </Wrapper>
   );
