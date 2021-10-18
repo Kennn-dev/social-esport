@@ -21,7 +21,7 @@ const Profile = () => {
     { value: "0", label: "Post" },
     { value: "1", label: "Montage" },
   ];
-  const history = useHistory();
+  // const history = useHistory();
   const [tabs, setTabs] = React.useState<TabsItem>(tabsInit[0]);
 
   const handleChangeTabs = (tab: TabsItem) => {

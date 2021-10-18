@@ -79,8 +79,8 @@ const Layout = styled.div`
       justify-content: center;
     }
     svg {
-      width: 1rem;
-      height: auto;
+      width: 24px;
+      height: 24px;
     }
   }
 `;

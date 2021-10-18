@@ -10,6 +10,7 @@ const Home = React.lazy(() => import("./views/Home"));
 const MontageRoutes = React.lazy(() => import("./views/montages/index"));
 const DiscoverRoutes = React.lazy(() => import("./views/discover/index"));
 const ProfileRoutes = React.lazy(() => import("./views/profile/index"));
+const SearchPage = React.lazy(() => import("./views/search/index"));
 const UnknownPage = React.lazy(() => import("../404/UnknowPage"));
 
 function Routes(): JSX.Element {
@@ -29,6 +30,7 @@ function Routes(): JSX.Element {
           <Route path={`${path}/montage`} component={MontageRoutes} />
           <Route path={`${path}/discover`} component={DiscoverRoutes} />
           <Route path={`${path}/profile`} component={ProfileRoutes} />
+          <Route path={`${path}/search`} component={SearchPage} />
 
           <Route path="*">
             <div

@@ -142,11 +142,19 @@ const Discover = () => {
         </div>
 
         <div className="discover--section--filter">
-          {dataLeague ? <RenderLeagues /> : <LeagueCardSkeleton count={3} />}
+          {dataLeague ? (
+            <RenderLeagues key="render-leagues" />
+          ) : (
+            <LeagueCardSkeleton count={3} />
+          )}
         </div>
         {/*  */}
         <div className="discover--section--schedule">
-          {data ? <RenderSchedules /> : <ScheduleCardSkeleton count={3} />}
+          {data ? (
+            <RenderSchedules key="render-schedules" />
+          ) : (
+            <ScheduleCardSkeleton count={3} />
+          )}
         </div>
       </div>
     </Wrapper>

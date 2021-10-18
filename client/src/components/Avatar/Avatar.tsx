@@ -46,22 +46,25 @@ const MainText = styled.div`
 
 interface AvatarProps {
   reverse?: boolean;
+  onClick?: () => void;
 }
 
-export default function Avatar({ reverse = false }: AvatarProps) {
+export default function Avatar({ reverse = false, onClick }: AvatarProps) {
   return (
-    <Layout reverse={reverse}>
-      <Text>
-        <MainText>Lily Bailey</MainText>
-        <span>3ks Followers</span>
-      </Text>
+    <div onClick={onClick}>
+      <Layout reverse={reverse}>
+        <Text>
+          <MainText>Lily Bailey</MainText>
+          <span>3ks Followers</span>
+        </Text>
 
-      <Image
-        alt="avatar"
-        src="https://source.unsplash.com/random"
-        width="100%"
-        height="auto"
-      />
-    </Layout>
+        <Image
+          alt="avatar"
+          src="https://source.unsplash.com/random"
+          width="100%"
+          height="auto"
+        />
+      </Layout>
+    </div>
   );
 }

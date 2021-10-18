@@ -22,16 +22,16 @@ const CommentCard = ({ src }: ICommentCardProps) => {
         </div>
         <div className="comment--actions">
           <div className="comment--actions--icon">
-            30
             <span>
               <FireIcon />
             </span>
+            30
           </div>
           <div className="comment--actions--icon">
-            2{" "}
             <span>
               <MessageIcon />
             </span>
+            2{" "}
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@ const Wrapper = styled.div`
         font-size: 14px;
         cursor: pointer;
         span {
-          margin-left: 10px;
+          margin-right: 10px;
           svg {
             width: 20px;
             height: 20px;

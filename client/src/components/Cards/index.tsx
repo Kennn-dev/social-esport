@@ -6,3 +6,4 @@ export { default as ProfileCard } from "./ProfileCard";
 export { default as CategoryCard } from "./CategoryCard";
 export { default as ScheduleCard } from "./ScheduleCard";
 export { default as LeagueCard } from "./LeagueCard";
+export { default as VideoCardHorizontal } from "./VideoCardHorizontal";
