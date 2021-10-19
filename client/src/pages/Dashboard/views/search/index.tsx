@@ -9,6 +9,8 @@ import {
   MessageIcon,
   FireIcon,
   VideoCardHorizontal,
+  ProfileCardHorizontal,
+  PostCardHorizontal,
 } from "../../../../components/index";
 import { MontageLayout } from "../montages/Montage";
 import { TabsItem } from "../../../../types/tabs";
@@ -35,10 +37,11 @@ const Wrapper = styled(MontageLayout)`
   .montage {
     display: flex;
     align-items: center;
+    height: 70vh;
 
     &--main-video {
       flex: 1;
-      height: 70vh;
+      height: 100%;
       padding: 15px;
     }
     &--list {
@@ -48,6 +51,34 @@ const Wrapper = styled(MontageLayout)`
       justify-content: space-around;
       flex-direction: column;
     }
+  }
+  .people {
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+    gap: 20px 0;
+
+    &--bottom {
+      margin: 0 auto;
+      width: fit-content;
+
+      cursor: pointer;
+      /* margin: 2rem auto 0 auto; */
+      color: #ff7e21;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: ${(p) => p.theme.bgBlock2};
+      }
+    }
+  }
+  .post-section {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
   }
 `;
 function useQuery() {
@@ -67,7 +98,7 @@ const Search = () => {
   };
   return (
     <Wrapper>
-      <div className="header--text">Search for {query.get("query")} </div>
+      <div className="header--text">Search for "{query.get("query")}" </div>
       <Tabs tabs={tabs} onChange={handleChangeTabs} />
       <div className="section">
         <div className="section--title">
@@ -121,7 +152,24 @@ const Search = () => {
       </div>
       <div className="section">
         <div className="section--title">People</div>
-        <div className="section--content people"></div>
+        <div className="section--content people">
+          {[...Array(5).keys()].map((i) => (
+            <ProfileCardHorizontal
+              avatar={`https://source.unsplash.com/random?sig=99${i}`}
+            />
+          ))}
+          <div className="people--bottom">View more</div>
+        </div>
+      </div>
+      <div className="section">
+        <div className="section--title">Posts</div>
+        <div className="section--content post-section">
+          {[...Array(4).keys()].map((i) => (
+            <PostCardHorizontal
+              image={`https://source.unsplash.com/random?sig=19${i}`}
+            />
+          ))}
+        </div>
       </div>
     </Wrapper>
   );
