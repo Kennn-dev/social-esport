@@ -5,19 +5,20 @@ import { TabsItem } from "../../types/tabs";
 
 interface TabsProps {
   tabs: TabsItem[];
+  currentValue?: TabsItem;
   onChange?: (item: TabsItem) => void;
 }
-const Tabs: React.FC<TabsProps> = ({ tabs, onChange = () => {} }) => {
-  const [active, setActive] = React.useState<TabsItem>(tabs[0]);
-
-  onChange(active);
-
+const Tabs: React.FC<TabsProps> = ({
+  tabs,
+  currentValue = tabs[0],
+  onChange = () => {},
+}) => {
   return (
     <Wrapper>
       {tabs.map((tab: TabsItem, index: number) => (
         <Button
-          onClick={() => setActive(tab)}
-          color={active.value === tab.value ? "primary" : "default"}
+          onClick={() => onChange(tab)}
+          color={currentValue.value === tab.value ? "primary" : "default"}
           key={tab.value + index}
           size="sm"
         >

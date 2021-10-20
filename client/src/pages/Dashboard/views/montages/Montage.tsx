@@ -8,13 +8,13 @@ import {
   VideoCard,
   Tabs,
 } from "../../../../components/index";
-
+import { TabsItem } from "../../../../types/tabs";
 const options = [
   { value: "chocolate", label: "Chocolate" },
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" },
 ];
-const tabs = [
+const tabList: TabsItem[] = [
   { value: "0", label: "For you" },
   { value: "1", label: "Following" },
   { value: "2", label: "Categories" },
@@ -22,11 +22,15 @@ const tabs = [
 ];
 
 export default function Montages() {
+  const [tab, setTab] = React.useState<TabsItem>(tabList[0]);
+  const handleChangeTab = (t: TabsItem) => {
+    setTab(t);
+  };
   return (
     <MontageLayout>
       <div className="header--text">Montage</div>
       <div className="montage--actions">
-        <Tabs tabs={tabs} />
+        <Tabs tabs={tabList} currentValue={tab} onChange={handleChangeTab} />
       </div>
       <div className="montage--actions">
         <Input

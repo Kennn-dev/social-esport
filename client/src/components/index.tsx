@@ -9,3 +9,4 @@ export * from "./Cards/index";
 export { default as Tag } from "./Tags/Tag";
 export { default as Tabs } from "./Tabs/Tabs";
 export { default as Skeleton } from "./CustomSkeleton";
+export { default as CustomModal } from "./CustomModal";
