@@ -6,6 +6,7 @@ export * from "./Buttons/index";
 export * from "./common/index";
 export * from "./Inputs/index";
 export * from "./Cards/index";
+export * from "./modal/index";
 export { default as Tag } from "./Tags/Tag";
 export { default as Tabs } from "./Tabs/Tabs";
 export { default as Skeleton } from "./CustomSkeleton";

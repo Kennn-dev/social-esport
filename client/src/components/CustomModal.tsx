@@ -16,7 +16,8 @@ const modalStyle: Modal.Styles = {
     transition: "all 0.5s ease",
   },
   overlay: {
-    backgroundColor: "#91919170",
+    zIndex: 99,
+    backgroundColor: "#34343491",
   },
 };
 const CustomModal = ({ ...props }: Props) => (

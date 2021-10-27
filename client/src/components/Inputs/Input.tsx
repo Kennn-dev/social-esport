@@ -16,13 +16,13 @@ const InputWrapper = styled.input<
   padding: ${({ icon }) =>
     icon ? `0.75rem 2.75rem 0.75rem 1rem` : `0.75rem 1rem`};
   background-color: ${({ theme }) => theme.bgBlock3};
-  border-radius: 0.5rem;
+  border-radius: 8px;
   height: fit-content;
   border: none;
   font-size: 1rem;
   color: ${({ theme }) => theme.white};
   border: 1px solid transparent;
-
+  transition: all 0.3s ease;
   &:hover {
     border: 1px solid ${({ theme }) => theme.gray};
   }

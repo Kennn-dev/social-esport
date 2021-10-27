@@ -31,6 +31,22 @@ export default function Navbar() {
       });
     }
   };
+  let createRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handler = (e: any) => {
+      if (typeof createRef?.current === "object") {
+        if (!createRef?.current?.contains(e.target)) {
+          setCreateOpen(false);
+        }
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, [createRef]);
   return (
     <GridLayout col={3}>
       <LeftContent>
@@ -49,7 +65,7 @@ export default function Navbar() {
         />
       </div>
       <RightContent>
-        <div className="icon">
+        <div className="icon" ref={createRef}>
           <DropdownCreate active={isCreateOpen}>
             <div className="parent">
               <AddIcon
@@ -59,15 +75,20 @@ export default function Navbar() {
                 className="message"
                 title="Create"
               />
-              <div className="child">
-                <div className="child--item">
-                  <CreatePostIcon /> Create Post
-                </div>
-                <div className="child--item">
-                  <CreateVideoIcon /> Create Montage
-                </div>
+            </div>
+            <div
+              className="child"
+              onBlur={() => {
+                console.log("blur");
+              }}
+            >
+              <div className="child--item">
+                <CreatePostIcon /> Create Post
               </div>
-            </div>{" "}
+              <div className="child--item">
+                <CreateVideoIcon /> Create Montage
+              </div>
+            </div>
           </DropdownCreate>
         </div>
         <div className="icon">
@@ -83,32 +104,37 @@ export default function Navbar() {
 }
 
 const DropdownLayout = styled.div<{ active: boolean }>`
+  position: relative;
   .parent {
-    position: relative;
+  }
+  .child {
+    opacity: ${(p) => (p.active ? 1 : 0)};
+    visibility: ${(p) => (p.active ? "visible" : "hidden")};
 
-    .child {
-      /* opacity: ${(p) => (p.active ? 1 : 0)}; */
-      visibility: ${(p) => (p.active ? "visible" : "hidden")};
-
-      width: fit-content;
-      padding: 20px 0;
-      border-radius: 15px;
+    width: fit-content;
+    padding: 20px 0;
+    border-radius: 15px;
+    background-color: ${(p) => p.theme.bgBlock2};
+    position: absolute;
+    top: calc(100% + 20px);
+    right: -100%;
+    transition: all 0.4s ease;
+    &--item {
+      display: flex;
+      align-items: center;
+      visibility: inherit;
+      cursor: pointer;
+      width: 200px;
+      color: ${(p) => p.theme.white};
+      padding: 20px 25px;
       background-color: ${(p) => p.theme.bgBlock2};
-      position: absolute;
-      top: calc(100% + 20px);
-      right: -100%;
-      transition: all 0.4s ease;
-      &--item {
-        visibility: inherit;
-        cursor: pointer;
-        width: 200px;
-        color: ${(p) => p.theme.white};
-        padding: 20px 25px;
-        background-color: ${(p) => p.theme.bgBlock2};
-        transition: all 0.3s ease;
-        &:hover {
-          background-color: ${(p) => p.theme.bgBlock4};
-        }
+      transition: all 0.3s ease;
+
+      svg {
+        margin-right: 10px;
+      }
+      &:hover {
+        background-color: ${(p) => p.theme.bgBlock4};
       }
     }
   }
@@ -133,7 +159,7 @@ const DropdownCreate = styled(DropdownLayout)`
 `;
 const GridLayout = styled(Grids)`
   border-bottom: 1px solid ${({ theme }) => theme.gray};
-
+  z-index: 2;
   position: fixed;
   left: 0;
   right: 0;
@@ -156,7 +182,10 @@ const RightContent = styled.div`
   align-items: center;
 
   .icon {
-    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
     border-radius: 50%;
     background-color: ${(p) => p.theme.bgBlock1};
 

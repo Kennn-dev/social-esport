@@ -4,56 +4,15 @@ import styled from "styled-components";
 import { AvatarCircle } from "../../../components/Avatar/index";
 import {
   Input,
-  EmojiIcon,
   ImageIcon,
-  CancelIcon,
-  StickerIcon,
   FeedCard,
   Button,
-  CustomModal,
+  PostModal,
 } from "../../../components/index";
-import { Props } from "react-modal";
 import RightSideBar from "../../../components/Sidebar/RightSideBar";
 
-interface IPostModal extends Props {
-  avatar: string;
-  onClose: () => void;
-}
-
-const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
-  // const handleOnClose = () => {
-  //   onClose();
-  // };
-  return (
-    <CustomModal {...props}>
-      <ModalLayout avatar={avatar}>
-        <div className="title">
-          Create Post
-          <CancelIcon onClick={onClose} title="cancel" />
-        </div>
-        <div className="modal">
-          <div className="modal--avatar"></div>
-          <div className="modal--form">
-            <div className="modal--form--body">
-              <Input />
-            </div>
-            <div className="modal--form--footer">
-              <div className="modal--form--footer--items">
-                <ImageIcon title="Image" />
-                <StickerIcon title="Sticker" />
-                <EmojiIcon title="Emoji" />
-              </div>
-              <Button color="primary">Share Post</Button>
-            </div>
-          </div>
-        </div>
-      </ModalLayout>
-    </CustomModal>
-  );
-};
-
 export default function Home(): JSX.Element {
-  const [modalIsOpen, setIsOpen] = React.useState<boolean>(true);
+  const [modalIsOpen, setIsOpen] = React.useState<boolean>(false);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -72,13 +31,15 @@ export default function Home(): JSX.Element {
                   height="auto"
                 />
               </AvatarCircle>
-              <Input
-                className="input"
-                onClick={() => {
-                  setIsOpen((s) => !s);
-                }}
-                placeholder="How was your game today ?"
-              />
+              <div className="input">
+                <Input
+                  onClick={() => {
+                    setIsOpen(true);
+                  }}
+                  placeholder="How was your game today ?"
+                />
+              </div>
+
               <ImageIcon />
             </InputWrapper>
           </ChildLayout>
@@ -109,78 +70,7 @@ export default function Home(): JSX.Element {
     </>
   );
 }
-const ModalLayout = styled.div<{ avatar: string }>`
-  padding: 20px;
-  padding-top: 10px;
-  margin-right: 120px;
-  margin-bottom: 200px;
 
-  width: 100vh;
-  max-width: 580px;
-  border-radius: 15px;
-  background-color: ${(p) => p.theme.bgBlock1};
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: ${(p) => p.theme.lightGray};
-    svg {
-      cursor: pointer;
-      width: 50px;
-      height: 50px;
-      transition: transform 0.5s ease;
-      &:hover {
-        transform: rotate(90deg);
-      }
-    }
-  }
-  .modal {
-    margin-top: 5px;
-    display: flex;
-
-    gap: 0 20px;
-
-    &--avatar {
-      flex-shrink: 0;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-
-      background-image: url(${(p) => p.avatar});
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-    &--form {
-      width: 100%;
-      display: flex;
-
-      flex-direction: column;
-      gap: 15px 0;
-
-      &--body {
-        input {
-          width: 100%;
-        }
-      }
-      &--footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &--items {
-          display: flex;
-          gap: 15px;
-          align-items: center;
-        }
-        button {
-          width: fit-content;
-        }
-      }
-    }
-  }
-`;
 const HomeLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -226,7 +116,7 @@ const InputWrapper = styled.div`
   background: ${({ theme }) => theme.bgBlock2};
   border-radius: 0.75rem;
   .input {
-    flex-grow: 1;
+    flex: 1;
   }
   .avatar {
     flex: none;
