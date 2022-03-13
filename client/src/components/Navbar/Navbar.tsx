@@ -14,6 +14,7 @@ import {
   BellIcon,
   SearchIcon,
 } from "../Icons/index";
+import device from "../../constains/divice";
 
 export default function Navbar() {
   const [query, setQuery] = React.useState<string>("");
@@ -169,6 +170,9 @@ const GridLayout = styled(Grids)`
   .navbar--search {
     width: 70%;
     position: relative;
+  }
+  @media ${device.desktopL} {
+    padding: 1rem 10%;
   }
 `;
 const Logo = styled.div`

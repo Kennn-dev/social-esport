@@ -40,8 +40,10 @@ const Wrapper = styled(MontageLayout)`
       flex-basis: 50%;
       display: flex;
       height: inherit;
-      justify-content: space-around;
+      /* justify-content: space-around; */
       flex-direction: column;
+      height: inherit;
+      overflow-y: auto;
     }
   }
   .people {

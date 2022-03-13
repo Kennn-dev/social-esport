@@ -1,4 +1,5 @@
 import React from "react";
+import device from "../../../../constains/divice";
 import styled from "styled-components";
 // import * as colors from "../../../../constains/colors";
 import { VideoCard } from "../../../../components/index";
@@ -8,6 +9,9 @@ const Layout = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   .montage-search--item {
+  }
+  @media ${device.desktopL} {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 `;
 const MontageSearch = () => {

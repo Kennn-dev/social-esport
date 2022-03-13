@@ -5,7 +5,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import { Layout, Loader } from "../../components/index";
 import { Suspense } from "react";
-
+import device from "../../constains/divice";
 const Home = React.lazy(() => import("./views/Home"));
 const MontageRoutes = React.lazy(() => import("./views/montages/index"));
 const DiscoverRoutes = React.lazy(() => import("./views/discover/index"));
@@ -57,8 +57,7 @@ const LoadWrapper = styled.div`
   transform: translate(230%, 0px);
 `;
 const HomeWrapper = styled(Layout)`
-  width: 60%;
-
+  width: 30%;
   .heading {
     font-size: 2rem;
     font-weight: bold;
@@ -75,5 +74,8 @@ const HomeWrapper = styled(Layout)`
 
     flex-shrink: 0;
     width: 35%;
+  }
+  @media ${device.laptop} {
+    width: 60%;
   }
 `;

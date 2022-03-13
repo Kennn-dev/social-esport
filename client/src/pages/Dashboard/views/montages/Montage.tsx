@@ -9,6 +9,7 @@ import {
   Tabs,
 } from "../../../../components/index";
 import { TabsItem } from "../../../../types/tabs";
+import device from "../../../../constains/divice";
 const options = [
   { value: "chocolate", label: "Chocolate" },
   { value: "strawberry", label: "Strawberry" },
@@ -99,6 +100,9 @@ export const MontageLayout = styled.div`
     gap: 1.5rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    @media ${device.desktopL} {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 `;
 

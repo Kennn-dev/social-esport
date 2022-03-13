@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import { Grids } from ".";
 import styled from "styled-components";
+import device from "../../constains/divice";
 interface LayoutProps {
   rightContent: boolean;
   children: React.ReactNode;
@@ -17,19 +18,26 @@ const LayoutWrapper = styled.div`
 
   .body {
     padding-top: 6rem;
-
+    width: 100%;
     .sidebar {
       position: fixed;
       top: 0;
       bottom: 0;
-      width: 20%;
+      width: 100%;
+      max-width: 300px;
+
       padding-top: 6rem;
     }
 
     .body--content {
       width: 100%;
       display: flex;
-      padding-left: 20%;
+      padding-left: 300px;
+    }
+
+    @media ${device.desktopL} {
+      width: 80%;
+      margin: 0 auto;
     }
   }
 `;

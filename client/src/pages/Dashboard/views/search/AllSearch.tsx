@@ -54,7 +54,7 @@ const AllSearch = () => {
             </MainMontage>
           </div>
           <div className="montage--list">
-            {[...Array(3).keys()].map((i) => (
+            {[...Array(5).keys()].map((i) => (
               <VideoCardHorizontal
                 key={i}
                 count={{ like: 10, comments: 20, views: 300 }}
