@@ -5,11 +5,10 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MongooseModule } from '@nestjs/mongoose';
+import { FacebookStrategy } from './auth/facebook.strategy';
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      `mongodb+srv://kendepzai:123@socialapp.onxaj.mongodb.net/socialDatabase?retryWrites=true&w=majority`,
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URL),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
@@ -19,6 +18,6 @@ import { MongooseModule } from '@nestjs/mongoose';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FacebookStrategy],
 })
 export class AppModule {}
