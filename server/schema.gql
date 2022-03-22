@@ -12,18 +12,44 @@ type UserDto {
   backgroundImage: String
 }
 
+type ResponseUserDto {
+  lastName: String!
+  firstName: String!
+  email: String!
+  avatar: String
+  backgroundImage: String
+}
+
+type ResponseLoginDto {
+  user: ResponseUserDto!
+  accessToken: String!
+  tokenType: String
+}
+
+type ResponseDto {
+  status: Int!
+  message: String!
+}
+
 type Query {
   hello: String!
   getAllUser: [UserDto!]!
 }
 
 type Mutation {
-  createNewUser(input: InputCreateUserDto!): UserDto!
+  createNewUser(inputCreate: InputCreateUserDto!): ResponseDto!
+  login(input: InputLoginDto!): ResponseLoginDto!
 }
 
 input InputCreateUserDto {
   lastName: String!
   firstName: String!
+  email: String!
+  password: String!
+  passwordConfirm: String!
+}
+
+input InputLoginDto {
   email: String!
   password: String!
 }

@@ -1,3 +1,5 @@
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/users.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -6,6 +8,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FacebookStrategy } from './auth/facebook.strategy';
+import { GoogleStrategy } from './auth/google.strategy';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { AuthResolver } from './auth/auth.resolver';
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGODB_URL),
@@ -15,9 +20,14 @@ import { FacebookStrategy } from './auth/facebook.strategy';
       playground: true,
       autoSchemaFile: 'schema.gql',
     }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, FacebookStrategy],
+  providers: [AppService, FacebookStrategy, GoogleStrategy, AuthService],
 })
 export class AppModule {}

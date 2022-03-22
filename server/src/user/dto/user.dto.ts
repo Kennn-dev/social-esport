@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class UserDto {
@@ -22,6 +22,44 @@ export class UserDto {
 }
 
 @InputType()
+export class InputLoginDto {
+  @Field({ nullable: false })
+  email: string;
+
+  @Field({ nullable: false })
+  password: string;
+}
+
+@ObjectType()
+export class ResponseUserDto {
+  @Field()
+  lastName: string;
+
+  @Field()
+  firstName: string;
+
+  @Field()
+  email: string;
+
+  @Field({ nullable: true })
+  avatar: string;
+  @Field({ nullable: true })
+  backgroundImage: string;
+}
+
+@ObjectType()
+export class ResponseLoginDto {
+  @Field((type) => ResponseUserDto)
+  user: ResponseUserDto;
+
+  @Field()
+  accessToken: string;
+
+  @Field({ nullable: true })
+  tokenType: string;
+}
+
+@InputType()
 export class InputCreateUserDto {
   @Field({ nullable: false })
   lastName: string;
@@ -34,4 +72,15 @@ export class InputCreateUserDto {
 
   @Field({ nullable: false })
   password: string;
+
+  @Field({ nullable: false })
+  passwordConfirm: string;
+}
+
+@ObjectType()
+export class ResponseDto {
+  @Field(() => Int)
+  status: number;
+  @Field()
+  message: string;
 }

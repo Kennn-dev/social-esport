@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 
-import { hash, compare } from 'bcrypt';
+import { hash, compare, compareSync } from 'bcrypt';
 import { HASH } from 'src/constaints/hash';
+import { LoginPayload } from 'src/types/user';
 export type UserDocument = User & Document;
 @Schema()
 export class User {
@@ -20,11 +21,20 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop()
+  @Prop({ default: null })
   avatar: string;
 
-  @Prop()
+  @Prop({ default: null })
   backgroundImage: string;
+
+  @Prop({ default: 0 })
+  role: number;
+
+  @Prop({ default: null })
+  facebookId: string;
+
+  @Prop({ default: null })
+  googleId: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -43,11 +53,10 @@ UserSchema.pre<any>('save', function (next) {
   });
 });
 
-UserSchema.methods.comparePassword = function (incomingPassword, cb) {
+UserSchema.methods.comparePassword = function (
+  incomingPassword: string,
+): boolean {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
-  compare(incomingPassword, user.password, function (err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+  return compareSync(incomingPassword, user.password);
 };

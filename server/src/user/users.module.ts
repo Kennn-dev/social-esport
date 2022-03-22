@@ -4,6 +4,7 @@ import { UserResolver } from './users.resolver';
 
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -11,5 +12,6 @@ import { MongooseModule } from '@nestjs/mongoose';
   ],
   controllers: [],
   providers: [UserResolver, UserService],
+  exports: [UserService],
 })
 export class UserModule {}
