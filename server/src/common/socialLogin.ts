@@ -18,31 +18,26 @@ export function handleAfterLogin(
   type: TypeLogin,
   cb: () => any,
 ) {
-  try {
-    const { googleId, facebookId } = user;
+  const { googleId, facebookId } = user;
 
-    switch (type) {
-      case TypeLogin.GOOGLE:
-        if (!googleId) {
-          user.googleId = payload.user.id;
-          user.avatar = payload.user.avatar;
-          user.save();
-        }
-        break;
-      case TypeLogin.FACEBOOK:
-        if (!facebookId) {
-          user.facebookId = payload.user.id;
-          user.avatar = payload.user.avatar;
-          user.save();
-        }
-        break;
-      default:
-        break;
-    }
-
-    return cb();
-  } catch (error) {
-    console.error(error.message);
-    throw new HttpException('Uh oh ! Something when wrong', 500);
+  switch (type) {
+    case TypeLogin.GOOGLE:
+      if (!googleId) {
+        user.googleId = payload.user.id;
+        user.avatar = payload.user.avatar;
+        user.save();
+      }
+      break;
+    case TypeLogin.FACEBOOK:
+      if (!facebookId) {
+        user.facebookId = payload.user.id;
+        user.avatar = payload.user.avatar;
+        user.save();
+      }
+      break;
+    default:
+      break;
   }
+
+  return cb();
 }

@@ -1,24 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 
-import { hash, compare, compareSync } from 'bcrypt';
+import { hash, compareSync } from 'bcrypt';
 import { HASH } from 'src/constaints/hash';
-import { LoginPayload } from 'src/types/user';
+import { Category } from 'src/category/models/category.schema';
 export type UserDocument = User & Document;
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   _id: MongooseSchema.Types.ObjectId;
 
-  @Prop({ required: true })
+  @Prop({ default: null })
   lastName: string;
 
-  @Prop({ required: true })
+  @Prop({ default: null })
   firstName: string;
 
   @Prop({ required: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
 
   @Prop({ default: null })
@@ -35,6 +35,9 @@ export class User {
 
   @Prop({ default: null })
   googleId: string;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Category' })
+  gameFollow: Category[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -45,6 +48,9 @@ UserSchema.pre<any>('save', function (next) {
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next();
   // generate a salt
+
+  if (user.facebookId) return next();
+  if (user.googleId) return next();
   hash(user.password, HASH.SALTROUNDS, function (err, hash) {
     if (err) return next(err);
     // override the cleartext password with the hashed one

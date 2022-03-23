@@ -11,6 +11,7 @@ import { FacebookStrategy } from './auth/facebook.strategy';
 import { GoogleStrategy } from './auth/google.strategy';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { AuthResolver } from './auth/auth.resolver';
+import { CategoryModule } from './category/category.module';
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGODB_URL),
@@ -26,6 +27,7 @@ import { AuthResolver } from './auth/auth.resolver';
     }),
     UserModule,
     AuthModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, FacebookStrategy, GoogleStrategy, AuthService],

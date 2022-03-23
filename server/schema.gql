@@ -31,14 +31,25 @@ type ResponseDto {
   message: String!
 }
 
+type Category {
+  _id: String!
+  title: String!
+  thumbnail: String
+  followers: [String!]!
+}
+
 type Query {
   hello: String!
   getAllUser: [UserDto!]!
+  category(id: Int!): Category!
 }
 
 type Mutation {
   createNewUser(inputCreate: InputCreateUserDto!): ResponseDto!
   login(input: InputLoginDto!): ResponseLoginDto!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Category!
 }
 
 input InputCreateUserDto {
@@ -52,4 +63,15 @@ input InputCreateUserDto {
 input InputLoginDto {
   email: String!
   password: String!
+}
+
+input CreateCategoryInput {
+  title: String!
+  thumbnail: String
+}
+
+input UpdateCategoryInput {
+  title: String
+  thumbnail: String
+  id: Int!
 }
