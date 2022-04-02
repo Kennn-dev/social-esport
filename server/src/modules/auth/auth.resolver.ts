@@ -1,8 +1,8 @@
-import { GqlAuthGuard } from './../guards/gql-auth.guard';
 import { AuthService } from './auth.service';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import { InputLoginDto, ResponseLoginDto } from 'src/user/dto/user.dto';
 import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from 'src/guards/gql-auth.guard';
+import { InputLoginDto, ResponseLoginDto } from '../user/dto/user.dto';
 @Resolver()
 export class AuthResolver {
   constructor(private authService: AuthService) {}

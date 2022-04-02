@@ -3,7 +3,7 @@ import { Schema as MongooseSchema } from 'mongoose';
 
 import { hash, compareSync } from 'bcrypt';
 import { HASH } from 'src/constaints/hash';
-import { Category } from 'src/category/models/category.schema';
+import { Category } from 'src/modules/category/models/category.schema';
 export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {
@@ -64,5 +64,6 @@ UserSchema.methods.comparePassword = function (
 ): boolean {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
+  if (!user.password && (user.facebookId || user.googleId)) return true;
   return compareSync(incomingPassword, user.password);
 };

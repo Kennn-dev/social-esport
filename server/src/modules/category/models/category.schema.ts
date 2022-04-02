@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 import { Document } from 'mongoose';
-import { User } from 'src/user/models/users.schema';
+import { User } from 'src/modules/user/models/users.schema';
 
 export type CategoryDocument = Category & Document;
 @Schema({ timestamps: true })

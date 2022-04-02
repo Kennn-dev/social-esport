@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryResolver } from './category.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/user/models/users.schema';
+import { User, UserSchema } from '../user/models/users.schema';
 
 @Module({
   imports: [

@@ -4,7 +4,7 @@ import { UserResolver } from './users.resolver';
 
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Category, CategorySchema } from 'src/category/models/category.schema';
+import { Category, CategorySchema } from '../category/models/category.schema';
 
 @Module({
   imports: [

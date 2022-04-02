@@ -1,15 +1,11 @@
-import { TypeLogin } from './../constants/user';
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { handleAfterLogin } from 'src/common/socialLogin';
-import {
-  InputLoginDto,
-  ResponseLoginDto,
-  ResponseUserDto,
-} from 'src/user/dto/user.dto';
-import { User } from 'src/user/models/users.schema';
-import { UserService } from 'src/user/users.service';
+import { TypeLogin } from 'src/constants/user';
+import { ResponseLoginDto } from '../user/dto/user.dto';
+import { User } from '../user/models/users.schema';
+import { UserService } from '../user/users.service';
 
 @Injectable()
 export class AuthService {

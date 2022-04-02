@@ -1,31 +1,41 @@
+import { Role } from './../../constaints/role';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CategoryService } from './category.service';
-import { Category } from './entities/category.entity';
+import { CategoryDto } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
+import { Request, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { Roles } from '../auth/role/role.decorator';
+import { RolesGuard } from 'src/guards/role.guard';
 
-@Resolver(() => Category)
+@Resolver('category')
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Mutation(() => Category)
-  createCategory(
+  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Mutation(() => CategoryDto, { name: 'createCategory' })
+  async createCategory(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
+    @Request() req,
   ) {
+    // console.log(req);
+    // return req.user;
     return this.categoryService.create(createCategoryInput);
   }
 
-  @Query(() => [Category], { name: 'category' })
-  findAll() {
+  @Query(() => [CategoryDto], { name: 'getAllCategory' })
+  async getAllCategory() {
     return this.categoryService.findAll();
   }
 
-  @Query(() => Category, { name: 'category' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.categoryService.findOne(id);
-  }
+  // @Query(() => CategoryDto, { name: 'category' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.categoryService.findOne(id);
+  // }
 
-  @Mutation(() => Category)
+  @Mutation(() => CategoryDto)
   updateCategory(
     @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
   ) {
@@ -35,7 +45,7 @@ export class CategoryResolver {
     );
   }
 
-  @Mutation(() => Category)
+  @Mutation(() => CategoryDto)
   removeCategory(@Args('id', { type: () => Int }) id: number) {
     return this.categoryService.remove(id);
   }

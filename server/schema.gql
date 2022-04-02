@@ -31,25 +31,25 @@ type ResponseDto {
   message: String!
 }
 
-type Category {
-  _id: String!
-  title: String!
+type CategoryDto {
+  _id: String
+  title: String
   thumbnail: String
-  followers: [String!]!
+  followers: [UserDto]!
 }
 
 type Query {
   hello: String!
   getAllUser: [UserDto!]!
-  category(id: Int!): Category!
+  getAllCategory: [CategoryDto!]!
 }
 
 type Mutation {
   createNewUser(inputCreate: InputCreateUserDto!): ResponseDto!
   login(input: InputLoginDto!): ResponseLoginDto!
-  createCategory(createCategoryInput: CreateCategoryInput!): Category!
-  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
-  removeCategory(id: Int!): Category!
+  createCategory(createCategoryInput: CreateCategoryInput!): CategoryDto!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): CategoryDto!
+  removeCategory(id: Int!): CategoryDto!
 }
 
 input InputCreateUserDto {

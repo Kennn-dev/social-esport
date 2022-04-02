@@ -1,8 +1,7 @@
-import { LoginPayload } from './../types/user';
-import { getAvatarFacebook } from './../common/facebook';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Profile, Strategy } from 'passport-facebook';
+import { getAvatarFacebook } from 'src/common/facebook';
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
   constructor() {
