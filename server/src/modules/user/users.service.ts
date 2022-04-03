@@ -1,11 +1,20 @@
 import { InputCreateUserDto } from './dto/user.dto';
 import { Model } from 'mongoose';
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  NotFoundException,
+  HttpStatus,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './models/users.schema';
 import { hash } from 'bcrypt';
 import { HASH } from 'src/constaints/hash';
 import { LoginPayload } from 'src/common/socialLogin';
+import { handleError } from 'src/utils/errors';
+import { UpdateUserInputDto } from './dto/update-user.dto';
+import { StatusResponseDto } from 'src/common/dto/response-status.dto';
+import { JWTPayload } from '../auth/jwt.strategy';
 
 @Injectable()
 export class UserService {
@@ -34,9 +43,7 @@ export class UserService {
         return await user.save();
       }
     } catch (error) {
-      if (typeof error === 'string') throw new HttpException(error, 500);
-
-      if (error instanceof Error) throw new HttpException(error.message, 500);
+      handleError(error);
     }
   }
   async create(createUserDto: InputCreateUserDto): Promise<User> {
@@ -54,14 +61,40 @@ export class UserService {
       return await user.save();
     } catch (error) {
       console.log(error);
-      if (typeof error === 'string') throw new HttpException(error, 500);
 
-      if (error instanceof Error) throw new HttpException(error.message, 500);
+      handleError(error);
     }
   }
   async findOne(params, cb?: (err, u: any) => void): Promise<User> {
     const user = await this.userModel.findOne(params, cb);
     if (!user) return null;
     return user;
+  }
+
+  async update(
+    id: string,
+    data: UpdateUserInputDto,
+    userReq: JWTPayload,
+  ): Promise<StatusResponseDto> {
+    try {
+      const user = await this.userModel.findByIdAndUpdate(id, data);
+      console.log(
+        user._id.toString(),
+        userReq.userId,
+        user._id.toString() == userReq.userId,
+      );
+      if (user && user._id.toString() == userReq.userId) {
+        return {
+          status: HttpStatus.OK,
+          message: 'Update Success',
+        };
+      }
+      return {
+        status: HttpStatus.UNAUTHORIZED,
+        message: 'Invalid Request',
+      };
+    } catch (error) {
+      handleError(error);
+    }
   }
 }

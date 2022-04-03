@@ -9,6 +9,7 @@ export const getRequestUtils = (context: ExecutionContext): any => {
   }
 
   const gqlCtx: any = GqlExecutionContext.create(context).getContext();
+
   if (gqlCtx.req) {
     return gqlCtx.req;
   }

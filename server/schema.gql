@@ -26,7 +26,7 @@ type ResponseLoginDto {
   tokenType: String
 }
 
-type ResponseDto {
+type StatusResponseDto {
   status: Int!
   message: String!
 }
@@ -38,18 +38,25 @@ type CategoryDto {
   followers: [UserDto]!
 }
 
+type DeleteCategoryResponseDto {
+  status: Int!
+  message: String!
+}
+
 type Query {
   hello: String!
   getAllUser: [UserDto!]!
   getAllCategory: [CategoryDto!]!
+  getDetailCategory(id: Int!): CategoryDto!
 }
 
 type Mutation {
-  createNewUser(inputCreate: InputCreateUserDto!): ResponseDto!
+  createNewUser(inputCreate: InputCreateUserDto!): StatusResponseDto!
+  updateUser(id: String!, inputUpdate: UpdateUserInputDto!): StatusResponseDto!
   login(input: InputLoginDto!): ResponseLoginDto!
   createCategory(createCategoryInput: CreateCategoryInput!): CategoryDto!
-  updateCategory(updateCategoryInput: UpdateCategoryInput!): CategoryDto!
-  removeCategory(id: Int!): CategoryDto!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): StatusResponseDto!
+  deleteCategory(id: String!): DeleteCategoryResponseDto!
 }
 
 input InputCreateUserDto {
@@ -58,6 +65,15 @@ input InputCreateUserDto {
   email: String!
   password: String!
   passwordConfirm: String!
+}
+
+input UpdateUserInputDto {
+  lastName: String
+  firstName: String
+  email: String
+  password: String
+  avatar: String
+  backgroundImage: String
 }
 
 input InputLoginDto {
@@ -73,5 +89,5 @@ input CreateCategoryInput {
 input UpdateCategoryInput {
   title: String
   thumbnail: String
-  id: Int!
+  id: String!
 }

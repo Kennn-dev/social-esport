@@ -15,6 +15,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (!success) {
       return true;
     }
+    const req = this.getRequest(context);
+    req.jwt = req.user;
     return true;
   }
   getRequest(context: ExecutionContext) {
