@@ -1,0 +1,40 @@
+{
+  "name": "buffer-to-stream",
+  "version": "1.0.0",
+  "description": "convert buffer to readable stream",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^4.4.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^3.5.0"
+  },
+  "scripts": {
+    "test": "mocha test/*.js",
+    "lint": "eslint src test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creeperyang/buffer-to-stream.git"
+  },
+  "keywords": [
+    "buffer",
+    "stream"
+  ],
+  "engines": {
+    "node": ">=6"
+  },
+  "author": "creeperyang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creeperyang/buffer-to-stream/issues"
+  },
+  "homepage": "https://github.com/creeperyang/buffer-to-stream#readme"
+}

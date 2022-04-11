@@ -1,3 +1,5 @@
+import { FollowService } from './modules/follow/follow.service';
+import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,15 +16,20 @@ import { GoogleStrategy } from './modules/auth/google.strategy';
 import { AuthService } from './modules/auth/auth.service';
 import { UserModule } from './modules/user/users.module';
 import { CategoryModule } from './modules/category/category.module';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
+import { FollowModule } from './modules/follow/follow.module';
+
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGODB_URL),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
-      playground: true,
+      playground: false,
       autoSchemaFile: 'schema.gql',
       context: ({ req, res }) => ({ req, res }),
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
@@ -31,6 +38,8 @@ import { CategoryModule } from './modules/category/category.module';
     UserModule,
     AuthModule,
     CategoryModule,
+    CloudinaryModule,
+    FollowModule,
   ],
   controllers: [AppController],
   providers: [
@@ -38,7 +47,8 @@ import { CategoryModule } from './modules/category/category.module';
     FacebookStrategy,
     GoogleStrategy,
     AuthService,
-
+    CloudinaryService,
+    FollowService,
     // {
     //   provide: APP_GUARD,
     //   useClass: RolesGuard,

@@ -26,6 +26,11 @@ type ResponseLoginDto {
   tokenType: String
 }
 
+type ResponseDto {
+  status: Int!
+  message: String!
+}
+
 type StatusResponseDto {
   status: Int!
   message: String!
@@ -43,20 +48,29 @@ type DeleteCategoryResponseDto {
   message: String!
 }
 
+type Follow {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   hello: String!
   getAllUser: [UserDto!]!
+  getUser(id: String!): ResponseUserDto!
   getAllCategory: [CategoryDto!]!
   getDetailCategory(id: Int!): CategoryDto!
+  follow(id: Int!): Follow!
 }
 
 type Mutation {
-  createNewUser(inputCreate: InputCreateUserDto!): StatusResponseDto!
+  createUser(inputCreate: InputCreateUserDto!): StatusResponseDto!
   updateUser(id: String!, inputUpdate: UpdateUserInputDto!): StatusResponseDto!
   login(input: InputLoginDto!): ResponseLoginDto!
   createCategory(createCategoryInput: CreateCategoryInput!): CategoryDto!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): StatusResponseDto!
   deleteCategory(id: String!): DeleteCategoryResponseDto!
+  sendRequestFollow(followerId: String!): ResponseDto!
+  removeFollow(id: Int!): Follow!
 }
 
 input InputCreateUserDto {

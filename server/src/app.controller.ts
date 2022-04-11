@@ -1,10 +1,50 @@
-import { Controller, Get, HttpStatus, Req, UseGuards } from '@nestjs/common';
+import { UPLOAD_TYPE } from './constaints/file';
+import { AppService } from './app.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Req,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './modules/auth/auth.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadResponse } from './types/cloudinary';
 
 @Controller()
 export class AppController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly appService: AppService,
+  ) {}
+
+  @Post('/upload')
+  // @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: {
+        fileSize: 10000000, // 10 Mb
+      },
+    }),
+  )
+  async upload(
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<UploadResponse> {
+    return this.appService.upload(file);
+  }
+
+  @Post('/destroy/:publicId')
+  // @UseGuards(JwtAuthGuard)
+  async destroyImage(@Param('publicId') publicId): Promise<UploadResponse> {
+    console.log(publicId);
+    return this.appService.destroy(publicId);
+  }
 
   @Get('/facebook')
   @UseGuards(AuthGuard('facebook'))

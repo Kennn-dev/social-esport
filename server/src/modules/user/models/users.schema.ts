@@ -3,7 +3,6 @@ import { Schema as MongooseSchema } from 'mongoose';
 
 import { hash, compareSync } from 'bcrypt';
 import { HASH } from 'src/constaints/hash';
-import { Category } from 'src/modules/category/models/category.schema';
 export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {
@@ -35,9 +34,6 @@ export class User {
 
   @Prop({ default: null })
   googleId: string;
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Category' })
-  gameFollow: Category[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

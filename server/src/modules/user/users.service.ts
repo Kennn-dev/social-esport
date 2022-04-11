@@ -1,3 +1,4 @@
+import { FollowService } from './../follow/follow.service';
 import { InputCreateUserDto } from './dto/user.dto';
 import { Model } from 'mongoose';
 import {
@@ -6,11 +7,9 @@ import {
   NotFoundException,
   HttpStatus,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectModel, Schema } from '@nestjs/mongoose';
 import { User, UserDocument } from './models/users.schema';
-import { hash } from 'bcrypt';
-import { HASH } from 'src/constaints/hash';
-import { LoginPayload } from 'src/common/socialLogin';
+
 import { handleError } from 'src/utils/errors';
 import { UpdateUserInputDto } from './dto/update-user.dto';
 import { StatusResponseDto } from 'src/common/dto/response-status.dto';
@@ -20,6 +19,7 @@ import { JWTPayload } from '../auth/jwt.strategy';
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private followService: FollowService,
   ) {}
 
   async findAll(): Promise<User[]> {
@@ -65,9 +65,12 @@ export class UserService {
       handleError(error);
     }
   }
-  async findOne(params, cb?: (err, u: any) => void): Promise<User> {
-    const user = await this.userModel.findOne(params, cb);
-    if (!user) return null;
+  async findOne(params): Promise<User> {
+    const user = await this.userModel.findOne(params);
+    const followCount = await this.followService.getUserFollowData(
+      user._id.toString(),
+    );
+    console.log(followCount);
     return user;
   }
 

@@ -2,7 +2,10 @@
   "dependencies": {
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.2.1",
+    "apollo-server-core": "^3.6.7",
     "bcrypt": "^5.0.1",
+    "buffer-to-stream": "^1.0.0",
+    "cloudinary": "^1.29.0",
     "dotenv": "^16.0.0",
     "passport": "^0.5.2",
     "passport-facebook": "^3.0.0",
@@ -12,6 +15,8 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/buffer-to-stream": "^1.0.0",
+    "@types/multer": "^1.4.7",
     "@types/passport": "^1.0.7",
     "@types/passport-facebook": "^2.1.11",
     "@types/passport-facebook-token": "^0.4.35",
