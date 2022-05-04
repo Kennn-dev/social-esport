@@ -1,15 +1,12 @@
 import { UserService } from './users.service';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from './models/users.schema';
-import { InputCreateUserDto, ResponseUserDto, UserDto } from './dto/user.dto';
 import {
-  HttpStatus,
-  Req,
-  Request,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+  InputCreateUserDto,
+  ResponseUserDetailDto,
+  UserDto,
+} from './dto/user.dto';
+import { HttpStatus, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { StatusResponseDto } from 'src/common/dto/response-status.dto';
 import { UpdateUserInputDto } from './dto/update-user.dto';
@@ -30,9 +27,9 @@ export class UserResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => ResponseUserDto, { name: 'getUser' })
+  @Query(() => ResponseUserDetailDto, { name: 'getUserById' })
   async getUser(@Args('id') id: string) {
-    return this.userService.findOne({ _id: id });
+    return this.userService.getUserById(id);
   }
 
   @Mutation(() => StatusResponseDto, { name: 'createUser' })

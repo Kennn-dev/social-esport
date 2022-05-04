@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Schema as MongooseSchema } from 'mongoose';
+import { Schema as MongooseSchema, Aggregate } from 'mongoose';
 
 import { hash, compareSync } from 'bcrypt';
 import { HASH } from 'src/constaints/hash';

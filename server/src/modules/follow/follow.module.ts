@@ -1,21 +1,17 @@
-import { FollowSchema } from './entities/follow.schema';
-import { Follow } from './entities/follow.entity';
-import { Module } from '@nestjs/common';
+import { Follow, FollowSchema } from './entities/follow.schema';
+import { forwardRef, Module } from '@nestjs/common';
 import { FollowService } from './follow.service';
 import { FollowResolver } from './follow.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from '../user/users.module';
 import { UserService } from '../user/users.service';
-import { User, UserSchema } from '../user/models/users.schema';
-import { UserResolver } from '../user/users.resolver';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Follow.name, schema: FollowSchema },
-      { name: User.name, schema: UserSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Follow.name, schema: FollowSchema }]),
+    forwardRef(() => UserModule),
   ],
-  providers: [FollowResolver, FollowService, UserService, UserResolver],
-  exports: [FollowService],
+  providers: [FollowResolver, FollowService],
+  exports: [FollowModule, FollowService, MongooseModule],
 })
 export class FollowModule {}

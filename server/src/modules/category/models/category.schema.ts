@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 import { Document } from 'mongoose';
-import { User } from 'src/modules/user/models/users.schema';
+import { TTimestamp } from 'src/types/common';
 
-export type CategoryDocument = Category & Document;
+export type CategoryDocument = Category & Document & TTimestamp;
 @Schema({ timestamps: true })
 export class Category {
   _id: MongooseSchema.Types.ObjectId;
@@ -15,9 +15,9 @@ export class Category {
   thumbnail: string;
 
   @Prop({
-    type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }],
+    type: [{ type: MongooseSchema.Types.ObjectId }],
   })
-  followers: User[];
+  followers: MongooseSchema.Types.ObjectId[];
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

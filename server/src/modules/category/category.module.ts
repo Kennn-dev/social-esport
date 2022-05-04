@@ -1,18 +1,18 @@
 import { Category, CategorySchema } from './models/category.schema';
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryResolver } from './category.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '../user/models/users.schema';
+import { UserModule } from '../user/users.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
-      { name: User.name, schema: UserSchema },
     ]),
+    forwardRef(() => UserModule),
   ],
   providers: [CategoryResolver, CategoryService],
-  exports: [CategoryService],
+  exports: [CategoryService, MongooseModule],
 })
 export class CategoryModule {}

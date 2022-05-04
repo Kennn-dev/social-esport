@@ -6,6 +6,7 @@ import { FollowService } from './follow.service';
 import { Follow } from './entities/follow.entity';
 import { CurrentUser } from 'src/decorators/auth.decorators';
 import { TCurrentUser } from 'src/types/user';
+import {} from './dto/follow.dto';
 
 @Resolver(() => Follow)
 export class FollowResolver {
@@ -17,8 +18,13 @@ export class FollowResolver {
     @Args('followerId') followerId: string,
     @CurrentUser() user: TCurrentUser,
   ) {
-    console.log('current user', user);
     return this.followService.sendRequest(user.userId, followerId);
+  }
+
+  @Mutation(() => ResponseDto, { name: 'unfollow' })
+  @UseGuards(JwtAuthGuard)
+  unfollow(@Args('followId') id: string) {
+    return this.followService.unfollow(id);
   }
 
   @Query(() => [Follow], { name: 'follow' })
@@ -26,10 +32,10 @@ export class FollowResolver {
     return this.followService.findAll();
   }
 
-  @Query(() => Follow, { name: 'follow' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.followService.findOne(id);
-  }
+  // @Query(() => GetFollowDataResponseDto, { name: 'getFollowData' })
+  // getUserFollowData(@CurrentUser() user: TCurrentUser) {
+  //   return this.followService.getUserFollowData(user.userId);
+  // }
 
   @Mutation(() => Follow)
   removeFollow(@Args('id', { type: () => Int }) id: number) {

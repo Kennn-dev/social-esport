@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type FollowDto {
+  total: Int!
+  listUsers: [ResponseUserDto!]!
+}
+
+type FollowDataDto {
+  follower: [FollowDataDto!]!
+  following: [FollowDataDto!]!
+}
+
 type UserDto {
   _id: ID!
   lastName: String!
@@ -13,9 +23,9 @@ type UserDto {
 }
 
 type ResponseUserDto {
-  lastName: String!
-  firstName: String!
-  email: String!
+  lastName: String
+  firstName: String
+  email: String
   avatar: String
   backgroundImage: String
 }
@@ -26,24 +36,19 @@ type ResponseLoginDto {
   tokenType: String
 }
 
+type ResponseUserDetailDto {
+  _id: String!
+  lastName: String!
+  firstName: String!
+  email: String!
+  role: Float!
+  avatar: String
+  backgroundImage: String
+  follower: FollowDto!
+  following: FollowDto!
+}
+
 type ResponseDto {
-  status: Int!
-  message: String!
-}
-
-type StatusResponseDto {
-  status: Int!
-  message: String!
-}
-
-type CategoryDto {
-  _id: String
-  title: String
-  thumbnail: String
-  followers: [UserDto]!
-}
-
-type DeleteCategoryResponseDto {
   status: Int!
   message: String!
 }
@@ -53,24 +58,44 @@ type Follow {
   exampleField: Int!
 }
 
+type StatusResponseDto {
+  status: Int!
+  message: String!
+}
+
+type DeleteCategoryResponseDto {
+  status: Int!
+  message: String!
+}
+
+type CategoryDto {
+  _id: String
+  title: String
+  thumbnail: String
+  followers: [ResponseUserDto!]
+}
+
 type Query {
   hello: String!
   getAllUser: [UserDto!]!
-  getUser(id: String!): ResponseUserDto!
+  getUserById(id: String!): ResponseUserDetailDto!
+  follow: [Follow!]!
   getAllCategory: [CategoryDto!]!
   getDetailCategory(id: Int!): CategoryDto!
-  follow(id: Int!): Follow!
 }
 
 type Mutation {
   createUser(inputCreate: InputCreateUserDto!): StatusResponseDto!
   updateUser(id: String!, inputUpdate: UpdateUserInputDto!): StatusResponseDto!
-  login(input: InputLoginDto!): ResponseLoginDto!
+  sendRequestFollow(followerId: String!): ResponseDto!
+  unfollow(followId: String!): ResponseDto!
+  removeFollow(id: Int!): Follow!
   createCategory(createCategoryInput: CreateCategoryInput!): CategoryDto!
+  followCategory(categoryId: String!): ResponseDto!
+  unfollowCategory(categoryId: String!): ResponseDto!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): StatusResponseDto!
   deleteCategory(id: String!): DeleteCategoryResponseDto!
-  sendRequestFollow(followerId: String!): ResponseDto!
-  removeFollow(id: Int!): Follow!
+  login(input: InputLoginDto!): ResponseLoginDto!
 }
 
 input InputCreateUserDto {
@@ -90,11 +115,6 @@ input UpdateUserInputDto {
   backgroundImage: String
 }
 
-input InputLoginDto {
-  email: String!
-  password: String!
-}
-
 input CreateCategoryInput {
   title: String!
   thumbnail: String
@@ -104,4 +124,9 @@ input UpdateCategoryInput {
   title: String
   thumbnail: String
   id: String!
+}
+
+input InputLoginDto {
+  email: String!
+  password: String!
 }

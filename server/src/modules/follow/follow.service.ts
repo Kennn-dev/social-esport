@@ -1,22 +1,29 @@
 import { ResponseDto } from './../user/dto/user.dto';
 import { Model } from 'mongoose';
 import { FOLLOW_STATUS } from './../../constaints/follow';
-import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  HttpStatus,
+  forwardRef,
+} from '@nestjs/common';
 import { UserService } from '../user/users.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Follow, FollowDocument } from './entities/follow.schema';
 import { handleError } from 'src/utils/errors';
-type FollowInfo = {
-  following: string[];
-  follower: string[];
-};
+import mongoose from 'mongoose';
+import { Inject } from '@nestjs/common';
+import { FollowDataDto, FollowObjDto } from './dto/follow.dto';
+import { aggregateUser } from './utils';
+
 @Injectable()
 export class FollowService {
   constructor(
+    @Inject(forwardRef(() => UserService))
     private userService: UserService,
-
     @InjectModel(Follow.name) private followModel: Model<FollowDocument>,
   ) {}
+
   async sendRequest(
     senderId: string,
     followerId: string,
@@ -42,6 +49,21 @@ export class FollowService {
         message: 'Success',
         status: HttpStatus.OK,
       };
+    } catch (error) {
+      console.log(error);
+      handleError(error);
+    }
+  }
+
+  async unfollow(followId: string): Promise<ResponseDto> {
+    try {
+      const isCompleted = await this.followModel.findByIdAndDelete(followId);
+      if (isCompleted) {
+        return {
+          message: 'Unfollowed',
+          status: HttpStatus.OK,
+        };
+      }
     } catch (error) {
       console.log(error);
       handleError(error);
@@ -85,17 +107,57 @@ export class FollowService {
    *
    * @param id : requester
    */
-  async getUserFollowData(id: string): Promise<FollowInfo> {
-    const follower = await this.followModel
-      .find({ followerId: id })
-      .populate('followerId');
-    const following = await this.followModel
-      .find({ userId: id })
-      .populate('userId');
-    console.log(follower, following);
+  async getUserFollowData(userId: string): Promise<FollowDataDto> {
+    // Who are follow "user" => this user is userId
+    const aggregateQueryFollower = aggregateUser(
+      {
+        userId: new mongoose.Types.ObjectId(userId),
+      },
+      {
+        localField: 'followerId',
+        as: 'follower',
+      },
+    );
+    const followerDt = await this.followModel
+      .aggregate(aggregateQueryFollower)
+      .exec();
+    const countFollower = await this.followModel
+      .find({
+        userId: new mongoose.Types.ObjectId(userId),
+      })
+      .count();
+    // console.log({ countFollower });
+    const listUserFollower = followerDt.map((fl) => ({
+      ...fl.follower[0],
+      _id: fl.follower[0].id.toString(),
+    }));
+    // Who this "user" following => this user is followerId
+    const aggregateQueryFollowing = aggregateUser(
+      {
+        followerId: new mongoose.Types.ObjectId(userId),
+      },
+      {
+        localField: 'userId',
+        as: 'following',
+      },
+    );
+    const followingDt = await this.followModel
+      .aggregate(aggregateQueryFollowing)
+      .exec();
+
+    const countFollowing = await this.followModel
+      .find({
+        followerId: new mongoose.Types.ObjectId(userId),
+      })
+      .count();
+
+    const listUserFollowing = followingDt.map((fl) => ({
+      ...fl.following[0],
+      _id: fl.following[0].id.toString(),
+    }));
     return {
-      follower: [],
-      following: [],
+      follower: { listUsers: listUserFollower, total: countFollower },
+      following: { listUsers: listUserFollowing, total: countFollowing },
     };
   }
 

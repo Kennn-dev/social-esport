@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID, InputType, Int } from '@nestjs/graphql';
+import { FollowDto } from 'src/modules/follow/dto/follow.dto';
 
 @ObjectType()
 export class UserDto {
@@ -32,13 +33,13 @@ export class InputLoginDto {
 
 @ObjectType()
 export class ResponseUserDto {
-  @Field()
+  @Field({ nullable: true })
   lastName: string;
 
-  @Field()
+  @Field({ nullable: true })
   firstName: string;
 
-  @Field()
+  @Field({ nullable: true })
   email: string;
 
   @Field({ nullable: true })
@@ -58,7 +59,34 @@ export class ResponseLoginDto {
   @Field({ nullable: true })
   tokenType: string;
 }
+@ObjectType()
+export class ResponseUserDetailDto {
+  @Field()
+  _id: string;
+  @Field()
+  lastName: string;
 
+  @Field()
+  firstName: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  role: number;
+
+  @Field({ nullable: true })
+  avatar: string;
+
+  @Field({ nullable: true })
+  backgroundImage: string;
+
+  @Field(() => FollowDto, { defaultValue: {} })
+  follower: FollowDto;
+
+  @Field(() => FollowDto, { defaultValue: {} })
+  following: FollowDto;
+}
 @InputType()
 export class InputCreateUserDto {
   @Field({ nullable: false })

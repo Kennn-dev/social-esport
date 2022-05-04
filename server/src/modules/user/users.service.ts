@@ -1,11 +1,18 @@
+import { FollowDto } from './../follow/dto/follow.dto';
 import { FollowService } from './../follow/follow.service';
-import { InputCreateUserDto } from './dto/user.dto';
+import {
+  InputCreateUserDto,
+  ResponseUserDto,
+  ResponseUserDetailDto,
+} from './dto/user.dto';
 import { Model } from 'mongoose';
 import {
   HttpException,
   Injectable,
   NotFoundException,
   HttpStatus,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectModel, Schema } from '@nestjs/mongoose';
 import { User, UserDocument } from './models/users.schema';
@@ -19,6 +26,7 @@ import { JWTPayload } from '../auth/jwt.strategy';
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @Inject(forwardRef(() => FollowService))
     private followService: FollowService,
   ) {}
 
@@ -65,12 +73,36 @@ export class UserService {
       handleError(error);
     }
   }
+  async getUserById(id: string): Promise<ResponseUserDetailDto> {
+    try {
+      const user = await this.userModel.findById(id);
+
+      const follow = await this.followService.getUserFollowData(
+        user._id.toString(),
+      );
+
+      const { _id, avatar, backgroundImage, email, firstName, lastName, role } =
+        user;
+      // console.log(_id.toString());
+      const res: ResponseUserDetailDto = {
+        _id: _id.toString(),
+        avatar,
+        backgroundImage,
+        email,
+        role,
+        firstName,
+        lastName,
+        follower: follow.follower,
+        following: follow.following,
+      };
+      console.log(res.follower.listUsers);
+      return res;
+    } catch (error) {
+      handleError(error);
+    }
+  }
   async findOne(params): Promise<User> {
     const user = await this.userModel.findOne(params);
-    const followCount = await this.followService.getUserFollowData(
-      user._id.toString(),
-    );
-    console.log(followCount);
     return user;
   }
 

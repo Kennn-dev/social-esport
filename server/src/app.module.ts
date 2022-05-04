@@ -19,6 +19,8 @@ import { CategoryModule } from './modules/category/category.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { FollowModule } from './modules/follow/follow.module';
+import { UserService } from './modules/user/users.service';
+import { CategoryService } from './modules/category/category.service';
 
 @Module({
   imports: [
@@ -33,7 +35,7 @@ import { FollowModule } from './modules/follow/follow.module';
     }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '10h' },
     }),
     UserModule,
     AuthModule,
@@ -47,8 +49,10 @@ import { FollowModule } from './modules/follow/follow.module';
     FacebookStrategy,
     GoogleStrategy,
     AuthService,
+    UserService,
     CloudinaryService,
     FollowService,
+    CategoryService,
     // {
     //   provide: APP_GUARD,
     //   useClass: RolesGuard,

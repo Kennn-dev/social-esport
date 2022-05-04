@@ -1,5 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { UserDto } from 'src/modules/user/dto/user.dto';
+import mongoose from 'mongoose';
+import { ResponseUserDto } from 'src/modules/user/dto/user.dto';
 
 @ObjectType()
 export class CategoryDto {
@@ -12,6 +13,6 @@ export class CategoryDto {
   @Field({ nullable: true })
   thumbnail: string;
 
-  @Field(() => [UserDto], { nullable: 'items' })
-  followers: UserDto[];
+  @Field(() => [ResponseUserDto], { nullable: true })
+  followers: ResponseUserDto;
 }
