@@ -13,6 +13,7 @@ import RightSideBar from "../../../components/Sidebar/RightSideBar";
 
 export default function Home(): JSX.Element {
   const [modalIsOpen, setIsOpen] = React.useState<boolean>(false);
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -82,7 +83,7 @@ const HomeLayout = styled.div`
   padding: 2rem;
 
   .title {
-    color: ${({ theme }) => theme.white};
+    color: ${({ theme }: any) => theme.white};
     font-size: 1.125rem;
     font-weight: bold;
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEventHandler } from "react";
 import { Props } from "react-modal";
 import styled from "styled-components";
 import {
@@ -11,11 +11,23 @@ import {
 } from "../../components/index";
 import CustomModal from "../CustomModal";
 // import * as colors from "../../constains/colors";
+import Picker, { IEmojiData } from "emoji-picker-react";
+import IconWithTooltip from "./IconWithTooltip";
 interface IPostModal extends Props {
   avatar: string;
   onClose: () => void;
 }
 const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
+  const [content, setContent] = React.useState<string>("");
+  // const [chosenEmoji, setChosenEmoji] = React.useState(null);
+
+  const onEmojiClick = (event: any, emojiObject: IEmojiData) => {
+    setContent(content.concat(emojiObject.emoji));
+    // setChosenEmoji(emojiObject);
+  };
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
+  };
   return (
     <CustomModal {...props}>
       <ModalLayout avatar={avatar}>
@@ -27,13 +39,21 @@ const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
           <div className="modal--avatar"></div>
           <div className="modal--form">
             <div className="modal--form--body">
-              <TextArea placeholder="What do you think ?" rows={7} autoFocus />
+              <TextArea
+                value={content}
+                onChange={handleChangeInput}
+                placeholder="What do you think ?"
+                rows={7}
+                autoFocus
+              />
             </div>
             <div className="modal--form--footer">
               <div className="modal--form--footer--items">
                 <ImageIcon title="Image" />
+                <IconWithTooltip icon={<EmojiIcon title="Emoji" />}>
+                  <Picker native onEmojiClick={onEmojiClick} />
+                </IconWithTooltip>
                 <StickerIcon title="Sticker" />
-                <EmojiIcon title="Emoji" />
               </div>
               <Button color="primary">Share Post</Button>
             </div>
@@ -45,6 +65,7 @@ const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
 };
 
 export default PostModal;
+
 const ModalLayout = styled.div<{ avatar: string }>`
   padding: 20px;
   padding-top: 10px;
