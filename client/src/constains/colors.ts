@@ -12,6 +12,7 @@ const gray = "#828282";
 const lightGray = "#D0D0D0";
 const white = "#F3F3F3";
 const lightPrimary = "#FFD3A8";
+
 export {
   primary,
   darkPrimary,

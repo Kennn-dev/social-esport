@@ -1,4 +1,4 @@
-import React, { FormEventHandler } from "react";
+import React, { FormEventHandler, LegacyRef, useCallback, useRef } from "react";
 import { Props } from "react-modal";
 import styled from "styled-components";
 import {
@@ -13,20 +13,30 @@ import CustomModal from "../CustomModal";
 // import * as colors from "../../constains/colors";
 import Picker, { IEmojiData } from "emoji-picker-react";
 import IconWithTooltip from "./IconWithTooltip";
+import useDebounce from "../../hooks/useDebounce";
+import ImageSelectList from "../ImageSelectList";
+import StyledEmojiPicker from "../EmojiPicker";
 interface IPostModal extends Props {
   avatar: string;
   onClose: () => void;
 }
 const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
   const [content, setContent] = React.useState<string>("");
-  // const [chosenEmoji, setChosenEmoji] = React.useState(null);
-
+  const srcList = [
+    "https://source.unsplash.com/random?sig=258&3d-render",
+    "https://source.unsplash.com/random?sig=228&3d-render",
+    "https://source.unsplash.com/random?sig=28&3d-render",
+    "https://source.unsplash.com/random?sig=218&3d-render",
+    "https://source.unsplash.com/random?sig=428&3d-render",
+  ];
   const onEmojiClick = (event: any, emojiObject: IEmojiData) => {
     setContent(content.concat(emojiObject.emoji));
-    // setChosenEmoji(emojiObject);
   };
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
+  };
+  const submit = () => {
+    console.log(content);
   };
   return (
     <CustomModal {...props}>
@@ -36,7 +46,7 @@ const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
           <CancelIcon onClick={onClose} title="cancel" />
         </div>
         <div className="modal">
-          <div className="modal--avatar"></div>
+          {/* <div className="modal--avatar"></div> */}
           <div className="modal--form">
             <div className="modal--form--body">
               <TextArea
@@ -46,16 +56,19 @@ const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
                 rows={7}
                 autoFocus
               />
+              <ImageSelectList src={srcList} />
             </div>
             <div className="modal--form--footer">
               <div className="modal--form--footer--items">
                 <ImageIcon title="Image" />
                 <IconWithTooltip icon={<EmojiIcon title="Emoji" />}>
-                  <Picker native onEmojiClick={onEmojiClick} />
+                  <StyledEmojiPicker onEmojiClick={onEmojiClick} />
                 </IconWithTooltip>
                 <StickerIcon title="Sticker" />
               </div>
-              <Button color="primary">Share Post</Button>
+              <Button onClick={submit} color="primary">
+                Share Post
+              </Button>
             </div>
           </div>
         </div>
@@ -72,8 +85,8 @@ const ModalLayout = styled.div<{ avatar: string }>`
   margin-right: 120px;
   margin-bottom: 100px;
 
-  width: 100vh;
-  max-width: 580px;
+  /* width: 100vh; */
+  /* max-width: 580px; */
   border-radius: 15px;
   background-color: ${(p) => p.theme.bgBlock1};
   .title {
@@ -93,6 +106,7 @@ const ModalLayout = styled.div<{ avatar: string }>`
       }
     }
   }
+
   .modal {
     margin-top: 5px;
     display: flex;
@@ -110,7 +124,7 @@ const ModalLayout = styled.div<{ avatar: string }>`
       background-repeat: no-repeat;
     }
     &--form {
-      width: 100%;
+      width: 60vh;
       display: flex;
 
       flex-direction: column;
@@ -120,6 +134,7 @@ const ModalLayout = styled.div<{ avatar: string }>`
         textarea {
           width: 100%;
           max-height: 300px;
+          margin-bottom: 20px;
         }
       }
       &--footer {
