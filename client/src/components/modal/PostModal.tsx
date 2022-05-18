@@ -1,4 +1,10 @@
-import React, { FormEventHandler, LegacyRef, useCallback, useRef } from "react";
+import React, {
+  FormEventHandler,
+  LegacyRef,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { Props } from "react-modal";
 import styled from "styled-components";
 import {
@@ -16,19 +22,15 @@ import IconWithTooltip from "./IconWithTooltip";
 import useDebounce from "../../hooks/useDebounce";
 import ImageSelectList from "../ImageSelectList";
 import StyledEmojiPicker from "../EmojiPicker";
+import ButtonAddImage from "../Buttons/ButtonAddImage";
 interface IPostModal extends Props {
   avatar: string;
   onClose: () => void;
 }
 const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
   const [content, setContent] = React.useState<string>("");
-  const srcList = [
-    "https://source.unsplash.com/random?sig=258&3d-render",
-    "https://source.unsplash.com/random?sig=228&3d-render",
-    "https://source.unsplash.com/random?sig=28&3d-render",
-    "https://source.unsplash.com/random?sig=218&3d-render",
-    "https://source.unsplash.com/random?sig=428&3d-render",
-  ];
+  const [srcList, setSrcList] = React.useState<string[]>([]);
+
   const onEmojiClick = (event: any, emojiObject: IEmojiData) => {
     setContent(content.concat(emojiObject.emoji));
   };
@@ -38,33 +40,47 @@ const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
   const submit = () => {
     console.log(content);
   };
+  const handleImageSelectChange = (fileList: string[]) => {
+    setSrcList((p) => [...p, ...fileList]);
+  };
+  const handleClose = () => {
+    setContent("");
+    setSrcList([]);
+    onClose();
+  };
   return (
     <CustomModal {...props}>
       <ModalLayout avatar={avatar}>
         <div className="title">
           Create Post
-          <CancelIcon onClick={onClose} title="cancel" />
+          <CancelIcon onClick={handleClose} title="cancel" />
         </div>
         <div className="modal">
-          {/* <div className="modal--avatar"></div> */}
           <div className="modal--form">
             <div className="modal--form--body">
               <TextArea
+                customStyle="plain"
                 value={content}
                 onChange={handleChangeInput}
                 placeholder="What do you think ?"
                 rows={7}
                 autoFocus
               />
-              <ImageSelectList src={srcList} />
+              <ImageSelectList
+                src={srcList}
+                onChange={handleImageSelectChange}
+              />
             </div>
             <div className="modal--form--footer">
               <div className="modal--form--footer--items">
-                <ImageIcon title="Image" />
+                <ButtonAddImage
+                  buttonType="icon"
+                  onChange={handleImageSelectChange}
+                />
                 <IconWithTooltip icon={<EmojiIcon title="Emoji" />}>
                   <StyledEmojiPicker onEmojiClick={onEmojiClick} />
                 </IconWithTooltip>
-                <StickerIcon title="Sticker" />
+                {/* <StickerIcon title="Sticker" /> */}
               </div>
               <Button onClick={submit} color="primary">
                 Share Post

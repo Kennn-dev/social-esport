@@ -33,6 +33,7 @@ const LayoutWrapper = styled.div`
       width: 100%;
       display: flex;
       padding-left: 300px;
+      justify-content: space-between;
     }
 
     @media ${device.desktopL} {

@@ -19,7 +19,7 @@ export default function Home(): JSX.Element {
   };
   return (
     <>
-      <div className="home--content">
+      <Wrapper>
         <HomeLayout>
           <ChildLayout>
             <div className="title">Let's create something</div>
@@ -58,7 +58,7 @@ export default function Home(): JSX.Element {
           <FeedCard />
           <FeedCard />
         </HomeLayout>
-      </div>
+      </Wrapper>
       <PostModal
         avatar={"https://source.unsplash.com/random?3d-render"}
         isOpen={modalIsOpen}
@@ -71,11 +71,15 @@ export default function Home(): JSX.Element {
     </>
   );
 }
-
+const Wrapper = styled.div`
+  width: 100%;
+`;
 const HomeLayout = styled.div`
+  max-width: 40rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   gap: 2rem;
   flex-shrink: 0;
 

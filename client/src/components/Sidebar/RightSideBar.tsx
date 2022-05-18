@@ -6,7 +6,8 @@ import { RightIcon } from "../Icons/index";
 import { VideoCard } from "../Cards/index";
 const Layout = styled.div`
   height: 100%;
-
+  width: 100%;
+  max-width: 40rem;
   color: ${colors.lightGray};
   border-left: 1px solid ${colors.gray};
   padding: 1rem 2rem;

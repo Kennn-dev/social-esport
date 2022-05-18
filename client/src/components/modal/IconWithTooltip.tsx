@@ -7,18 +7,6 @@ type Props = {
   children: ReactNode;
 };
 
-const Wrapper = styled.div<{ isDisplay: boolean }>`
-  position: relative;
-  transition: all 0.5s ease;
-  .icon {
-  }
-  .children {
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
-    display: ${(p) => (p.isDisplay ? "" : "none")};
-  }
-`;
 export default function IconWithTooltip(props: Props) {
   const { icon, children } = props;
   const ref = useRef(null);
@@ -47,3 +35,17 @@ export default function IconWithTooltip(props: Props) {
     </Wrapper>
   );
 }
+
+const Wrapper = styled.div<{ isDisplay: boolean }>`
+  cursor: pointer;
+  position: relative;
+  transition: all 0.5s ease;
+  .icon {
+  }
+  .children {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: ${(p) => (p.isDisplay ? "" : "none")};
+  }
+`;

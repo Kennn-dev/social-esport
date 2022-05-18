@@ -64,16 +64,9 @@ const HomeWrapper = styled(Layout)`
     color: ${colors.white};
   }
   .home--content {
-    flex-grow: 1;
+    justify-content: center !important;
   }
   .home--rightbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-
-    flex-shrink: 0;
-    width: 35%;
   }
   @media ${device.laptop} {
     width: 60%;

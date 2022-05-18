@@ -8,10 +8,19 @@ import {
   MessageIcon,
   ShareIcon,
 } from "../Icons/index";
+import ImageLayout from "../Images/ImageLayout";
 interface IFeedCardProps {
   src?: string;
 }
 export default function FeedCard({ src }: IFeedCardProps): JSX.Element {
+  const images = [
+    "https://source.unsplash.com/random?sig=281&3d-render",
+    "https://source.unsplash.com/random?sig=12&3d-render",
+    "https://source.unsplash.com/random?sig=911&3d-render",
+    "https://source.unsplash.com/random?sig=811&3d-render",
+    "https://source.unsplash.com/random?sig=891&3d-render",
+    "https://source.unsplash.com/random?sig=211&3d-render",
+  ];
   return (
     <Layout>
       <div className="header">
@@ -23,12 +32,13 @@ export default function FeedCard({ src }: IFeedCardProps): JSX.Element {
         donec cursus tortor enim. Nunc, hac diam morbi augue at vulputate vitae.
       </span>
       <div className="card--img">
-        <img
+        <ImageLayout images={images} />
+        {/* <img
           src={src || "https://source.unsplash.com/random"}
           alt="this is content img"
           width="100%"
           height="auto"
-        />
+        /> */}
       </div>
       <div className="card--actions">
         <Button className="button" icon={<FireIcon />}>
@@ -55,7 +65,7 @@ const Layout = styled.div`
   flex-direction: column;
   gap: 15px;
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
 
   .header {
     padding: 1rem 1.25rem;

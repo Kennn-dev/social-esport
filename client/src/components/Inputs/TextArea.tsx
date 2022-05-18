@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-interface ITextAreaProps extends React.HTMLProps<HTMLInputElement> {}
-const Layout = styled.textarea<any>`
-  resize: vertical;
+interface IProps {
+  customStyle?: "default" | "plain";
+}
+
+const LayoutDefault = styled.textarea<IProps>`
+  resize: none;
   max-width: 100%;
   width: 100%;
   font-family: "Ubuntu", "arial";
   line-height: 130%;
   padding: 0.75rem 1rem;
-  background-color: ${({ theme }) => theme.bgBlock3};
+  background-color: ${(p) => p.theme.bgBlock3};
   border-radius: 8px;
   height: fit-content;
   border: none;
@@ -26,8 +29,28 @@ const Layout = styled.textarea<any>`
     background-color: ${({ theme }) => theme.bgBlock2};
   }
 `;
-const TextArea: React.FC<ITextAreaProps> = ({ ...props }) => {
-  return <Layout {...(props as any)} />;
+const LayoutPlain = styled(LayoutDefault)`
+  background-color: transparent;
+  border: 1px solid transparent;
+
+  padding: 0;
+  &:hover {
+    border: 1px solid transparent;
+  }
+  &:focus {
+    outline: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+  }
+`;
+const TextArea: React.FC<
+  IProps & React.ComponentProps<typeof LayoutDefault>
+> = ({ customStyle = "default", ...props }) => {
+  return customStyle === "default" ? (
+    <LayoutDefault {...props} />
+  ) : (
+    <LayoutPlain {...props} />
+  );
 };
 
 export default TextArea;
