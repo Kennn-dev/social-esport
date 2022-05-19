@@ -3,6 +3,7 @@ type TImage = {
   src: string;
   isTop?: boolean;
   isFull?: boolean;
+  count?: number;
 };
 const ImageLayoutItem = styled.div<TImage>`
   grid-column: ${(p) => (p.isTop ? "span 6 / span 6" : "span 4 / span 4")};

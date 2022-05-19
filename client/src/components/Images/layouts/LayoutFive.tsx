@@ -29,7 +29,18 @@ const OverlayCount = styled.div<PropsOverlay>`
   height: 100%;
   width: 100%;
   opacity: 0.7;
-  background-color: ${(p) => p.theme.bgBlock3};
+  background-color: ${(p) => p.theme.bgBlock1};
+
+  &:before {
+    content: "+${(p) => p.count}";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    color: ${(p) => p.theme.white};
+  }
 `;
 export default function LayoutFive(props: Props) {
   const { images } = props;
@@ -40,7 +51,7 @@ export default function LayoutFive(props: Props) {
       <Image src={images[2]} />
       <Image src={images[3]} />
       <Image src={images[4]}>
-        <OverlayCount count={2} />
+        {images.length > 5 && <OverlayCount count={images.length - 5} />}
       </Image>
     </Wrapper>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import AvatarCircleGroup from "../Avatar/AvatarCircleGroup";
 import { Avatar } from "../Avatar/index";
 import { Button } from "../Buttons/index";
 import {
@@ -17,9 +18,10 @@ export default function FeedCard({ src }: IFeedCardProps): JSX.Element {
     "https://source.unsplash.com/random?sig=281&3d-render",
     "https://source.unsplash.com/random?sig=12&3d-render",
     "https://source.unsplash.com/random?sig=911&3d-render",
-    "https://source.unsplash.com/random?sig=811&3d-render",
+    "https://source.unsplash.com/random?sig=81&3d-render",
     "https://source.unsplash.com/random?sig=891&3d-render",
-    "https://source.unsplash.com/random?sig=211&3d-render",
+    "https://source.unsplash.com/random?sig=261&3d-render",
+    "https://source.unsplash.com/random?sig=461&3d-render",
   ];
   return (
     <Layout>
@@ -33,27 +35,49 @@ export default function FeedCard({ src }: IFeedCardProps): JSX.Element {
       </span>
       <div className="card--img">
         <ImageLayout images={images} />
-        {/* <img
-          src={src || "https://source.unsplash.com/random"}
-          alt="this is content img"
-          width="100%"
-          height="auto"
-        /> */}
       </div>
       <div className="card--actions">
-        <Button className="button" icon={<FireIcon />}>
-          5
-        </Button>
-        <Button className="button" icon={<MessageIcon />}>
-          4
-        </Button>
-        <Button className="button" icon={<ShareIcon />}>
-          5
-        </Button>
+        <div className="card--actions--left">
+          <LikeButton>
+            <IconWithCount count={"4k"}>
+              <FireIcon />
+            </IconWithCount>
+          </LikeButton>
+          <IconWithCount count={"100"}>
+            <MessageIcon />
+          </IconWithCount>
+        </div>
+        <div className="card--actions--right">
+          <AvatarCircleGroup avatars={images} />
+          <span>and 300 others liked</span>
+        </div>
       </div>
     </Layout>
   );
 }
+
+type TIconWithCount = {
+  count: number | string;
+};
+type TLikeButton = {
+  active?: boolean;
+};
+const LikeButton = styled.span<TLikeButton>`
+  & svg {
+    stroke-opacity: ${(p) => (p.active ? 0 : 1)};
+    fill: ${(p) => (p.active ? p.theme.red : "transparent")};
+  }
+`;
+const IconWithCount = styled.span<TIconWithCount>`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &:after {
+    content: "${(p) => p.count}";
+    display: inline-block;
+    margin-left: 5px;
+  }
+`;
 const Layout = styled.div`
   line-height: 140%;
 
@@ -91,6 +115,19 @@ const Layout = styled.div`
     svg {
       width: 24px;
       height: 24px;
+    }
+
+    &--left {
+      margin-top: 5px;
+      display: flex;
+      column-gap: 20px;
+    }
+
+    &--right {
+      margin-top: 5px;
+      display: flex;
+      column-gap: 10px;
+      color: ${(p) => p.theme.lightGray};
     }
   }
 `;
