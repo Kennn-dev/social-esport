@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Aggregate } from 'mongoose';
 
 import { hash, compareSync } from 'bcrypt';
-import { HASH } from 'src/constaints/hash';
+import { HASH } from 'src/constants/hash';
 export type UserDocument = User & Document;
 @Schema({ timestamps: true })
 export class User {

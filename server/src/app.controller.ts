@@ -1,4 +1,4 @@
-import { UPLOAD_TYPE } from './constaints/file';
+import { UPLOAD_TYPE } from './constants/file';
 import { AppService } from './app.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import {

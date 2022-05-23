@@ -6,7 +6,7 @@ import {
   SetMetadata,
   UseGuards,
 } from '@nestjs/common';
-import { Role } from 'src/constaints/role';
+import { Role } from 'src/constants/role';
 import { RolesGuard } from 'src/guards/role.guard';
 
 export function Auth(...roles: Role[]) {

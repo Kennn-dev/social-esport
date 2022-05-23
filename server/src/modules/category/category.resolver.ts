@@ -1,6 +1,6 @@
 import { JwtAuthGuard } from './../../guards/jwt-auth.guard';
 import { ResponseDto } from './../user/dto/user.dto';
-import { Role } from './../../constaints/role';
+import { Role } from '../../constants/role';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CategoryService } from './category.service';
 import { CreateCategoryInput } from './dto/create-category.input';

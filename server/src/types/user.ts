@@ -1,4 +1,4 @@
-import { Role } from 'src/constaints/role';
+import { Role } from 'src/constants/role';
 
 export interface LoginPayload {
   email: string;

@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { FOLLOW_STATUS } from 'src/constaints/follow';
+import { FOLLOW_STATUS } from 'src/constants/follow';
 import { ResponseUserDto } from 'src/modules/user/dto/user.dto';
 @ObjectType()
 export class FollowObjDto {

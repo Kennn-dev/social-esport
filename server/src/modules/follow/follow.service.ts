@@ -1,6 +1,6 @@
 import { ResponseDto } from './../user/dto/user.dto';
 import { Model } from 'mongoose';
-import { FOLLOW_STATUS } from './../../constaints/follow';
+import { FOLLOW_STATUS } from '../../constants/follow';
 import {
   HttpException,
   Injectable,

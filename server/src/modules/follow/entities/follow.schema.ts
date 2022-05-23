@@ -1,4 +1,4 @@
-import { FOLLOW_STATUS } from './../../../constaints/follow';
+import { FOLLOW_STATUS } from '../../../constants/follow';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Types } from 'mongoose';
 import { Document } from 'mongoose';

@@ -34,7 +34,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "webpack": "^5.72.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
