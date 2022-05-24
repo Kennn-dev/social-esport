@@ -7,8 +7,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
-import { RolesGuard } from './guards/role.guard';
-import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { FacebookStrategy } from './modules/auth/facebook.strategy';
@@ -21,6 +19,8 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { FollowModule } from './modules/follow/follow.module';
 import { UserService } from './modules/user/users.service';
 import { CategoryService } from './modules/category/category.service';
+import { PostModule } from './modules/post/post.module';
+import { PostService } from './modules/post/post.service';
 
 @Module({
   imports: [
@@ -42,6 +42,7 @@ import { CategoryService } from './modules/category/category.service';
     CategoryModule,
     CloudinaryModule,
     FollowModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [
@@ -49,10 +50,7 @@ import { CategoryService } from './modules/category/category.service';
     FacebookStrategy,
     GoogleStrategy,
     AuthService,
-    UserService,
     CloudinaryService,
-    FollowService,
-    CategoryService,
     // {
     //   provide: APP_GUARD,
     //   useClass: RolesGuard,

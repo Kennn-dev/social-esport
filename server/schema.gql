@@ -96,6 +96,9 @@ type Mutation {
   updateCategory(updateCategoryInput: UpdateCategoryInput!): StatusResponseDto!
   deleteCategory(id: String!): DeleteCategoryResponseDto!
   login(input: InputLoginDto!): ResponseLoginDto!
+  createPost(inputCreate: CreatePostInputDto!): StatusResponseDto!
+  updatePost(inputUpdate: UpdatePostInputDto!, id: String!): StatusResponseDto!
+  deletePost(id: String!): StatusResponseDto!
 }
 
 input InputCreateUserDto {
@@ -129,4 +132,20 @@ input UpdateCategoryInput {
 input InputLoginDto {
   email: String!
   password: String!
+}
+
+input CreatePostInputDto {
+  """Max length 2000 characters"""
+  content: String
+  listImage: [String!]
+  typeView: String
+  canComment: Boolean = true
+}
+
+input UpdatePostInputDto {
+  """Max length 2000 characters"""
+  content: String
+  listImage: [String!]
+  typeView: String
+  canComment: Boolean = true
 }
