@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import * as colors from "../../../constains/colors";
 import { AvatarCircle } from "../../../components/Avatar/index";
 import {
   Input,
