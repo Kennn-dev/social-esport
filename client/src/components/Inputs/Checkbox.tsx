@@ -120,7 +120,6 @@ const Input = styled.input`
 `;
 
 export default function Checkbox(props: any) {
-  console.log(props.children);
   const { children, ...inputProps } = props;
   const id = makeUniqueId("checkbox-");
 

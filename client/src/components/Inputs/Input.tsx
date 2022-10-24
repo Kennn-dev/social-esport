@@ -1,11 +1,16 @@
 import React from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
+import COLORS from "src/constains/colors";
 import styled, { CSSProp } from "styled-components";
 interface InputWrapperProps {
   css?: CSSProp;
   icon?: boolean;
+  error?: string | null | undefined;
 }
 interface InputProps {
   icon?: React.ReactNode;
+  registerProps?: UseFormRegisterReturn<any>;
+  error?: string | null | undefined;
 }
 const InputWrapper = styled.input<
   InputWrapperProps & React.HTMLProps<HTMLInputElement>
@@ -31,6 +36,9 @@ const InputWrapper = styled.input<
     border: 1px solid ${({ theme }) => theme.primary};
     background-color: ${({ theme }) => theme.bgBlock2};
   }
+  &::-ms-reveal {
+    color: white;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -49,14 +57,23 @@ const IconWrapper = styled.div`
   }
 `;
 
+const InputError = styled.span`
+  display: block;
+  margin-top: 7px;
+  color: ${COLORS.lightRed};
+`;
+
 const Input: React.FC<InputProps & React.HTMLProps<HTMLInputElement>> = ({
   icon,
+  registerProps,
+  error,
   ...props
 }) => {
   return (
     <div style={{ position: "relative" }}>
-      <InputWrapper {...(props as any)} icon={!!icon} />
+      <InputWrapper {...registerProps} {...(props as any)} icon={!!icon} />
       {icon ? <IconWrapper className="input--icon">{icon}</IconWrapper> : null}
+      {error && <InputError>{error}</InputError>}
     </div>
   );
 };

@@ -8,14 +8,14 @@ export type ColorButton =
   | "ghost"
   | "default";
 type SizeButton = "base" | "lg" | "sm";
-interface ButtonProps {
+type ButtonProps = Omit<React.HTMLProps<HTMLButtonElement>, "size"> & {
   color?: ColorButton;
   size?: SizeButton;
   icon?: ReactNode | boolean; // false
   className?: string;
   children?: ReactNode;
-  onClick?: (p?: any) => void;
-}
+  htmlType?: "submit" | null | undefined;
+};
 
 const ButtonLayout = styled.button<ButtonProps>`
   border: ${({ color, theme }) =>
@@ -51,6 +51,10 @@ const ButtonLayout = styled.button<ButtonProps>`
     background-color: ${({ color, theme }) =>
       color === "default" && theme.bgBlock4};
   }
+
+  input {
+    display: none;
+  }
 `;
 
 const Button = ({
@@ -59,6 +63,7 @@ const Button = ({
   children,
   className,
   size = "base",
+  htmlType,
   ...props
 }: ButtonProps) => (
   <ButtonLayout
@@ -69,6 +74,7 @@ const Button = ({
   >
     {icon || null}
     {children}
+    {htmlType === "submit" && <input type="submit" />}
   </ButtonLayout>
 );
 export { Button };
