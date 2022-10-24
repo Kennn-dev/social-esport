@@ -2,6 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "outDir": "build/dist",
+    "baseUrl": "./",
     "module": "esnext",
     "target": "es2017",
     "lib": ["es6", "dom", "esnext.asynciterable", "es2017"],
@@ -25,8 +26,7 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "baseUrl": "./"
+    "noEmit": true
   },
   "exclude": [
     "node_modules",
@@ -37,5 +37,5 @@
     "jest",
     "src/setupTests.ts"
   ],
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

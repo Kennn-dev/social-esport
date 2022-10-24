@@ -13,7 +13,24 @@ const lightGray = "#D0D0D0";
 const white = "#F3F3F3";
 const lightPrimary = "#FFD3A8";
 const red = "#ED4956";
-
+const COLORS = {
+  primary,
+  darkPrimary,
+  lightGray,
+  lightPrimary,
+  bgBlock1,
+  bgBlock2,
+  bgBlock3,
+  bgBlock4,
+  bgBlock5,
+  bgBlock6,
+  secondary,
+  darkSecondary,
+  gray,
+  white,
+  red,
+};
+export default COLORS;
 export {
   primary,
   darkPrimary,

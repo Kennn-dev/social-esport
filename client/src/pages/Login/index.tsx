@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Checkbox from "src/components/Inputs/Checkbox";
+import styled from "styled-components";
 import {
-  LoginLayout,
-  Input,
   Button,
   FacebookIcon,
   GoogleColoredIcon,
+  Input,
+  LoginLayout,
 } from "../../components/index";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import * as colors from "../../constains/colors";
 export const FormLoginWrapper = styled.div`
   height: fit-content;
@@ -98,8 +99,9 @@ const Login: React.FC<{}> = () => {
             <Input type="password" />
           </div>
           <label className="login--form--checkbox">
-            <input type="checkbox" />
-            <span className=""> Remember my password</span>
+            {/* <input type="checkbox" /> */}
+            <Checkbox>Remember my password</Checkbox>
+            {/* <span className=""> </span> */}
           </label>
           <Button size="lg" color={"primary"}>
             <Link to="/">Login</Link>

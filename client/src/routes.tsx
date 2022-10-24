@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import { Loader } from "./components/index";
+import { Loader } from "./components";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 
 //TODOS : Replace loading falback with component
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
@@ -28,13 +29,14 @@ const Routes = () => {
     >
       <Switch>
         <Redirect exact from="/" to="/dashboard" />
-        <Route path={"/dashboard"}>
+        <ProtectedRoute path={"/dashboard"}>
           <Dashboard />
-        </Route>
-        <Route path={"/login"}>
+        </ProtectedRoute>
+
+        <Route exact path={"/login"}>
           <Login />
         </Route>
-        <Route path={"/register"}>
+        <Route exact path={"/register"}>
           <Register />
         </Route>
         <Route path="*">
