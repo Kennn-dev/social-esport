@@ -8,8 +8,10 @@ type Props = {
 export default function ProtectedRoute(props: Props & RouteProps) {
   const { children, ...rest } = props;
   const auth = useAppStore((state) => state.auth);
+  console.log({ auth });
 
-  if (!auth) {
+  // TODOS :decode then verify token here
+  if (!auth.accessToken) {
     return (
       <Redirect
         to={{

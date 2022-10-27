@@ -12,11 +12,15 @@ function App() {
     cache: new InMemoryCache(),
     connectToDevTools: true,
   });
+
   const toastConfig: ToastContainerProps = {
     position: toast.POSITION.BOTTOM_LEFT,
-    autoClose: 3000,
+    autoClose: 5000,
     hideProgressBar: true,
     theme: "dark",
+    className: "toast",
+    toastClassName: "toast-wrapper",
+    bodyClassName: "toast-body",
   };
   return (
     <ApolloProvider client={client}>

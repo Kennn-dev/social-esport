@@ -1,7 +1,8 @@
 import { ApolloError, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import Checkbox from "src/components/Inputs/Checkbox";
 import StaticAlert from "src/components/Notifications/StaticAlert";
 import { ALERT_TYPE } from "src/constains";
@@ -16,6 +17,8 @@ import {
   Input,
   LoginLayout,
 } from "../../components/index";
+import { ResponseLoginDto } from "src/graphql/types/graphql";
+import { useAppStore } from "src/store";
 
 export const FormLoginWrapper = styled.div`
   height: fit-content;
@@ -127,8 +130,10 @@ type LoginInput = {
 };
 
 const Login: React.FC<{}> = () => {
-  const [login, { data, loading, error }] = useMutation<
-    TResponseLoginDto,
+  const updateStore = useAppStore((state) => state.update);
+  const history = useHistory();
+  const [login, { loading, error }] = useMutation<
+    { login: ResponseLoginDto },
     { input: TInputLoginDto }
   >(LOGIN);
   const {
@@ -138,14 +143,19 @@ const Login: React.FC<{}> = () => {
     formState: { errors },
   } = useForm<LoginInput>();
   const onSubmit = (values: LoginInput) => {
-    console.log(values);
-
     login({
       variables: {
         input: {
           email: values.username,
           password: values.password,
         },
+      },
+      onCompleted: (data) => {
+        if (data.login.accessToken) {
+          toast.success("Hoooray !!! Login success 🥰");
+          updateStore(data.login);
+          history.push("/dashboard");
+        }
       },
     });
   };

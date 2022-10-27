@@ -2,10 +2,14 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 	* {
+		--toastify-toast-width : 400px;
+		--toastify-color-dark : #272727;
 		margin : 0;
 		padding : 0;
 		box-sizing : border-box;
 		font-size : 16px;
+
+
       @media (min-width: 768px) {
         /* font-size: 16px; */
       }
@@ -63,6 +67,29 @@ const GlobalStyle = createGlobalStyle`
 			}
 		}
 
+	}
+
+
+		
+	/* Custom toaster */
+
+	.toast-wrapper {
+		border-radius: 15px;
+		padding: 20px;
+		box-shadow: -16px 20px 100px 0px #00000040;
+		border : 2px solid transparent;
+
+		&:hover{
+
+		border: 2px solid #828282
+		}
+	}
+
+	.toast-body {
+		width: 100%;
+		text-overflow: ellipsis;
+		white-space: normal;
+		overflow: hidden;
 	}
 
 `;
