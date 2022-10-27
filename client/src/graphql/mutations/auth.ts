@@ -16,3 +16,13 @@ export const LOGIN = gql`
     }
   }
 `;
+
+// Define mutation
+export const REGISTER = gql`
+  mutation Mutation($inputCreate: InputCreateUserDto!) {
+    createUser(inputCreate: $inputCreate) {
+      status
+      message
+    }
+  }
+`;

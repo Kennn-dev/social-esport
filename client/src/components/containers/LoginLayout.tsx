@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
   .hero {
     position: relative;
-    width: 40%;
+    width: 0%;
     height: 100%;
     background-color: #ff6523;
     overflow-y: hidden;
@@ -45,10 +45,21 @@ const Wrapper = styled.div`
       z-index: 1;
     }
   }
+
   .login--children {
     flex: 1;
     color: ${colors.white};
     margin: auto;
+  }
+  @media (min-width: 768px) {
+    /* font-size: 16px; */
+    .hero {
+      width: 40%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* font-size: 16px; */
   }
 `;
 
@@ -64,7 +75,8 @@ const LoginLayout: React.FC<LoginProps> = ({ children }) => {
             width={"100%"}
             height="auto"
           />
-          <h1>Connect esport to the world</h1>
+          <h1>Connect esport </h1>
+          <h1 style={{ marginTop: 0 }}>to the world</h1>
         </div>
         <img
           alt="Hero"

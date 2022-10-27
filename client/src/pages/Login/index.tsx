@@ -1,11 +1,14 @@
-import { useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Checkbox from "src/components/Inputs/Checkbox";
+import StaticAlert from "src/components/Notifications/StaticAlert";
+import { ALERT_TYPE } from "src/constains";
 import COLORS from "src/constains/colors";
 import { LOGIN } from "src/graphql/mutations/auth";
 import styled from "styled-components";
+import logo from "../../assets/social-esport-logo.png";
 import {
   Button,
   FacebookIcon,
@@ -16,7 +19,7 @@ import {
 
 export const FormLoginWrapper = styled.div`
   height: fit-content;
-  width: 50%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   row-gap: 1.5rem;
@@ -68,10 +71,14 @@ export const FormLoginWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    column-gap: 1.5rem;
+    column-gap: 20px;
+
+    &--child {
+      width: 50%;
+    }
     svg {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 25px;
+      height: 25px;
     }
   }
   .login--links {
@@ -86,15 +93,44 @@ export const FormLoginWrapper = styled.div`
       color: ${COLORS.gray};
     }
   }
+  .logo--login--layout {
+  }
+  @media (min-width: 640px) {
+    width: 70%;
+  }
+
+  @media (min-width: 768px) {
+    /* font-size: 16px; */
+    width: 50%;
+    .logo--login--layout {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* font-size: 16px; */
+    width: 80%;
+  }
+
+  @media (min-width: 1280px) {
+    width: 60%;
+  }
+
+  @media (min-width: 1536px) {
+    width: 40%;
+  }
 `;
 
 type LoginInput = {
   username: string;
   password: string;
 };
+
 const Login: React.FC<{}> = () => {
-  const [login, { data, loading, error }] =
-    useMutation<TResponseLoginDto>(LOGIN);
+  const [login, { data, loading, error }] = useMutation<
+    TResponseLoginDto,
+    { input: TInputLoginDto }
+  >(LOGIN);
   const {
     register,
     handleSubmit,
@@ -103,35 +139,59 @@ const Login: React.FC<{}> = () => {
   } = useForm<LoginInput>();
   const onSubmit = (values: LoginInput) => {
     console.log(values);
+
+    login({
+      variables: {
+        input: {
+          email: values.username,
+          password: values.password,
+        },
+      },
+    });
   };
-  console.log(watch("username")); // watch input value by passing the name of it
 
   return (
     <LoginLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormLoginWrapper>
+          <div className="logo--login--layout">
+            <img src={logo} width="100%" height={"auto"} />
+          </div>
           <h4>Login</h4>
+          {error && (
+            <StaticAlert type={ALERT_TYPE.ERR} content={error.message} />
+          )}
+
           <div className="login--form">
             <div className="login--field">
               <div className="label">Username</div>
               <Input
-                registerProps={register("username", { required: true })}
-                error={errors.username ? "Username required" : null}
+                registerProps={register("username", {
+                  required: "Username required",
+                })}
+                error={errors.username?.message}
               />
             </div>
             <div className="login--field">
               <div className="label">Password</div>
               <Input
                 type="password"
-                registerProps={register("password", { required: true })}
-                error={errors.password ? "Password required" : null}
+                registerProps={register("password", {
+                  required: "Password required",
+                })}
+                error={errors.password?.message}
               />
             </div>
             <label className="login--form--checkbox">
               <Checkbox>Remember my password</Checkbox>
             </label>
 
-            <Button htmlType="submit" size="lg" color={"primary"}>
+            <Button
+              loading={loading}
+              htmlType="submit"
+              size="lg"
+              color={"primary"}
+            >
               Login
             </Button>
           </div>
@@ -139,12 +199,16 @@ const Login: React.FC<{}> = () => {
             <span className="login--line--text">or</span>
           </div>
           <div className="login--social">
-            <Button color="secondary" icon={<GoogleColoredIcon />}>
-              Google
-            </Button>
-            <Button color="secondary" icon={<FacebookIcon color="#4267B2" />}>
-              Facebook
-            </Button>
+            <div className="login--social--child">
+              <Button color="secondary" icon={<GoogleColoredIcon />}>
+                Google
+              </Button>
+            </div>
+            <div className="login--social--child">
+              <Button color="secondary" icon={<FacebookIcon color="#4267B2" />}>
+                Facebook
+              </Button>
+            </div>
           </div>
           <div className="login--links">
             <span>
