@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 export type ColorButton =
   | "primary"
+  | "no-style"
   | "secondary"
   | "link"
   | "ghost"
@@ -27,21 +28,29 @@ const ButtonLayout = styled.button<ButtonProps>`
       ? theme.primary
       : color === "secondary"
       ? theme.white
+      : color === "no-style"
+      ? "transparent"
       : theme.bgBlock1};
   display: flex;
-  justify-content: center;
+  justify-content: ${({ color }) => color !== "no-style" && "center"};
   gap: 1rem;
   align-items: center;
   width: 100%;
   color: ${({ color, theme }) =>
-    color === "secondary" ? theme.bgBlock1 : theme.white};
+    color === "secondary"
+      ? theme.bgBlock1
+      : color === "no-style"
+      ? theme.gray
+      : theme.white};
   border-radius: 0.75rem;
   cursor: ${({ loading }) => (loading ? "not-allowed" : "pointer")};
   pointer-events: ${({ loading }) => (loading ? "none" : "auto")};
   transition: all ease 0.3s;
 
-  padding: ${({ size }) =>
-    size === "base"
+  padding: ${({ size, color }) =>
+    color === "no-style"
+      ? ""
+      : size === "base"
       ? "0.75rem 1.5rem"
       : size === "lg"
       ? "1rem 1.75rem"
@@ -53,6 +62,8 @@ const ButtonLayout = styled.button<ButtonProps>`
   &:hover {
     background-color: ${({ color, theme }) =>
       color === "default" && theme.bgBlock4};
+
+    color: ${COLORS.white};
   }
 
   input {

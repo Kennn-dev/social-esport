@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
 	* {
 		--toastify-toast-width : 400px;
 		--toastify-color-dark : #272727;
+		--common-shadow : rgb(0 0 0 / 77%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;
 		margin : 0;
 		padding : 0;
 		box-sizing : border-box;

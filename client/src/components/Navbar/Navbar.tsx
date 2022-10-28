@@ -15,10 +15,15 @@ import {
   SearchIcon,
 } from "../Icons/index";
 import device from "../../constains/divice";
+import PopOver from "../PopOver";
+import { AvatarCircle } from "../Avatar";
+import { useAppStore } from "src/store";
+import AvatarThumb from "../Avatar/AvatarThumb";
+import { Button } from "../Buttons";
 
 export default function Navbar() {
+  const user = useAppStore((state) => state.auth.user);
   const [query, setQuery] = React.useState<string>("");
-  const [isCreateOpen, setCreateOpen] = React.useState<boolean>(false);
   const history = useHistory();
   const handleSearchChange = (e: any) => {
     setQuery(e?.target?.value);
@@ -32,22 +37,20 @@ export default function Navbar() {
       });
     }
   };
-  let createRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    const handler = (e: any) => {
-      if (typeof createRef?.current === "object") {
-        if (!createRef?.current?.contains(e.target)) {
-          setCreateOpen(false);
-        }
-      }
-    };
-    document.addEventListener("mousedown", handler);
+  const ContentNotification = () => {
+    return <div>Content</div>;
+  };
+  const ContentProfile = () => {
+    return (
+      <div style={{ width: 250 }}>
+        <Button style={{ padding: "10px 0px" }} color="no-style">
+          Log Out
+        </Button>
+      </div>
+    );
+  };
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  }, [createRef]);
   return (
     <GridLayout col={3}>
       <LeftContent>
@@ -66,39 +69,27 @@ export default function Navbar() {
         />
       </div>
       <RightContent>
-        <div className="icon" ref={createRef}>
-          <DropdownCreate active={isCreateOpen}>
-            <div className="parent">
-              <AddIcon
-                onClick={() => {
-                  setCreateOpen((s) => !s);
-                }}
-                className="message"
-                title="Create"
-              />
-            </div>
-            <div
-              className="child"
-              onBlur={() => {
-                console.log("blur");
-              }}
-            >
-              <div className="child--item">
-                <CreatePostIcon /> Create Post
-              </div>
-              <div className="child--item">
-                <CreateVideoIcon /> Create Montage
-              </div>
-            </div>
-          </DropdownCreate>
+        <div className="icon">
+          <AddIcon className="message" title="Create" />
         </div>
         <div className="icon">
-          <BellIcon className="bell" title="Notification" />
+          <PopOver title="" content={<ContentNotification />}>
+            <BellIcon className="bell" title="Notification" />
+          </PopOver>
         </div>
         <div className="icon">
           <MessageIcon className="message" title="Message" />
         </div>
-        <Avatar />
+        <PopOver
+          title={
+            <div style={{ fontSize: 18 }}>
+              {`${user?.lastName} ${user?.firstName}`}
+            </div>
+          }
+          content={<ContentProfile />}
+        >
+          <AvatarThumb width={48} height={48} user={user} />
+        </PopOver>
       </RightContent>
     </GridLayout>
   );
