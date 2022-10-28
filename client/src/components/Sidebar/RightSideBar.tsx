@@ -9,7 +9,7 @@ const Layout = styled.div`
   width: 100%;
   max-width: 40rem;
   color: ${colors.lightGray};
-  border-left: 1px solid ${colors.gray};
+  /* border-left: 1px solid ${colors.gray}; */
   padding: 1rem 2rem;
   display: flex;
   flex-shrink: 0;

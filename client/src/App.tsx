@@ -7,8 +7,19 @@ import { ToastContainer, toast, ToastContainerProps } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {
+  const uri = () => {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+      // dev code
+      return process.env.REACT_APP_API_ENDPOINT_LOCAL;
+    } else {
+      // production code
+      return process.env.REACT_APP_API_ENDPOINT;
+    }
+  };
+  console.log("Backend", uri());
+
   const client = new ApolloClient({
-    uri: process.env.REACT_APP_API_ENDPOINT_LOCAL,
+    uri: uri(),
     cache: new InMemoryCache(),
     connectToDevTools: true,
   });
@@ -22,6 +33,7 @@ function App() {
     toastClassName: "toast-wrapper",
     bodyClassName: "toast-body",
   };
+
   return (
     <ApolloProvider client={client}>
       <ToastContainer {...toastConfig} />
