@@ -9,6 +9,48 @@ type Props = {
   title?: ReactNode | (() => ReactNode);
 };
 
+export default function PopOver(props: Props) {
+  const { children, title, content } = props;
+  const [height, setHeight] = useState(0);
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  const ref = useRef<any>(null);
+  const refModel = useRef<any>(null);
+
+  const handleOpen = () => {
+    setOpen((v) => !v);
+  };
+
+  const child = React.cloneElement<any>(children, {
+    onClick: handleOpen,
+    style: {
+      cursor: "pointer",
+    },
+  });
+
+  const handleOutsideClick = (e: any) => {
+    setOpen(false);
+  };
+
+  useOnClickOutside(ref, handleOutsideClick, "mousedown");
+  useEffect(() => {
+    const h = refModel?.current.offsetHeight;
+    // console.log();
+
+    setHeight(h);
+  }, []);
+
+  return (
+    <Wrapper ref={ref} height={height}>
+      <span ref={refModel}>{child}</span>
+
+      <Content isOpen={isOpen}>
+        {title && <div className="popover--title">{title}</div>}
+        {content}
+      </Content>
+    </Wrapper>
+  );
+}
 const Content = styled.div<{ isOpen: boolean }>`
   position: absolute;
   right: 0px;
@@ -39,48 +81,3 @@ const Wrapper = styled.div<{ height: number }>`
     }
   }
 `;
-
-export default function PopOver(props: Props) {
-  const { children, title, content } = props;
-  const [height, setHeight] = useState(0);
-  const [isOpen, setOpen] = useState<boolean>(false);
-
-  const ref = useRef<any>(null);
-  const refModel = useRef<any>(null);
-  const refButton = useRef<any>(null);
-
-  const handleOpen = () => {
-    setOpen((v) => !v);
-  };
-
-  const child = React.cloneElement<any>(children, {
-    onClick: handleOpen,
-    ref: refButton,
-    style: {
-      cursor: "pointer",
-    },
-  });
-
-  const handleOutsideClick = (e: any) => {
-    setOpen(false);
-  };
-
-  useOnClickOutside(ref, handleOutsideClick, "mousedown");
-  useEffect(() => {
-    const h = refModel?.current.offsetHeight;
-    // console.log();
-
-    setHeight(h);
-  }, []);
-
-  return (
-    <Wrapper ref={ref} height={height}>
-      <span ref={refModel}>{child}</span>
-
-      <Content isOpen={isOpen}>
-        {title && <div className="popover--title">{title}</div>}
-        {content}
-      </Content>
-    </Wrapper>
-  );
-}

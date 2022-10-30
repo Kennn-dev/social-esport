@@ -153,7 +153,9 @@ const Login: React.FC<{}> = () => {
       onCompleted: (data) => {
         if (data.login.accessToken) {
           toast.success("Hoooray !!! Login success 🥰");
+
           updateStore(data.login);
+          localStorage.setItem("token", data.login.accessToken);
           history.push("/dashboard");
         }
       },

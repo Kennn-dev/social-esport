@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
-import * as colors from "../../../../constains/colors";
+import COLORS from "src/constains/colors";
 import {
   Button,
   MessageIcon,
@@ -12,17 +12,43 @@ import {
 } from "../../../../components/index";
 import { MontageLayout } from "../montages/Montage";
 import { TabsItem } from "../../../../types/tabs";
+import { useQuery } from "@apollo/client";
+import { GET_USER_BY_ID } from "src/graphql/queries/user";
+import { ResponseUserDetailDto } from "src/graphql/types/graphql";
+import { useAppStore } from "src/store";
+import { toast } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
+import CustomSkeleton from "src/components/SkeletonCustom";
+import { getFullname } from "src/utils";
 interface IProfileLayoutProps {
   src: string;
   avatarSrc: string;
+  loading: boolean;
 }
 const Profile = () => {
   const tabsInit: TabsItem[] = [
     { value: "0", label: "Post" },
     { value: "1", label: "Montage" },
   ];
-  // const history = useHistory();
+  const history = useHistory();
+  const user = useAppStore((s) => s.auth.user);
   const [tabs, setTabs] = React.useState<TabsItem>(tabsInit[0]);
+  const { loading, error, data } = useQuery<
+    {
+      getUserById: ResponseUserDetailDto;
+    },
+    { getUserByIdId: string | number | undefined }
+  >(GET_USER_BY_ID, {
+    variables: {
+      getUserByIdId: user?._id,
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const handleChangeTabs = (tab: TabsItem) => {
     setTabs(tab);
@@ -68,58 +94,93 @@ const Profile = () => {
     console.log("Render");
     return render;
   };
+
+  const renderButtons = (): ReactNode => {
+    // condition here
+    const me = (
+      <>
+        <Button
+          onClick={() => {
+            history.push("/dashboard/profile/edit");
+          }}
+          size="lg"
+          color="ghost"
+        >
+          Edit Profile
+        </Button>
+      </>
+    );
+
+    return me;
+    // <Button size="lg" color="primary">
+    //             Follow
+    //           </Button>
+
+    //           <Button
+    //             size="sm"
+    //             color="secondary"
+    //             className="message"
+    //             icon={<MessageIcon color={COLORS.bgBlock1} />}
+    //           >
+    //             Message
+    //           </Button>
+  };
+
+  if (error) {
+    toast.error(error.message);
+  }
+
   return (
     <Layout
+      loading={loading}
       src={`https://images.unsplash.com/photo-1633907284646-7abf4a195875?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=464&q=80`}
-      avatarSrc={`https://images.unsplash.com/photo-1633636611822-30b3aece0748?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDU2fENEd3V3WEpBYkV3fHxlbnwwfHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60`}
+      avatarSrc={data?.getUserById.avatar || ""}
     >
       <div className="profile">
         <div className="profile--card--info">
-          <div className="profile--card--info--avatar"></div>
+          {loading ? (
+            <CustomSkeleton width={100} height={100} circle />
+          ) : (
+            <div className="profile--card--info--avatar"></div>
+          )}
+
           <div className="profile--card--info--content">
             <div className="profile--card--info--content--text">
               <h1 className="profile--card--info--content--text--heading">
-                Lily Bailey
+                {loading ? (
+                  <CustomSkeleton height={30} width={"70%"} />
+                ) : (
+                  getFullname(data?.getUserById)
+                )}
               </h1>
               <span className="profile--card--info--content--text--email">
-                @LilyBailey
+                {loading ? (
+                  <CustomSkeleton height={20} width={"50%"} />
+                ) : (
+                  `@${data?.getUserById.email}`
+                )}
               </span>
-              <div className="profile--card--info--content--text--meta">
-                <div className="item">
-                  <strong>300</strong> Followers
+
+              {loading ? (
+                <CustomSkeleton height={20} width={"70%"} />
+              ) : (
+                <div className="profile--card--info--content--text--meta">
+                  <div className="item">
+                    <strong>{data?.getUserById.follower.total}</strong>{" "}
+                    Followers
+                  </div>
+                  <div className="item">
+                    <strong>{data?.getUserById.following.total}</strong>{" "}
+                    Following
+                  </div>
+                  <div className="item">
+                    <strong>0</strong> Montages
+                  </div>
                 </div>
-                <div className="item">
-                  <strong>50</strong> Following
-                </div>
-                <div className="item">
-                  <strong>100</strong> Montages
-                </div>
-              </div>
+              )}
             </div>
             <div className="profile--card--info--content--actions">
-              <Button size="lg" color="primary">
-                Follow
-              </Button>
-
-              <Button
-                size="sm"
-                color="secondary"
-                className="message"
-                icon={<MessageIcon color={colors.bgBlock1} />}
-              >
-                Message
-              </Button>
-              {/* {
-                <Button
-                  onClick={() => {
-                    history.push("/dashboard/profile/edit");
-                  }}
-                  size="lg"
-                  color="ghost"
-                >
-                  Edit Profile
-                </Button>
-              } */}
+              {renderButtons()}
             </div>
           </div>
         </div>
@@ -162,7 +223,9 @@ const Layout = styled(MontageLayout)<IProfileLayoutProps>`
     width: inherit;
 
     border-radius: 1rem;
-    background-image: url(${({ src }) => src});
+    background-image: url(${({ src, loading }) => (loading ? "none" : src)});
+    background-color: ${({ loading }) =>
+      loading ? COLORS.gray : "transparent"};
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -197,6 +260,14 @@ const Layout = styled(MontageLayout)<IProfileLayoutProps>`
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+      }
+      &--avatar-ske {
+        flex-shrink: 0;
+
+        width: 100px;
+        height: 100px;
+        outline: 3px solid ${({ theme }) => theme.primary};
+        border-radius: 50%;
       }
       &--content {
         display: flex;

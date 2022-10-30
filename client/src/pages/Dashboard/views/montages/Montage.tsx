@@ -88,6 +88,7 @@ export const MontageLayout = styled.div`
   .montage--actions {
     width: 100%;
     padding: 10px;
+    padding-left: 0px;
     display: flex;
     align-items: center;
     gap: 2rem;

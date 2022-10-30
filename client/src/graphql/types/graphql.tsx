@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -216,6 +217,7 @@ export type ResponseUserDetailDto = {
 
 export type ResponseUserDto = {
   __typename?: "ResponseUserDto";
+  _id: Scalars["ID"];
   avatar?: Maybe<Scalars["String"]>;
   backgroundImage?: Maybe<Scalars["String"]>;
   email?: Maybe<Scalars["String"]>;
@@ -272,3 +274,9 @@ export type UserDto = {
 export type QueryQueryVariables = Exact<{ [key: string]: never }>;
 
 export type QueryQuery = { __typename?: "Query"; hello: string };
+
+export const QueryDocument = gql`
+  query Query {
+    hello
+  }
+`;

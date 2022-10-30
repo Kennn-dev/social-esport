@@ -23,6 +23,7 @@ import { Button } from "../Buttons";
 
 export default function Navbar() {
   const user = useAppStore((state) => state.auth.user);
+  const logout = useAppStore((state) => state.reset);
   const [query, setQuery] = React.useState<string>("");
   const history = useHistory();
   const handleSearchChange = (e: any) => {
@@ -38,13 +39,24 @@ export default function Navbar() {
     }
   };
 
+  const handleLogOut = () => {
+    localStorage.clear();
+    logout();
+    history.push("/login");
+  };
+
   const ContentNotification = () => {
     return <div>Content</div>;
   };
+
   const ContentProfile = () => {
     return (
       <div style={{ width: 250 }}>
-        <Button style={{ padding: "10px 0px" }} color="no-style">
+        <Button
+          onClick={handleLogOut}
+          style={{ padding: "10px 0px" }}
+          color="no-style"
+        >
           Log Out
         </Button>
       </div>

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useAppStore } from "src/store";
 import styled from "styled-components";
+import AvatarThumb from "./AvatarThumb";
 
 const Layout = styled.div<{ reverse: boolean }>`
   display: flex;
@@ -58,10 +59,6 @@ interface AvatarProps {
 export default function Avatar({ reverse = false, onClick }: AvatarProps) {
   const user = useAppStore((state) => state.auth.user);
   let fullName = useMemo(() => `${user?.lastName} ${user?.firstName}`, [user]);
-  let src = useMemo(
-    () => user?.avatar || `https://robohash.org/${fullName}`,
-    [user?.avatar]
-  );
   return (
     <div onClick={onClick}>
       <Layout reverse={reverse}>
@@ -70,7 +67,8 @@ export default function Avatar({ reverse = false, onClick }: AvatarProps) {
           <span>3ks Followers</span>
         </Text>
 
-        <Image alt="avatar" src={src} width="100%" height="auto" />
+        {/* <Image alt="avatar" src={src} width="100%" height="auto" /> */}
+        <AvatarThumb width={48} height={48} user={user?.avatar} />
       </Layout>
     </div>
   );

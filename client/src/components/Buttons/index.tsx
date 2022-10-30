@@ -63,7 +63,8 @@ const ButtonLayout = styled.button<ButtonProps>`
     background-color: ${({ color, theme }) =>
       color === "default" && theme.bgBlock4};
 
-    color: ${COLORS.white};
+    color: ${({ color }) =>
+      color !== "secondary" ? COLORS.white : COLORS.bgBlock1};
   }
 
   input {

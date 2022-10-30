@@ -1,10 +1,10 @@
 import React from "react";
 import COLORS from "src/constains/colors";
-import { ResponseUserDto } from "src/graphql/types/graphql";
+import { Maybe, ResponseUserDto } from "src/graphql/types/graphql";
 import styled from "styled-components";
 
 type Props = {
-  user: ResponseUserDto | null;
+  user: ResponseUserDto | null | string | Maybe<string> | undefined;
   width: string | number;
   height: string | number;
 };
@@ -14,7 +14,7 @@ const Img = styled.div<Props>`
   height: ${({ height }) =>
     typeof height === "number" ? height + "px" : height};
   background-image: url(${({ user }) =>
-    user?.avatar || "https://robohash.org/none"});
+    typeof user === "string" ? user : user?.avatar || ""});
   background-color: ${COLORS.darkPrimary};
   background-size: contain;
   background-position: center;

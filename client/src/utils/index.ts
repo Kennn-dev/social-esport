@@ -1,5 +1,6 @@
 import { ALERT_TYPE } from "src/constains";
 import COLORS from "src/constains/colors";
+import { ResponseUserDto } from "src/graphql/types/graphql";
 
 export function readFileAsText(file: Blob): Promise<any> {
   return new Promise(function (resolve, reject) {
@@ -17,14 +18,21 @@ export function readFileAsText(file: Blob): Promise<any> {
   });
 }
 
-
-export function getColorAlert( type : ALERT_TYPE)  : string{
+export function getColorAlert(type: ALERT_TYPE): string {
   switch (type) {
     case ALERT_TYPE.ERR:
-      return COLORS.lightRed 
-  
+      return COLORS.lightRed;
+
     default:
       return COLORS.bgBlock6;
   }
+}
 
+export function getFullname(
+  user: Omit<ResponseUserDto, "__typename"> | null | undefined
+): string {
+  if (!user) {
+    return "Unknown";
+  }
+  return `${user.lastName} ${user.firstName}`;
 }

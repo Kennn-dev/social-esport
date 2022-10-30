@@ -70,7 +70,7 @@ const Input: React.FC<InputProps & React.HTMLProps<HTMLInputElement>> = ({
   ...props
 }) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", ...props.style }}>
       <InputWrapper {...registerProps} {...(props as any)} icon={!!icon} />
       {icon ? <IconWrapper className="input--icon">{icon}</IconWrapper> : null}
       {error && <InputError>{error}</InputError>}
