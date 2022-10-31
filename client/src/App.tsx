@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Theme from "./components/Theme";
 import GlobalStyle from "./globalStyles";
 import Routes from "./routes";
-import { SkeletonTheme, SkeletonThemeProps } from "react-loading-skeleton";
 
 import { ToastContainer, toast, ToastContainerProps } from "react-toastify";
 import client from "src/graphql/client";
@@ -23,14 +22,12 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ToastContainer {...toastConfig} />
-      <SkeletonTheme>
         <Theme>
           <GlobalStyle />
           <Router>
             <Routes />
           </Router>
         </Theme>
-      </SkeletonTheme>
     </ApolloProvider>
   );
 }
