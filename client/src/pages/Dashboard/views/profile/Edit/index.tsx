@@ -1,5 +1,9 @@
+import { useQuery } from "@apollo/client";
 import React, { useMemo } from "react";
 import { Tabs } from "src/components";
+import { GET_USER_PROFILE } from "src/graphql/queries/user";
+import { ResponseUserDto } from "src/graphql/types/graphql";
+import { useAppStore } from "src/store";
 import { TabsItem } from "src/types/tabs";
 import styled from "styled-components";
 import { MontageLayout } from "../../montages/Montage";
@@ -25,20 +29,32 @@ const EditLayout = styled(MontageLayout)`
 `;
 export default function Edit() {
   const [tab, setTab] = React.useState<TabsItem>(tabList[0]);
+  const user = useAppStore((s) => s.auth.user);
+  const { loading, error, data } = useQuery<
+    { getUserById: ResponseUserDto },
+    { getUserByIdId: ResponseUserDto["_id"] | undefined }
+  >(GET_USER_PROFILE, {
+    variables: {
+      getUserByIdId: user?._id,
+    },
+  });
+
   const handleChangeTab = (t: TabsItem) => {
     setTab(t);
   };
+  console.log(data?.getUserById);
 
-  const renderContent = useMemo(() => {
+  const renderContent = () => {
     switch (tab.value) {
       case "0":
-        return <UserProfile />;
+        return <UserProfile user={data?.getUserById} loading={loading} />;
       case "1":
         return <Account />;
       default:
         return null;
     }
-  }, [tab.value]);
+  };
+
   return (
     <EditLayout>
       <div className="header--text">Profile</div>
@@ -47,7 +63,7 @@ export default function Edit() {
       </div>
       <div className="edit--content">
         <div className="edit--content--header">{tab.label}</div>
-        <>{renderContent}</>
+        <>{renderContent()}</>
       </div>
     </EditLayout>
   );

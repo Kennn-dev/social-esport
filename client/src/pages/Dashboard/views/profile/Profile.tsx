@@ -20,8 +20,9 @@ import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
 import CustomSkeleton from "src/components/SkeletonCustom";
 import { getFullname } from "src/utils";
+import { Maybe } from "graphql/jsutils/Maybe";
 interface IProfileLayoutProps {
-  src: string;
+  src: string | Maybe<string> | undefined;
   avatarSrc: string;
   loading: boolean;
 }
@@ -37,7 +38,7 @@ const Profile = () => {
     {
       getUserById: ResponseUserDetailDto;
     },
-    { getUserByIdId: string | number | undefined }
+    { getUserByIdId: Maybe<string> | undefined }
   >(GET_USER_BY_ID, {
     variables: {
       getUserByIdId: user?._id,
@@ -46,9 +47,6 @@ const Profile = () => {
       toast.error(error.message);
     },
   });
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleChangeTabs = (tab: TabsItem) => {
     setTabs(tab);
@@ -133,7 +131,8 @@ const Profile = () => {
   return (
     <Layout
       loading={loading}
-      src={`https://images.unsplash.com/photo-1633907284646-7abf4a195875?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=464&q=80`}
+      // src={`https://images.unsplash.com/photo-1633907284646-7abf4a195875?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=464&q=80`}
+      src={data?.getUserById.backgroundImage}
       avatarSrc={data?.getUserById.avatar || ""}
     >
       <div className="profile">

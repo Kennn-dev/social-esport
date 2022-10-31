@@ -11,6 +11,8 @@ export const LOGIN = gql`
         firstName
         avatar
         backgroundImage
+        address
+        phoneNumber
       }
       accessToken
       tokenType

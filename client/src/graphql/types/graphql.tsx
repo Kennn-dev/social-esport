@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -205,6 +204,7 @@ export type ResponseLoginDto = {
 export type ResponseUserDetailDto = {
   __typename?: "ResponseUserDetailDto";
   _id: Scalars["String"];
+  address?: Maybe<Scalars["String"]>;
   avatar?: Maybe<Scalars["String"]>;
   backgroundImage?: Maybe<Scalars["String"]>;
   email: Scalars["String"];
@@ -212,17 +212,20 @@ export type ResponseUserDetailDto = {
   follower: FollowDto;
   following: FollowDto;
   lastName: Scalars["String"];
+  phoneNumber?: Maybe<Scalars["String"]>;
   role: Scalars["Float"];
 };
 
 export type ResponseUserDto = {
   __typename?: "ResponseUserDto";
-  _id: Scalars["ID"];
+  _id?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
   avatar?: Maybe<Scalars["String"]>;
   backgroundImage?: Maybe<Scalars["String"]>;
   email?: Maybe<Scalars["String"]>;
   firstName?: Maybe<Scalars["String"]>;
   lastName?: Maybe<Scalars["String"]>;
+  phoneNumber?: Maybe<Scalars["String"]>;
 };
 
 export type StatusResponseDto = {
@@ -252,12 +255,13 @@ export type UpdatePostInputDto = {
 };
 
 export type UpdateUserInputDto = {
+  address?: InputMaybe<Scalars["String"]>;
   avatar?: InputMaybe<Scalars["String"]>;
   backgroundImage?: InputMaybe<Scalars["String"]>;
   email?: InputMaybe<Scalars["String"]>;
   firstName?: InputMaybe<Scalars["String"]>;
   lastName?: InputMaybe<Scalars["String"]>;
-  password?: InputMaybe<Scalars["String"]>;
+  phoneNumber?: InputMaybe<Scalars["String"]>;
 };
 
 export type UserDto = {

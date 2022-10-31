@@ -36,3 +36,12 @@ export function getFullname(
   }
   return `${user.lastName} ${user.firstName}`;
 }
+
+export function pick<T = any>(obj: T, keys: string[]): T {
+  const rs: any = {};
+  for (let key of keys) {
+    rs[key] = obj[key];
+  }
+
+  return rs;
+}

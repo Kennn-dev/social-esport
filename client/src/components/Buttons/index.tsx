@@ -17,12 +17,12 @@ type ButtonProps = Omit<React.HTMLProps<HTMLButtonElement>, "size"> & {
   icon?: ReactNode | boolean; // false
   className?: string;
   children?: ReactNode;
-  htmlType?: "submit" | null | undefined;
+  htmlType?: React.HTMLProps<HTMLButtonElement>["type"];
 };
 
 const ButtonLayout = styled.button<ButtonProps>`
   border: ${({ color, theme }) =>
-    color === "ghost" ? `2px solid ${theme.gray}` : "none"};
+    color === "ghost" ? `2px solid ${theme.gray}` : "2px solid transparent"};
   background-color: ${({ color, theme }) =>
     color === "primary"
       ? theme.primary
@@ -122,7 +122,7 @@ const Button = ({
   children,
   className,
   size = "base",
-  htmlType,
+  htmlType = "button",
   loading,
   ...props
 }: ButtonProps) => (
@@ -132,10 +132,11 @@ const Button = ({
     color={color}
     className={className || ""}
     loading={loading}
+    type={htmlType}
   >
     {loading ? <Icon size={size} /> : icon || null}
     {children}
-    {htmlType === "submit" && <input type="submit" />}
+    {/* {htmlType === "submit" && <input type="submit" />} */}
   </ButtonLayout>
 );
 export { Button };

@@ -12,8 +12,9 @@ type State = {
 };
 
 type Action = {
-  update: (payload: any) => void;
+  update: (payload: Partial<TAuth>) => void;
   reset: () => void;
+  updateUser: (payload: Partial<ResponseUserDto>) => void;
 };
 
 type Store = State & Action;
@@ -39,9 +40,20 @@ export const useAppStore = create<State & Action>(
         user: null,
         tokenType: null,
       },
-      update: (payload) =>
+      update: (payload: Partial<TAuth>) =>
         set((state) => ({ ...state, auth: { ...state.auth, ...payload } })),
       reset: () => set(() => initialState),
+      updateUser: (payload) =>
+        set((state) => ({
+          ...state,
+          auth: {
+            ...state.auth,
+            user: {
+              ...state.auth.user,
+              ...payload,
+            },
+          },
+        })),
     }),
     {
       name: "auth-store",

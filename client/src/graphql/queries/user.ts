@@ -33,3 +33,18 @@ export const GET_USER_BY_ID = gql`
     }
   }
 `;
+export const GET_USER_PROFILE = gql`
+  query Query($getUserByIdId: String!) {
+    getUserById(id: $getUserByIdId) {
+      _id
+      lastName
+      firstName
+      email
+      role
+      avatar
+      backgroundImage
+      address
+      phoneNumber
+    }
+  }
+`;

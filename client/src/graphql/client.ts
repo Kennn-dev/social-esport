@@ -1,13 +1,22 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloError,
+  ApolloLink,
+  createHttpLink,
+  InMemoryCache,
+  from,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
+import { toast } from "react-toastify";
 
 const uri = () => {
   if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
     // dev code
-    return process.env.REACT_APP_API_ENDPOINT_LOCAL;
+    return `${process.env.REACT_APP_API_ENDPOINT_LOCAL}/graphql`;
   } else {
     // production code
-    return process.env.REACT_APP_API_ENDPOINT;
+    return `${process.env.REACT_APP_API_ENDPOINT}/graphql`;
   }
 };
 
@@ -29,11 +38,27 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Log any GraphQL errors or network error that occurred
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  console.log("ERROR CLIENT", graphQLErrors);
+
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      toast.error(`[GraphQL error]: Message: ${message}`)
+    );
+  if (networkError) {
+    toast.error(`[Network error]: ${networkError.message}`);
+  }
+});
+const links = from([errorLink, authLink, httpLink]);
 const client = new ApolloClient({
   uri: uri(),
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
+  link: links,
   connectToDevTools: true,
 });
 
 export default client;
+// export function handleError(error : ApolloError) {
+//   error.
+// }
