@@ -1,11 +1,12 @@
-import React, { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { base64ToFile } from "src/utils";
 
 type TUseFileUpload = {
   loading: boolean;
   data: ResponseUpload | null;
-  upload: (f: File) => Promise<void>;
+  upload: (f: File | string) => Promise<void>;
   destroy: () => Promise<void>;
 };
 
@@ -31,12 +32,18 @@ export default function useFileUpload(): TUseFileUpload {
     }
   };
 
-  const upload = async (file: File) => {
+  const upload = async (file: File | string) => {
     try {
       setLoading(true);
       if (!file) return;
       const formData: FormData = new FormData();
-      formData.append("file", file);
+
+      if (typeof file === "string") {
+        const f = await base64ToFile(file);
+        formData.append("file", f);
+      } else {
+        formData.append("file", file);
+      }
       const data = await axios.post<ResponseUpload>(
         `${uri()}/upload`,
         formData,

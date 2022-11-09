@@ -1,28 +1,19 @@
-import React, {
-  FormEventHandler,
-  LegacyRef,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import React from "react";
 import { Props } from "react-modal";
 import styled from "styled-components";
 import {
   Button,
-  CancelIcon,
+  Cancel2Icon,
   EmojiIcon,
-  ImageIcon,
-  StickerIcon,
   TextArea,
 } from "../../components/index";
 import CustomModal from "../CustomModal";
 // import * as colors from "../../constains/colors";
-import Picker, { IEmojiData } from "emoji-picker-react";
-import IconWithTooltip from "./IconWithTooltip";
-import useDebounce from "../../hooks/useDebounce";
-import ImageSelectList from "../ImageSelectList";
-import StyledEmojiPicker from "../EmojiPicker";
+import { IEmojiData } from "emoji-picker-react";
 import ButtonAddImage from "../Buttons/ButtonAddImage";
+import StyledEmojiPicker from "../EmojiPicker";
+import ImageSelectList from "../ImageSelectList";
+import IconWithTooltip from "./IconWithTooltip";
 interface IPostModal extends Props {
   avatar: string;
   onClose: () => void;
@@ -49,11 +40,15 @@ const PostModal = ({ avatar, onClose = () => {}, ...props }: IPostModal) => {
     onClose();
   };
   return (
-    <CustomModal {...props}>
+    <CustomModal isUseDefaultLayout={false} modalProps={props}>
       <ModalLayout avatar={avatar}>
         <div className="title">
           Create Post
-          <CancelIcon onClick={handleClose} title="cancel" />
+          <Cancel2Icon
+            styles={{ width: 34, height: 34 }}
+            onClick={handleClose}
+            title="cancel"
+          />
         </div>
         <div className="modal">
           <div className="modal--form">
@@ -97,7 +92,7 @@ export default PostModal;
 
 const ModalLayout = styled.div<{ avatar: string }>`
   padding: 20px;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   margin-right: 120px;
   margin-bottom: 100px;
 
@@ -114,8 +109,8 @@ const ModalLayout = styled.div<{ avatar: string }>`
     color: ${(p) => p.theme.lightGray};
     svg {
       cursor: pointer;
-      width: 50px;
-      height: 50px;
+      width: 24px;
+      height: 24px;
       transition: transform 0.5s ease;
       &:hover {
         transform: rotate(90deg);
@@ -156,7 +151,7 @@ const ModalLayout = styled.div<{ avatar: string }>`
       &--footer {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
 
         &--items {
           display: flex;

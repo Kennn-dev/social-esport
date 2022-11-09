@@ -22,7 +22,9 @@
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-animations": "^1.0.0",
+    "react-avatar-editor": "^13.0.0",
     "react-dom": "^17.0.2",
+    "react-easy-crop": "^4.6.2",
     "react-hook-form": "^7.38.0",
     "react-loading-skeleton": "^2.2.0",
     "react-modal": "^3.14.3",
@@ -64,6 +66,7 @@
   "devDependencies": {
     "@types/moment": "^2.13.0",
     "@types/react-animations": "^1.0.0",
+    "@types/react-avatar-editor": "^13.0.0",
     "@types/react-modal": "^3.13.1",
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.25",

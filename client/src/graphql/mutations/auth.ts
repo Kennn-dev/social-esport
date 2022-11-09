@@ -29,3 +29,12 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const CHANGE_PASSWORD = gql`
+  mutation Mutation($input: ChangePasswordInputDto!) {
+    changePassword(input: $input) {
+      status
+      message
+    }
+  }
+`;

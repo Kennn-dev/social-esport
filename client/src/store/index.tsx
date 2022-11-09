@@ -3,9 +3,9 @@ import create, { StateCreator } from "zustand";
 import { persist, PersistOptions } from "zustand/middleware";
 
 type TAuth = {
-  accessToken: string | null;
+  accessToken?: string | null;
   tokenType?: string | null;
-  user: ResponseUserDto | null;
+  user?: ResponseUserDto | null;
 };
 type State = {
   auth: TAuth;
@@ -42,7 +42,8 @@ export const useAppStore = create<State & Action>(
       },
       update: (payload: Partial<TAuth>) =>
         set((state) => ({ ...state, auth: { ...state.auth, ...payload } })),
-      reset: () => set(() => initialState),
+      reset: () =>
+        set((state) => ({ ...state, auth: { ...initialState } }), true),
       updateUser: (payload) =>
         set((state) => ({
           ...state,

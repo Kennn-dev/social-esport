@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -25,6 +26,12 @@ export type CategoryDto = {
   followers?: Maybe<Array<ResponseUserDto>>;
   thumbnail?: Maybe<Scalars["String"]>;
   title?: Maybe<Scalars["String"]>;
+};
+
+export type ChangePasswordInputDto = {
+  confirmPassword: Scalars["String"];
+  newPassword: Scalars["String"];
+  oldPassword: Scalars["String"];
 };
 
 export type CreateCategoryInput = {
@@ -85,6 +92,7 @@ export type InputLoginDto = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  changePassword: StatusResponseDto;
   createCategory: CategoryDto;
   createComment: StatusResponseDto;
   createPost: StatusResponseDto;
@@ -101,6 +109,10 @@ export type Mutation = {
   updateComment: StatusResponseDto;
   updatePost: StatusResponseDto;
   updateUser: StatusResponseDto;
+};
+
+export type MutationChangePasswordArgs = {
+  input: ChangePasswordInputDto;
 };
 
 export type MutationCreateCategoryArgs = {

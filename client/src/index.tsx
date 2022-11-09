@@ -1,16 +1,21 @@
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBell, faCommentAlt } from "@fortawesome/free-regular-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import Modal from "react-modal";
+import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faBell, faCommentAlt } from "@fortawesome/free-regular-svg-icons";
 library.add(faBell, faCommentAlt, faBars);
+Modal.setAppElement("#root");
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

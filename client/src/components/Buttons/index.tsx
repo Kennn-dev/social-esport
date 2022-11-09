@@ -18,6 +18,7 @@ type ButtonProps = Omit<React.HTMLProps<HTMLButtonElement>, "size"> & {
   className?: string;
   children?: ReactNode;
   htmlType?: React.HTMLProps<HTMLButtonElement>["type"];
+  block?: boolean;
 };
 
 const ButtonLayout = styled.button<ButtonProps>`
@@ -35,7 +36,7 @@ const ButtonLayout = styled.button<ButtonProps>`
   justify-content: ${({ color }) => color !== "no-style" && "center"};
   gap: 1rem;
   align-items: center;
-  width: 100%;
+  width: ${({ block }) => (block ? "100%" : "fit-content")};
   color: ${({ color, theme }) =>
     color === "secondary"
       ? theme.bgBlock1
@@ -92,7 +93,7 @@ const Loader = styled.div<{ size: SizeButton }>`
   }
 `;
 const Icon = ({ size }: { size: SizeButton }) => (
-  <Loader size={size}>
+  <Loader style={{ flex: "none" }} size={size}>
     <svg
       className="icon-load"
       xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +124,7 @@ const Button = ({
   className,
   size = "base",
   htmlType = "button",
+  block = true,
   loading,
   ...props
 }: ButtonProps) => (
@@ -133,6 +135,7 @@ const Button = ({
     className={className || ""}
     loading={loading}
     type={htmlType}
+    block={block}
   >
     {loading ? <Icon size={size} /> : icon || null}
     {children}

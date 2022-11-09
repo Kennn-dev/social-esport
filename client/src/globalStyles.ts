@@ -1,3 +1,4 @@
+import COLORS from "src/constains/colors";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -5,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
 		--toastify-toast-width : 400px;
 		--toastify-color-dark : #272727;
 		--common-shadow : rgb(0 0 0 / 77%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;
+  --saturation-factor: 1;
 		margin : 0;
 		padding : 0;
 		box-sizing : border-box;
@@ -38,7 +40,52 @@ const GlobalStyle = createGlobalStyle`
 		&::-webkit-scrollbar-thumb:hover {
 			background: rgba(112, 112, 112, 1);
 		}
+
+			/* SLIDER  slider range */
+		input[type=range]{
+			-webkit-appearance: none;
+		}
+
+	input[type=range]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+    display: block;
+      background-color: ${COLORS.bgBlock6};
 	}
+	
+	input[type=range]::-webkit-slider-thumb {
+		     -webkit-appearance: none;
+      appearance: none;
+		 appearance: none;
+
+      background-color: ${COLORS.primary};
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      width: 10px;
+      height: 24px;
+      /* margin-left: -5px; */
+      /* top: 50%; */
+      margin-top: -8px;
+      box-shadow: 0 3px 1px 0
+          hsla(0, calc(var(--saturation-factor, 1) * 0%), 0%, 0.05),
+        0 2px 2px 0 hsla(0, calc(var(--saturation-factor, 1) * 0%), 0%, 0.1),
+        0 3px 3px 0 hsla(0, calc(var(--saturation-factor, 1) * 0%), 0%, 0.05);
+	}
+
+	
+
+	input[type=range]:focus::-webkit-slider-runnable-track {
+      background-color: ${COLORS.bgBlock6};
+	}
+	/*  */
+
+
+
+
+	}
+
+
 	html {
 		height : 100%;
 	}
@@ -67,6 +114,8 @@ const GlobalStyle = createGlobalStyle`
 				outline : none
 			}
 		}
+
+	
 
 	}
 

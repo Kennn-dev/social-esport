@@ -1,26 +1,24 @@
-import React, { ReactNode, useEffect } from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router";
-import COLORS from "src/constains/colors";
-import {
-  Button,
-  MessageIcon,
-  Tabs,
-  FeedCard,
-  VideoCard,
-  CategoryCard,
-} from "../../../../components/index";
-import { MontageLayout } from "../montages/Montage";
-import { TabsItem } from "../../../../types/tabs";
 import { useQuery } from "@apollo/client";
+import { Maybe } from "graphql/jsutils/Maybe";
+import React, { ReactNode } from "react";
+import { useHistory } from "react-router";
+import { toast } from "react-toastify";
+import CustomSkeleton from "src/components/SkeletonCustom";
+import COLORS from "src/constains/colors";
 import { GET_USER_BY_ID } from "src/graphql/queries/user";
 import { ResponseUserDetailDto } from "src/graphql/types/graphql";
 import { useAppStore } from "src/store";
-import { toast } from "react-toastify";
-import Skeleton from "react-loading-skeleton";
-import CustomSkeleton from "src/components/SkeletonCustom";
 import { getFullname } from "src/utils";
-import { Maybe } from "graphql/jsutils/Maybe";
+import styled from "styled-components";
+import {
+  Button,
+  CategoryCard,
+  FeedCard,
+  Tabs,
+  VideoCard,
+} from "../../../../components/index";
+import { TabsItem } from "../../../../types/tabs";
+import { MontageLayout } from "../montages/Montage";
 interface IProfileLayoutProps {
   src: string | Maybe<string> | undefined;
   avatarSrc: string;
@@ -228,6 +226,9 @@ const Layout = styled(MontageLayout)<IProfileLayoutProps>`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
 
     &--card--info {
       position: absolute;

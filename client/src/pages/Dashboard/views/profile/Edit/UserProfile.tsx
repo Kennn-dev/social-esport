@@ -1,11 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { Maybe } from "graphql/jsutils/Maybe";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button, Input, Skeleton } from "src/components";
 import AvatarThumb from "src/components/Avatar/AvatarThumb";
-import COLORS from "src/constains/colors";
 import { UPDATE_COMMON_PROFILE } from "src/graphql/mutations/user";
 import {
   ResponseUserDto,
@@ -16,15 +15,17 @@ import useFileUpload from "src/hooks/useFileUpload";
 import { useAppStore } from "src/store";
 import { pick } from "src/utils";
 import {
-  Wrapper,
-  Title,
+  Background,
+  Flex,
   GroupAvatar,
   GroupWrapper,
   GroupWrapperForm,
   SubText,
-  Flex,
-  Background,
+  Title,
+  Wrapper,
 } from "./layouts/index";
+import AvatarEditUploadModal from "./User Profile/AvatarEditUploadModal";
+import BackgroundEditUploadModal from "./User Profile/BackgroundEditUploadModal";
 
 type Props = {
   user: ResponseUserDto | undefined;
@@ -34,6 +35,10 @@ type Props = {
 export default function UserProfile(props: Props) {
   const { loading, user } = props;
   const updateUser = useAppStore((s) => s.updateUser);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpenBg, setOpenBg] = useState<boolean>(false);
+  const [currentFileBg, setCurrentFileBg] = useState<File | null>(null);
+  const [currentFile, setCurrentFile] = useState<File | null>(null);
   // console.log({ loading, user });
   const {
     loading: avatarLoading,
@@ -41,6 +46,7 @@ export default function UserProfile(props: Props) {
     upload: avatarUpload,
     destroy: avatarDestroy,
   } = useFileUpload();
+
   const {
     loading: bgLoading,
     data: bgData,
@@ -103,12 +109,33 @@ export default function UserProfile(props: Props) {
 
   const handleOnchangeUploadAvatar = (e: any) => {
     console.log(e.target.files[0]);
-    avatarUpload(e.target.files[0]);
+    setOpen(true);
+    setCurrentFile(e.target.files[0]);
+
+    // 👇️ reset file input
+    e.target.value = null;
+  };
+
+  const handleSaveAfterEdit = async (url: string) => {
+    if (url) {
+      await avatarUpload(url);
+      return Promise.resolve();
+    }
+  };
+  const handleSaveAfterEditBg = async (url: string | null) => {
+    if (url) {
+      await bgUpload(url);
+      return Promise.resolve();
+    }
   };
 
   const handleOnchangeUploadBackground = (e: any) => {
     console.log(e.target.files[0]);
-    bgUpload(e.target.files[0]);
+    setOpenBg(true);
+    setCurrentFileBg(e.target.files[0]);
+
+    // 👇️ reset file input
+    e.target.value = null;
   };
 
   const handleRemoveAvatar = () => {
@@ -160,9 +187,10 @@ export default function UserProfile(props: Props) {
                 ref={uploadAvatarRef}
                 onChange={handleOnchangeUploadAvatar}
                 type="file"
+                accept="image/png, image/jpg, image/jpeg"
               />
             </div>
-            <SubText>Must be JPEG, PNG, or GIF and cannot exceed 10MB.</SubText>
+            <SubText>Must be JPEG, PNG and cannot exceed 10MB.</SubText>
           </GroupAvatar>
         </GroupWrapper>
         <GroupWrapper>
@@ -186,6 +214,7 @@ export default function UserProfile(props: Props) {
             style={{ display: "none" }}
             ref={uploadBackgroundRef}
             type="file"
+            accept="image/png, image/jpg, image/jpeg"
             onChange={handleOnchangeUploadBackground}
           />
         </GroupWrapper>
@@ -267,6 +296,41 @@ export default function UserProfile(props: Props) {
           </div>
         </Flex>
       </Wrapper>
+
+      <AvatarEditUploadModal
+        title={"Edit Avatar"}
+        editorProps={{
+          width: 350,
+          height: 350,
+          borderRadius: 10000,
+        }}
+        file={currentFile}
+        handleSaveImage={handleSaveAfterEdit}
+        isOpen={isOpen}
+        setOpen={setOpen}
+      />
+
+      <BackgroundEditUploadModal
+        title={"Edit Background"}
+        handleSaveImage={handleSaveAfterEditBg}
+        file={currentFileBg}
+        // handleSaveImage={handleSaveAfterEdit}
+        isOpen={isOpenBg}
+        setOpen={setOpenBg}
+      />
+
+      {/* <AvatarEditUploadModal
+        title={"Background Avatar"}
+        editorProps={{
+          width: 500,
+          height: 350,
+          borderRadius: 20,
+        }}
+        file={currentFileBg}
+        handleSaveImage={handleSaveAfterEditBg}
+        isOpen={isOpenBg}
+        setOpen={setOpenBg}
+      /> */}
     </form>
   );
 }

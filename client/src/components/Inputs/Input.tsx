@@ -1,16 +1,29 @@
 import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import {
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+  UseFormRegisterReturn,
+} from "react-hook-form";
 import COLORS from "src/constains/colors";
 import styled, { CSSProp } from "styled-components";
 interface InputWrapperProps {
   css?: CSSProp;
   icon?: boolean;
-  error?: string | null | undefined;
+  error?:
+    | string
+    | FieldError
+    | Merge<FieldError, FieldErrorsImpl<any>>
+    | undefined;
 }
 interface InputProps {
   icon?: React.ReactNode;
   registerProps?: UseFormRegisterReturn<any>;
-  error?: string | null | undefined;
+  error?:
+    | string
+    | FieldError
+    | Merge<FieldError, FieldErrorsImpl<any>>
+    | undefined;
 }
 const InputWrapper = styled.input<
   InputWrapperProps & React.HTMLProps<HTMLInputElement>

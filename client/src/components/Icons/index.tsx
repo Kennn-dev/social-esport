@@ -704,22 +704,22 @@ const EmojiIcon = ({ color = "#D0D0D0", title = "", ...props }: IconProps) => (
 const CancelIcon = ({ color = "#D0D0D0", title = "", ...props }: IconProps) => (
   <svg
     {...props}
-    width="34"
-    height="34"
-    viewBox="0 0 34 34"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <title>{title}</title>
     <path
-      d="M12.7573 21.2427L21.2426 12.7574"
+      d="M1 13.2426L13.2426 0.999978"
       stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      d="M21.2426 21.2426L12.7573 12.7573"
+      d="M13.2426 13.4851L1 1.24255"
       stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
@@ -798,7 +798,7 @@ const CreateVideoIcon = ({
     <path
       d="M23 18.5C23 18.86 22.96 19.21 22.87 19.55C22.76 20 22.58 20.43 22.35 20.82C21.57 22.12 20.14 23 18.5 23C17.42 23 16.44 22.62 15.68 21.98C15.67 21.98 15.67 21.98 15.67 21.98C15.61 21.93 15.56 21.89 15.51 21.84C15.5 21.83 15.49 21.82 15.47 21.81C15.15 21.53 14.87 21.19 14.65 20.82C14.24 20.14 14 19.34 14 18.5C14 17.28 14.48 16.17 15.27 15.36C16.09 14.52 17.24 14 18.5 14C19.81 14 21 14.56 21.81 15.46C21.82 15.47 21.83 15.49 21.84 15.5C21.89 15.55 21.94 15.61 21.98 15.67C22.62 16.44 23 17.43 23 18.5Z"
       stroke={color}
-      stroke-width="1.5"
+      strokeWidth="1.5"
       strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -866,7 +866,38 @@ const CreatePostIcon = ({
   </svg>
 );
 
+const Cancel2Icon = ({
+  color = "#D0D0D0",
+  title = "",
+  ...props
+}: IconProps) => (
+  <svg
+    {...props}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M2 20L20 2.00001"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M20 20L2 2"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export {
+  Cancel2Icon,
   CreateVideoIcon,
   CreatePostIcon,
   AddIcon,
