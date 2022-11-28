@@ -1,3 +1,5 @@
-Tech : GraphQL , Nodejs, TypeScript, React 
+Tech : GraphQL , Nestjs , TypeScript, React 
 
-Currently in develop
+Currently in developing
+
+[] [] []
